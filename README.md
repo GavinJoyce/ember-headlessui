@@ -1,38 +1,26 @@
-ember-tailwind-ui
-==============================================================================
+# ember-tailwind-ui
 
-[Short description of the addon.]
+This is a work-in-progress implementation of:
 
+- https://github.com/tailwindlabs/tailwindui-vue
+- https://github.com/tailwindlabs/tailwindui-react
 
-Compatibility
-------------------------------------------------------------------------------
+A set of completely unstyled, fully accessible UI components for Ember.js, designed to integrate beautifully with Tailwind CSS.
 
-* Ember.js v3.16 or above
-* Ember CLI v2.13 or above
-* Node.js v10 or above
-
-
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install ember-tailwind-ui
 ```
 
+## Usage
 
-Usage
-------------------------------------------------------------------------------
+Todo..
 
-[Longer description of how to use the addon in apps.]
-
-
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
-
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
