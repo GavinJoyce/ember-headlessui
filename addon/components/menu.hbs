@@ -1,0 +1,22 @@
+<div
+  id={{this.guid}}
+  {{on 'pointerdown' this.onPointerDown}}
+  ...attributes
+>
+  {{yield (hash
+    isOpen=this.isOpen
+    Button=(
+      component 'menu/button'
+      guid=this.buttonGuid
+      menuGuid=this.guid
+      itemsGuid=this.itemsGuid
+      isOpen=this.isOpen
+      onClick=this.toggle
+    )
+    Items=(
+      component 'menu/items'
+      guid=this.itemsGuid
+      isOpen=this.isOpen
+    )
+  )}}
+</div>
