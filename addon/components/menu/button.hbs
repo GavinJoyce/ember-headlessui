@@ -1,0 +1,12 @@
+<button
+  {{on "click" @onClick}}
+  {{on "keydown" this.onKeydown}}
+  type="button"
+  aria-haspopup={{true}}
+  aria-controls={{@itemsGuid}}
+  aria-expanded={{@isOpen}}
+  id="{{@menuGuid}}-button"
+  ...attributes
+>
+  {{yield}}
+</button>

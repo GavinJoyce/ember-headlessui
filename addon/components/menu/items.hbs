@@ -1,0 +1,18 @@
+{{#if @isOpen}}
+  <div
+    id={{@guid}}
+    {{on "keydown" this.onKeydown}}
+    tabindex="-1"
+    ...attributes
+  >
+    {{yield (hash
+      Item=(component
+        'menu/item'
+        registerItem=@registerItem
+        unregisterItem=@unregisterItem
+        goToItem=@goToItem
+        closeMenu=@closeMenu
+      )
+    )}}
+  </div>
+{{/if}}
