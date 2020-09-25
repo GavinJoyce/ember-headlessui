@@ -1,4 +1,4 @@
-# ember-tailwind-ui
+# ember-headlessui
 
 This is a work-in-progress implementation of:
 
@@ -10,7 +10,7 @@ A set of completely unstyled, fully accessible UI components for Ember.js, desig
 ## Installation
 
 ```
-ember install ember-tailwind-ui
+ember install ember-headlessui
 ```
 
 ## Usage
