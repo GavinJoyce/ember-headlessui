@@ -1,1 +1,1 @@
-export { default } from 'ember-tailwind-ui/components/menu/button';
+export { default } from "ember-headlessui/components/menu/button";
