@@ -51,7 +51,7 @@ export default class Item extends Component {
   }
 
   @action
-  onMouseMove() {
+  onMouseOver() {
     if (this.args.isDisabled) return;
     if (this.isActive) return;
 
