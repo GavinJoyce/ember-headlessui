@@ -1,7 +1,7 @@
 {{#let (element (or @tagName "a")) as |Tag|}}
   <Tag
     {{did-insert @registerItemElement}}
-    {{on "mousemove" @onMouseMove}}
+    {{on "mouseover" @onMouseOver}}
     {{on "click" @onClick}}
     {{will-destroy @unregisterItemElement}}
     id={{@guid}}

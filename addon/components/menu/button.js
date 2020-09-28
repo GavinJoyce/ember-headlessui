@@ -10,13 +10,16 @@ export default class Button extends Component {
       case "Enter":
       case "ArrowDown":
         event.preventDefault();
-        this.args.openMenu();
 
-        next(() => {
-          this.args.goToFirstItem();
-        });
+        if (this.args.isOpen && event.key === "Enter") {
+          this.args.closeMenu();
+        } else {
+          this.args.openMenu();
+          next(() => {
+            this.args.goToFirstItem();
+          });
+        }
         break;
-
       case "ArrowUp":
         event.preventDefault();
         this.args.openMenu();
