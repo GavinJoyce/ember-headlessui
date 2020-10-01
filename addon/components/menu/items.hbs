@@ -1,6 +1,7 @@
 {{#if @isOpen}}
   <div
     id={{@guid}}
+    aria-labelledby={{@buttonGuid}}
     {{on "keydown" this.onKeydown}}
     tabindex="-1"
     ...attributes
