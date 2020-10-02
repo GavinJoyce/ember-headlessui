@@ -2,8 +2,7 @@
 
 This is a work-in-progress implementation of:
 
-- https://github.com/tailwindlabs/tailwindui-vue
-- https://github.com/tailwindlabs/tailwindui-react
+- https://github.com/tailwindlabs/headlessui
 
 A set of completely unstyled, fully accessible UI components for Ember.js, designed to integrate beautifully with Tailwind CSS.
 
