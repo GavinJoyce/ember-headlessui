@@ -1,0 +1,18 @@
+<div ...attributes>
+  {{yield (hash
+    isChecked=@isChecked
+    Label=(
+      component 'switch/label'
+      guid=this.labelGuid
+      onPointerUp=this.onLabelPointerUp
+    )
+    Button=(
+      component 'switch/button'
+      guid=this.buttonGuid
+      labelGuid=this.labelGuid
+      isChecked=@isChecked
+      onClick=this.onButtonClick
+      onKeyUp=this.onButtonKeyUp
+    )
+  )}}
+</div>

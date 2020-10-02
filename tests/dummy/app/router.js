@@ -13,4 +13,8 @@ Router.map(function () {
     this.route("menu-with-transition");
     this.route("menu-with-transition-and-popper");
   });
+
+  this.route("switch", function () {
+    this.route("switch-basic");
+  });
 });

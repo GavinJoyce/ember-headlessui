@@ -1,0 +1,12 @@
+<div
+  id={{@guid}}
+  role="switch"
+  tabindex="0"
+  aria-checked={{@isChecked}}
+  aria-labelledby={{@labelGuid}}
+  {{on "click" @onClick}}
+  {{on "keyup" @onKeyUp}}
+  ...attributes
+>
+  {{yield}}
+</div>
