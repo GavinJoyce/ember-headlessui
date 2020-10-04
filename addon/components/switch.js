@@ -30,6 +30,6 @@ export default class Switch extends Component {
   }
 
   _toggle() {
-    this.args.onUpdate(!this.args.isChecked);
+    this.args.onUpdate(!this.args.isOn);
   }
 }

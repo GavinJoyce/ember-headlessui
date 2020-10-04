@@ -1,12 +1,15 @@
-<div
-  id={{@guid}}
-  role="switch"
-  tabindex="0"
-  aria-checked={{@isChecked}}
-  aria-labelledby={{@labelGuid}}
-  {{on "click" @onClick}}
-  {{on "keyup" @onKeyUp}}
-  ...attributes
->
-  {{yield}}
-</div>
+{{#let (element (or @tagName "div")) as |Tag|}}
+  <Tag
+    id={{@guid}}
+    role="switch"
+    tabindex="0"
+    aria-checked="{{@isOn}}"
+    aria-labelledby={{@labelGuid}}
+    {{on "click" @onClick}}
+    {{on "keyup" @onKeyUp}}
+    ...attributes
+    data-test-headlessui-switch-button
+  >
+    {{yield}}
+  </Tag>
+{{/let}}

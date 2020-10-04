@@ -1,8 +1,8 @@
 
 <div class="flex items-start justify-center w-screen h-full p-12 bg-gray-50">
   <Switch
-    @isChecked={{this.isChecked}}
-    @onUpdate={{set this.isChecked}}
+    @isOn={{this.isOn}}
+    @onUpdate={{set this.isOn}}
     class="flex items-center space-x-4"
     as |switch|
   >
@@ -10,12 +10,12 @@
     <switch.Button
       class="
         relative inline-flex flex-shrink-0 h-6 border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:shadow-outline transition-colors ease-in-out duration-200
-        {{if switch.isChecked "bg-indigo-600" "bg-gray-200"}}
+        {{if switch.isOn "bg-indigo-600" "bg-gray-200"}}
       "
     >
       <span class="
         inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full
-        {{if switch.isChecked "translate-x-5" "translate-x-0"}}
+        {{if switch.isOn "translate-x-5" "translate-x-0"}}
       " />
     </switch.Button>
   </Switch>

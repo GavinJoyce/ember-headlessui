@@ -1,6 +1,10 @@
-<div ...attributes>
+<div
+  ...attributes
+  data-test-headlessui-switch
+  data-test-headlessui-switch-is-on={{@isOn}}
+>
   {{yield (hash
-    isChecked=@isChecked
+    isOn=@isOn
     Label=(
       component 'switch/label'
       guid=this.labelGuid
@@ -10,7 +14,7 @@
       component 'switch/button'
       guid=this.buttonGuid
       labelGuid=this.labelGuid
-      isChecked=@isChecked
+      isOn=@isOn
       onClick=this.onButtonClick
       onKeyUp=this.onButtonKeyUp
     )

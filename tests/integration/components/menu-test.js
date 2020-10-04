@@ -63,7 +63,7 @@ function assertNoActiveMenuItem(menuSelector) {
   QUnit.assert.dom(menuSelector).doesNotHaveAria("activedescendant");
 }
 
-module("Integration | Component | menu", (hooks) => {
+module("Integration | Component | <Menu>", (hooks) => {
   setupRenderingTest(hooks);
 
   test("it renders", async (assert) => {
