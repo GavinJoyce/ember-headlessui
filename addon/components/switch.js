@@ -8,7 +8,7 @@ export default class Switch extends Component {
   buttonGuid = `${this.guid}-button`;
 
   @action
-  onLabelPointerUp() {
+  onLabelClick() {
     let buttonElement = document.getElementById(this.buttonGuid);
     buttonElement.click();
     buttonElement.focus();
