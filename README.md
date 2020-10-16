@@ -1,5 +1,7 @@
 # ember-headlessui
 
+[![ember-headlessui Actions Status](https://github.com/GavinJoyce/ember-headlessui/workflows/CI/badge.svg)](https://github.com/GavinJoyce/ember-headlessui/actions)
+
 This is a work-in-progress implementation of:
 
 - https://github.com/tailwindlabs/headlessui
