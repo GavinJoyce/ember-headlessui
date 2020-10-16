@@ -52,18 +52,22 @@ export default class extends Component {
 
   @action
   onWindowKeydown(event) {
-    this.keys.unshift(
+    let { keys } = this;
+
+    keys.unshift(
       event.shiftKey && event.key !== "Shift"
         ? KeyDisplay[`Shift${event.key}`] ?? event.key
         : KeyDisplay[event.key] ?? event.key
     );
 
-    this.keys = this.keys;
+    this.keys = keys;
 
     setTimeout(() => {
       if (!this.isDestroying) {
-        this.keys.pop();
-        this.keys = this.keys;
+        let { keys } = this;
+
+        keys.pop();
+        this.keys = keys;
       }
     }, 2000);
   }

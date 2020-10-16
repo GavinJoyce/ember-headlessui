@@ -1,5 +1,3 @@
-/*global module*/
-
 // NOTE: we should try an stay in sync with https://github.com/tailwindlabs/headlessui/blob/develop/tailwind.config.js
 
 const defaultTheme = require("tailwindcss/defaultTheme");
