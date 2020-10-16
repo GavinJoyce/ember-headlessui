@@ -86,15 +86,19 @@ export default class Menu extends Component {
 
   @action
   registerItem(item) {
-    this.items.push(item);
-    this.items = this.items;
+    let { items } = this;
+
+    items.push(item);
+    this.items = items;
   }
 
   @action
   unregisterItem(item) {
-    let index = this.items.indexOf(item);
-    this.items.splice(index, 1);
-    this.items = this.items;
+    let { items } = this;
+
+    let index = items.indexOf(item);
+    items.splice(index, 1);
+    this.items = items;
   }
 
   @action
