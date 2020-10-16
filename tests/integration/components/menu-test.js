@@ -182,7 +182,7 @@ module("Integration | Component | <Menu>", (hooks) => {
           .hasText("Item A", "The first item is selected");
       });
 
-      test("it should have no active menu item when there are no menu items at all", async (assert) => {
+      test("it should have no active menu item when there are no menu items at all", async () => {
         await render(hbs`
         <Menu data-test-menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -291,7 +291,7 @@ module("Integration | Component | <Menu>", (hooks) => {
         assert.dom("[data-test-is-selected]").doesNotExist();
       });
 
-      test("it should be possible to close the menu with Enter when there is no active menuitem", async function (assert) {
+      test("it should be possible to close the menu with Enter when there is no active menuitem", async function () {
         await render(hbs`
         <Menu data-test-menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
