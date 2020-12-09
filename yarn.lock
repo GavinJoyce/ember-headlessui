@@ -4964,10 +4964,10 @@ ember-disable-prototype-extensions@^1.1.3:
   resolved "https://registry.yarnpkg.com/ember-disable-prototype-extensions/-/ember-disable-prototype-extensions-1.1.3.tgz#1969135217654b5e278f9fe2d9d4e49b5720329e"
   integrity sha1-GWkTUhdlS14nj5/i2dTkm1cgMp4=
 
-ember-element-helper@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.3.1.tgz#dd6017a64a9952058c16050c7a9eb0fff5ebfe90"
-  integrity sha512-U3tXkhiPsL1uIz2jCBZS4Lot0Le0wt7RM7TArYAR5OZRLGdCaLkRjQ0Xx5IlwWbBS0KOrfARevc1OLnX1AIgZQ==
+ember-element-helper@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.3.2.tgz#a0e384c266c6fb0e39803708d6f5e83ce6dba659"
+  integrity sha512-t4lrekoRb/jVQeg/N1V0kzehV6cw0YAH1hG1H2+Ykl35YxpYdX7/8hKtaGzVPxceemUVFO7fUorEQ6Y//wpWdA==
   dependencies:
     ember-cli-babel "^7.17.2"
     ember-cli-htmlbars "^5.1.0"

@@ -26,7 +26,7 @@
     "@ember/render-modifiers": "^1.0.2",
     "ember-cli-babel": "^7.22.1",
     "ember-cli-htmlbars": "^5.3.1",
-    "ember-element-helper": "^0.3.1",
+    "ember-element-helper": "^0.3.2",
     "ember-truth-helpers": "^2.1.0"
   },
   "devDependencies": {
