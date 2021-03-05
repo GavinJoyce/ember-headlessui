@@ -8,6 +8,8 @@ This is a work-in-progress implementation of:
 
 A set of completely unstyled, fully accessible UI components for Ember.js, designed to integrate beautifully with Tailwind CSS.
 
+![ember-headlessui](https://user-images.githubusercontent.com/2526/110099076-ce070680-7d98-11eb-932b-afc075fc7b62.gif)
+
 ## Installation
 
 ```
