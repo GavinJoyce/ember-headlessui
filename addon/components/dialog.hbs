@@ -1,0 +1,8 @@
+{{#if @isOpen}}
+  <div ...attributes>
+    {{yield (hash
+      Overlay=(component "dialog/-overlay" onClose=@onClose)
+      Title=(component "dialog/-title")
+    )}}
+  </div>
+{{/if}}
