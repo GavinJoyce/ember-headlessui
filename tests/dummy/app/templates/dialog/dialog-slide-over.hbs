@@ -1,0 +1,50 @@
+<div class="flex items-start justify-center w-screen h-full p-12 bg-gray-50">
+  <button
+    class="px-4 py-2 text-sm font-medium text-blue-100 bg-blue-800 rounded-md hover:bg-opacity-75 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+    type="button"
+    {{on "click" (set this.isOpen true)}}
+  >
+    Open dialog
+  </button>
+
+  <Dialog
+    class="fixed inset-0 overflow-hidden"
+    @isOpen={{this.isOpen}}
+    @onClose={{set this.isOpen false}}
+    as |d|
+  >
+    <div class="absolute inset-0 overflow-hidden">
+      <d.Overlay class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+
+      <div class="fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div class="w-screen max-w-md">
+          <div class="flex flex-col h-full py-6 overflow-y-scroll bg-white shadow-xl">
+            <div class="px-4 sm:px-6">
+              <div class="flex items-start justify-between">
+                <d.Title class="text-lg font-medium text-gray-900">Panel title</d.Title>
+                <div class="flex items-center ml-3 h-7">
+                  <button
+                    type="button"
+                    class="text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    {{on "click" (set this.isOpen false)}}
+                    >
+                    <span class="sr-only">Close panel</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative flex-1 px-4 mt-6 sm:px-6">
+              <div class="absolute inset-0 px-4 sm:px-6">
+                <div class="h-full border-2 border-gray-200 border-dashed" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Dialog>
+</div>

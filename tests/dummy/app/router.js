@@ -20,5 +20,6 @@ Router.map(function () {
 
   this.route('dialog', function () {
     this.route('dialog-basic');
+    this.route('dialog-slide-over');
   });
 });
