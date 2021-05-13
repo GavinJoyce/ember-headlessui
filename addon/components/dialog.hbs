@@ -1,8 +1,14 @@
-{{#if @isOpen}}
-  <div ...attributes>
-    {{yield (hash
-      Overlay=(component "dialog/-overlay" onClose=@onClose)
-      Title=(component "dialog/-title")
-    )}}
-  </div>
-{{/if}}
+{{#let (global-ref-to "headless-dialog-portal") as |$portal|}}
+  {{#if $portal}}
+    {{#if @isOpen}}
+      {{#in-element $portal}}
+        <div ...attributes>
+          {{yield (hash
+            Overlay=(component "dialog/-overlay" onClose=@onClose)
+            Title=(component "dialog/-title")
+          )}}
+        </div>
+      {{/in-element}}
+    {{/if}}
+  {{/if}}
+{{/let}}
