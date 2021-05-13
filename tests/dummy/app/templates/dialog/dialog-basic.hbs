@@ -1,6 +1,6 @@
 <div class="flex items-start justify-center w-screen h-full p-12 bg-gray-50">
   <button
-    class="px-4 py-2 text-sm font-medium text-blue-100 bg-blue-800 rounded-md hover:bg-opacity-75 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+    class="px-4 py-2 text-sm font-medium text-blue-100 bg-blue-800 rounded-md hover:bg-opacity-75 focus:ring-2 focus:ring-white focus:ring-opacity-75"
     type="button"
     {{on "click" (set this.isOpen true)}}>Open dialog</button>
 
@@ -25,12 +25,16 @@
           Your payment has been successfully submitted. We’ve sent
           your an email with all of the details of your order.
           </p>
+
+          <a href="javascript:void(0)">with</a>
+          <a href="javascript:void(0)">some</a>
+          <a href="javascript:void(0)">focusable</a>
         </div>
 
         <div class="mt-4">
           <button
             type="button"
-            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+            class="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             {{on "click" (set this.isOpen false)}}
             >
             Got it, thanks!

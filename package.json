@@ -30,6 +30,7 @@
     "ember-cli-babel": "^7.26.3",
     "ember-cli-htmlbars": "^5.7.1",
     "ember-element-helper": "^0.3.1",
+    "ember-focus-trap": "^0.6.0",
     "ember-ref-bucket": "^2.0.0",
     "ember-truth-helpers": "^2.1.0"
   },

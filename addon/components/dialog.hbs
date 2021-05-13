@@ -2,7 +2,10 @@
   {{#if $portal}}
     {{#if @isOpen}}
       {{#in-element $portal}}
-        <div ...attributes>
+        <div
+          {{focus-trap}}
+          ...attributes
+        >
           {{yield (hash
             Overlay=(component "dialog/-overlay" onClose=@onClose)
             Title=(component "dialog/-title")
