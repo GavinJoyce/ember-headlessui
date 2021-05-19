@@ -2,8 +2,8 @@
 //      We should endevour to have a similar test suite to it:
 //      https://github.com/tailwindlabs/headlessui/blob/412cc950aa7545c1d78ac0791ae136fa9c15294a/packages/%40headlessui-vue/src/components/menu/menu.test.tsx
 
-import QUnit, { module, test } from "qunit";
-import { setupRenderingTest } from "ember-qunit";
+import QUnit, { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 import {
   click,
   render,
@@ -11,21 +11,21 @@ import {
   findAll,
   triggerEvent,
   triggerKeyEvent,
-} from "@ember/test-helpers";
-import { hbs } from "ember-cli-htmlbars";
+} from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 
 function assertClosedMenuButton(selector) {
-  QUnit.assert.dom(selector).hasAttribute("id");
-  QUnit.assert.dom(selector).hasAttribute("aria-haspopup");
-  QUnit.assert.dom(selector).doesNotHaveAttribute("aria-controls");
-  QUnit.assert.dom(selector).doesNotHaveAttribute("aria-expanded");
+  QUnit.assert.dom(selector).hasAttribute('id');
+  QUnit.assert.dom(selector).hasAttribute('aria-haspopup');
+  QUnit.assert.dom(selector).doesNotHaveAttribute('aria-controls');
+  QUnit.assert.dom(selector).doesNotHaveAttribute('aria-expanded');
 }
 
 function assertOpenMenuButton(selector) {
-  QUnit.assert.dom(selector).hasAttribute("id");
-  QUnit.assert.dom(selector).hasAttribute("aria-haspopup");
-  QUnit.assert.dom(selector).hasAttribute("aria-controls");
-  QUnit.assert.dom(selector).hasAttribute("aria-expanded");
+  QUnit.assert.dom(selector).hasAttribute('id');
+  QUnit.assert.dom(selector).hasAttribute('aria-haspopup');
+  QUnit.assert.dom(selector).hasAttribute('aria-controls');
+  QUnit.assert.dom(selector).hasAttribute('aria-expanded');
 }
 
 function assertMenuButtonLinkedWithMenuItems(
@@ -35,11 +35,11 @@ function assertMenuButtonLinkedWithMenuItems(
   let menuButtonElement = find(menuButtonSelector);
   let menuItemsElement = find(menuItemsSelector);
 
-  QUnit.assert.dom(menuButtonElement).hasAria("controls", menuItemsElement.id);
+  QUnit.assert.dom(menuButtonElement).hasAria('controls', menuItemsElement.id);
 
   QUnit.assert
     .dom(menuItemsElement)
-    .hasAria("labelledby", menuButtonElement.id);
+    .hasAria('labelledby', menuButtonElement.id);
 }
 
 function assertMenuItems(menuSelector, expectedCount) {
@@ -49,9 +49,9 @@ function assertMenuItems(menuSelector, expectedCount) {
   let itemElements = findAll(itemsSelector);
 
   itemElements.forEach((itemElement) => {
-    QUnit.assert.dom(itemElement).hasAttribute("id");
-    QUnit.assert.dom(itemElement).hasAttribute("role", "menuitem");
-    QUnit.assert.dom(itemElement).hasAttribute("tabindex", "-1");
+    QUnit.assert.dom(itemElement).hasAttribute('id');
+    QUnit.assert.dom(itemElement).hasAttribute('role', 'menuitem');
+    QUnit.assert.dom(itemElement).hasAttribute('tabindex', '-1');
   });
 }
 
@@ -60,13 +60,13 @@ function assertMenuItemsAreCollaped(selector) {
 }
 
 function assertNoActiveMenuItem(menuSelector) {
-  QUnit.assert.dom(menuSelector).doesNotHaveAria("activedescendant");
+  QUnit.assert.dom(menuSelector).doesNotHaveAria('activedescendant');
 }
 
-module("Integration | Component | <Menu>", (hooks) => {
+module('Integration | Component | <Menu>', (hooks) => {
   setupRenderingTest(hooks);
 
-  test("it renders", async (assert) => {
+  test('it renders', async (assert) => {
     await render(hbs`
       <Menu data-test-menu as |menu|>
         <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -78,18 +78,18 @@ module("Integration | Component | <Menu>", (hooks) => {
       </Menu>
     `);
 
-    assert.dom("[data-test-menu]").isVisible();
+    assert.dom('[data-test-menu]').isVisible();
 
-    assert.dom("[data-test-menu-button]").hasText("Trigger");
+    assert.dom('[data-test-menu-button]').hasText('Trigger');
 
-    assertClosedMenuButton("[data-test-menu-button]");
+    assertClosedMenuButton('[data-test-menu-button]');
 
-    assertMenuItemsAreCollaped("[data-test-menu-items]");
+    assertMenuItemsAreCollaped('[data-test-menu-items]');
   });
 
-  module("Rendering", () => {
-    module("Menu", () => {
-      test("Menu yields an object", async (assert) => {
+  module('Rendering', () => {
+    module('Menu', () => {
+      test('Menu yields an object', async (assert) => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger {{if menu.isOpen "visible" "hidden" }}</menu.Button>
@@ -101,19 +101,19 @@ module("Integration | Component | <Menu>", (hooks) => {
           </Menu>
         `);
 
-        assert.dom("[data-test-menu-button]").hasText("Trigger hidden");
+        assert.dom('[data-test-menu-button]').hasText('Trigger hidden');
 
-        assertClosedMenuButton("[data-test-menu-button]");
+        assertClosedMenuButton('[data-test-menu-button]');
 
-        await click("[data-test-menu-button]");
+        await click('[data-test-menu-button]');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
-        assert.dom("[data-test-menu-button]").hasText("Trigger visible");
-        assert.dom("[data-test-menu-items]").isVisible();
+        assert.dom('[data-test-menu-button]').hasText('Trigger visible');
+        assert.dom('[data-test-menu-items]').isVisible();
       });
 
-      test("Item yields an object", async function (assert) {
+      test('Item yields an object', async function (assert) {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger {{if menu.isOpen "visible" "hidden" }}</menu.Button>
@@ -129,18 +129,18 @@ module("Integration | Component | <Menu>", (hooks) => {
           </Menu>
         `);
 
-        await click("[data-test-menu-button]");
+        await click('[data-test-menu-button]');
 
         assert
-          .dom("[data-test-menu-item")
-          .hasText("Item A [isActive:false] [isDisabled:false]");
+          .dom('[data-test-menu-item]')
+          .hasText('Item A [isActive:false] [isDisabled:false]');
       });
     });
   });
 
-  module("Keyboard interactions", function () {
-    module("`Enter` key", function () {
-      test("it should be possible to open the menu with Enter", async (assert) => {
+  module('Keyboard interactions', function () {
+    module('`Enter` key', function () {
+      test('it should be possible to open the menu with Enter', async (assert) => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -164,25 +164,25 @@ module("Integration | Component | <Menu>", (hooks) => {
           </Menu>
         `);
 
-        assertClosedMenuButton("[data-test-menu-button]");
+        assertClosedMenuButton('[data-test-menu-button]');
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
         assertMenuButtonLinkedWithMenuItems(
-          "[data-test-menu-button]",
-          "[data-test-menu-items]"
+          '[data-test-menu-button]',
+          '[data-test-menu-items]'
         );
 
-        assertMenuItems("[data-test-menu]", 3);
+        assertMenuItems('[data-test-menu]', 3);
 
         assert
-          .dom("[data-test-is-selected]")
-          .hasText("Item A", "The first item is selected");
+          .dom('[data-test-is-selected]')
+          .hasText('Item A', 'The first item is selected');
       });
 
-      test("it should have no active menu item when there are no menu items at all", async () => {
+      test('it should have no active menu item when there are no menu items at all', async () => {
         await render(hbs`
         <Menu data-test-menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -190,16 +190,16 @@ module("Integration | Component | <Menu>", (hooks) => {
         </Menu>
       `);
 
-        assertClosedMenuButton("[data-test-menu-button]");
+        assertClosedMenuButton('[data-test-menu-button]');
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
-        assertNoActiveMenuItem("[data-test-menu]");
+        assertNoActiveMenuItem('[data-test-menu]');
       });
 
-      test("it should focus the first non disabled menu item when opening with Enter", async (assert) => {
+      test('it should focus the first non disabled menu item when opening with Enter', async (assert) => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -223,16 +223,16 @@ module("Integration | Component | <Menu>", (hooks) => {
           </Menu>
         `);
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
         assert
-          .dom("[data-test-is-selected]")
-          .hasText("Item B", "The first non-disabled item is selected");
+          .dom('[data-test-is-selected]')
+          .hasText('Item B', 'The first non-disabled item is selected');
       });
 
-      test("it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)", async (assert) => {
+      test('it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)', async (assert) => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -256,16 +256,16 @@ module("Integration | Component | <Menu>", (hooks) => {
           </Menu>
         `);
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
         assert
-          .dom("[data-test-is-selected]")
-          .hasText("Item C", "The first non-disabled item is selected");
+          .dom('[data-test-is-selected]')
+          .hasText('Item C', 'The first non-disabled item is selected');
       });
 
-      test("it should have no active menu item upon Enter key press, when there are no non-disabled menu items", async function (assert) {
+      test('it should have no active menu item upon Enter key press, when there are no non-disabled menu items', async function (assert) {
         await render(hbs`
         <Menu data-test-menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -284,14 +284,14 @@ module("Integration | Component | <Menu>", (hooks) => {
         </Menu>
       `);
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
-        assert.dom("[data-test-is-selected]").doesNotExist();
+        assert.dom('[data-test-is-selected]').doesNotExist();
       });
 
-      test("it should be possible to close the menu with Enter when there is no active menuitem", async function () {
+      test('it should be possible to close the menu with Enter when there is no active menuitem', async function () {
         await render(hbs`
         <Menu data-test-menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -310,18 +310,18 @@ module("Integration | Component | <Menu>", (hooks) => {
         </Menu>
       `);
 
-        await click("[data-test-menu-button");
+        await click('[data-test-menu-button]');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertClosedMenuButton("[data-test-menu-button]");
+        assertClosedMenuButton('[data-test-menu-button]');
       });
 
-      test("it should be possible to close the menu with Enter and invoke the active menu item", async function (assert) {
+      test('it should be possible to close the menu with Enter and invoke the active menu item', async function (assert) {
         let itemClicked = 0;
-        this.set("onClick", (item) => (itemClicked = item.target));
+        this.set('onClick', (item) => (itemClicked = item.target));
 
         await render(hbs`
         <Menu data-test-menu as |menu|>
@@ -341,22 +341,22 @@ module("Integration | Component | <Menu>", (hooks) => {
         </Menu>
       `);
 
-        await click("[data-test-menu-button]");
+        await click('[data-test-menu-button]');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
-        await triggerEvent("[data-test-item-b]", "mouseover");
+        await triggerEvent('[data-test-item-b]', 'mouseover');
 
-        await triggerKeyEvent("[data-test-item-b]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-item-b]', 'keydown', 'Enter');
 
-        assert.dom(itemClicked).hasText("Item B");
+        assert.dom(itemClicked).hasText('Item B');
 
-        assertClosedMenuButton("[data-test-menu-button]");
+        assertClosedMenuButton('[data-test-menu-button]');
       });
 
-      test("it should be possible to use a button as a menu item and invoke it upon Enter", async function (assert) {
+      test('it should be possible to use a button as a menu item and invoke it upon Enter', async function (assert) {
         let itemClicked = 0;
-        this.set("onClick", (item) => (itemClicked = item.target));
+        this.set('onClick', (item) => (itemClicked = item.target));
 
         await render(hbs`
         <Menu data-test-menu as |menu|>
@@ -376,20 +376,20 @@ module("Integration | Component | <Menu>", (hooks) => {
         </Menu>
       `);
 
-        await triggerKeyEvent("[data-test-menu-button]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
 
-        assertOpenMenuButton("[data-test-menu-button]");
+        assertOpenMenuButton('[data-test-menu-button]');
 
-        assert.dom("[data-test-item-a]").hasTagName("a");
-        assert.dom("[data-test-item-b]").hasTagName("button");
+        assert.dom('[data-test-item-a]').hasTagName('a');
+        assert.dom('[data-test-item-b]').hasTagName('button');
 
-        await triggerEvent("[data-test-item-b]", "mouseover");
+        await triggerEvent('[data-test-item-b]', 'mouseover');
 
-        await triggerKeyEvent("[data-test-item-b]", "keydown", "Enter");
+        await triggerKeyEvent('[data-test-item-b]', 'keydown', 'Enter');
 
-        assert.dom(itemClicked).hasText("Item B");
+        assert.dom(itemClicked).hasText('Item B');
 
-        assertClosedMenuButton("[data-test-menu-button]");
+        assertClosedMenuButton('[data-test-menu-button]');
       });
     });
 

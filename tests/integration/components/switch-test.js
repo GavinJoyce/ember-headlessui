@@ -1,22 +1,22 @@
-import QUnit, { module, test } from "qunit";
-import { setupRenderingTest } from "ember-qunit";
-import { click, render, triggerKeyEvent } from "@ember/test-helpers";
-import { hbs } from "ember-cli-htmlbars";
+import QUnit, { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { click, render, triggerKeyEvent } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 
-function assertSwitchIsOn(selector = "[data-test-headlessui-switch]") {
-  QUnit.assert.dom(selector).hasAttribute("data-test-headlessui-switch-is-on");
+function assertSwitchIsOn(selector = '[data-test-headlessui-switch]') {
+  QUnit.assert.dom(selector).hasAttribute('data-test-headlessui-switch-is-on');
   QUnit.assert
     .dom(`${selector} [data-test-headlessui-switch-button]`)
-    .hasAttribute("aria-checked", "true");
+    .hasAttribute('aria-checked', 'true');
 }
 
-function assertSwitchIsOff(selector = "[data-test-headlessui-switch]") {
+function assertSwitchIsOff(selector = '[data-test-headlessui-switch]') {
   QUnit.assert
     .dom(selector)
-    .doesNotHaveAttribute("data-test-headlessui-switch-is-on");
+    .doesNotHaveAttribute('data-test-headlessui-switch-is-on');
   QUnit.assert
     .dom(`${selector} [data-test-headlessui-switch-button]`)
-    .hasAttribute("aria-checked", "false");
+    .hasAttribute('aria-checked', 'false');
 }
 
 const SwitchState = {
@@ -26,7 +26,7 @@ const SwitchState = {
 
 function assertSwitchState(
   options,
-  selector = "[data-test-headlessui-switch]"
+  selector = '[data-test-headlessui-switch]'
 ) {
   let assert = QUnit.assert;
   let buttonSelector = `${selector} [data-test-headlessui-switch-button]`;
@@ -35,8 +35,8 @@ function assertSwitchState(
   assert.dom(selector).exists(selector);
 
   assert.dom(buttonSelector).exists(selector);
-  assert.dom(buttonSelector).hasAttribute("role", "switch");
-  assert.dom(buttonSelector).hasAttribute("tabindex", "0");
+  assert.dom(buttonSelector).hasAttribute('role', 'switch');
+  assert.dom(buttonSelector).hasAttribute('tabindex', '0');
 
   if (options.buttonTagName) {
     assert.dom(buttonSelector).hasTagName(options.buttonTagName);
@@ -60,10 +60,10 @@ function assertSwitchState(
   }
 }
 
-module("Integration | Component | <Switch>", function (hooks) {
+module('Integration | Component | <Switch>', function (hooks) {
   setupRenderingTest(hooks);
 
-  test("it should be possible to render a Switch without crashing", async function () {
+  test('it should be possible to render a Switch without crashing', async function () {
     await render(hbs`
       <Switch @isOn={{false}} data-test-switch as |switch|>
         <switch.Button />
@@ -73,8 +73,8 @@ module("Integration | Component | <Switch>", function (hooks) {
     assertSwitchState({ state: SwitchState.Off });
   });
 
-  module("Rendering", function () {
-    test("it should be possible to render a Switch when @isOn={{true}}", async function (assert) {
+  module('Rendering', function () {
+    test('it should be possible to render a Switch when @isOn={{true}}', async function (assert) {
       await render(hbs`
         <Switch @isOn={{true}} data-test-switch as |switch|>
           <switch.Label>{{if switch.isOn "On" "Off"}}</switch.Label>
@@ -84,13 +84,13 @@ module("Integration | Component | <Switch>", function (hooks) {
 
       assertSwitchState({
         state: SwitchState.On,
-        text: "On",
-        buttonTagName: "div",
+        text: 'On',
+        buttonTagName: 'div',
       });
-      assert.dom("[data-test-switch]").hasTagName("div");
+      assert.dom('[data-test-switch]').hasTagName('div');
     });
 
-    test("it should be possible to render a Switch when @isOn={{false}}", async function () {
+    test('it should be possible to render a Switch when @isOn={{false}}', async function () {
       await render(hbs`
         <Switch @isOn={{false}} data-test-switch as |switch|>
           <switch.Label>{{if switch.isOn "On" "Off"}}</switch.Label>
@@ -100,12 +100,12 @@ module("Integration | Component | <Switch>", function (hooks) {
 
       assertSwitchState({
         state: SwitchState.Off,
-        text: "Off",
-        buttonTagName: "div",
+        text: 'Off',
+        buttonTagName: 'div',
       });
     });
 
-    test("the button tag name can be customised", async function () {
+    test('the button tag name can be customised', async function () {
       await render(hbs`
         <Switch @isOn={{false}} data-test-switch as |switch|>
           <switch.Label>{{if switch.isOn "On" "Off"}}</switch.Label>
@@ -115,14 +115,14 @@ module("Integration | Component | <Switch>", function (hooks) {
 
       assertSwitchState({
         state: SwitchState.Off,
-        text: "Off",
-        buttonTagName: "span",
+        text: 'Off',
+        buttonTagName: 'span',
       });
     });
   });
 
-  module("Render composition", function () {
-    test("it should be possible to render a Switch, switch.Label and switch.Button", async function () {
+  module('Render composition', function () {
+    test('it should be possible to render a Switch, switch.Label and switch.Button', async function () {
       await render(hbs`
         <Switch @isOn={{false}} data-test-switch as |switch|>
           <switch.Label>Enable notifications</switch.Label>
@@ -132,18 +132,18 @@ module("Integration | Component | <Switch>", function (hooks) {
 
       assertSwitchState({
         state: SwitchState.Off,
-        labelText: "Enable notifications",
+        labelText: 'Enable notifications',
       });
     });
   });
 
-  module("Keyboard interactions", function () {
-    module("`Space` key", function () {
-      test("it should be possible to toggle the Switch with Space", async function () {
-        this.set("isEnabled", false);
+  module('Keyboard interactions', function () {
+    module('`Space` key', function () {
+      test('it should be possible to toggle the Switch with Space', async function () {
+        this.set('isEnabled', false);
 
-        this.set("onUpdate", (value) => {
-          this.set("isEnabled", value);
+        this.set('onUpdate', (value) => {
+          this.set('isEnabled', value);
         });
 
         await render(hbs`
@@ -155,23 +155,23 @@ module("Integration | Component | <Switch>", function (hooks) {
 
         assertSwitchState({ state: SwitchState.Off });
 
-        await triggerKeyEvent("[data-test-button]", "keyup", " ");
+        await triggerKeyEvent('[data-test-button]', 'keyup', ' ');
 
         assertSwitchState({ state: SwitchState.On });
 
-        await triggerKeyEvent("[data-test-button]", "keyup", " ");
+        await triggerKeyEvent('[data-test-button]', 'keyup', ' ');
 
         assertSwitchState({ state: SwitchState.Off });
       });
     });
   });
 
-  module("Keyboard interactions", function () {
-    test("it should be possible to toggle the Switch with a click", async function () {
-      this.set("isEnabled", false);
+  module('Keyboard interactions', function () {
+    test('it should be possible to toggle the Switch with a click', async function () {
+      this.set('isEnabled', false);
 
-      this.set("onUpdate", (value) => {
-        this.set("isEnabled", value);
+      this.set('onUpdate', (value) => {
+        this.set('isEnabled', value);
       });
 
       await render(hbs`
@@ -183,20 +183,20 @@ module("Integration | Component | <Switch>", function (hooks) {
 
       assertSwitchState({ state: SwitchState.Off });
 
-      await click("[data-test-button]");
+      await click('[data-test-button]');
 
       assertSwitchState({ state: SwitchState.On });
 
-      await click("[data-test-button]");
+      await click('[data-test-button]');
 
       assertSwitchState({ state: SwitchState.Off });
     });
 
-    test("it should be possible to toggle the Switch with a click on the Label", async function () {
-      this.set("isEnabled", false);
+    test('it should be possible to toggle the Switch with a click on the Label', async function () {
+      this.set('isEnabled', false);
 
-      this.set("onUpdate", (value) => {
-        this.set("isEnabled", value);
+      this.set('onUpdate', (value) => {
+        this.set('isEnabled', value);
       });
 
       await render(hbs`
@@ -208,11 +208,11 @@ module("Integration | Component | <Switch>", function (hooks) {
 
       assertSwitchState({ state: SwitchState.Off });
 
-      await click("[data-test-label]");
+      await click('[data-test-label]');
 
       assertSwitchState({ state: SwitchState.On });
 
-      await click("[data-test-label]");
+      await click('[data-test-label]');
 
       assertSwitchState({ state: SwitchState.Off });
     });

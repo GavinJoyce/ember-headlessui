@@ -1,1 +1,1 @@
-export { default } from "ember-headlessui/components/menu/item";
+export { default } from 'ember-headlessui/components/menu/item';

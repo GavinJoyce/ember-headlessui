@@ -1,8 +1,8 @@
-import Component from "@glimmer/component";
-import { tracked } from "@glimmer/tracking";
-import { action } from "@ember/object";
-import { guidFor } from "@ember/object/internals";
-import { next } from "@ember/runloop";
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { next } from '@ember/runloop';
 
 export default class Menu extends Component {
   guid = `${guidFor(this)}-tailwindui-menu`;
