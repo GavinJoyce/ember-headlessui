@@ -1,1 +1,1 @@
-export { default } from "ember-headlessui/components/switch";
+export { default } from 'ember-headlessui/components/switch';

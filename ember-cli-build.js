@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-const EmberAddon = require("ember-cli/lib/broccoli/ember-addon");
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     postcssOptions: {
       compile: {
         plugins: [
-          require("tailwindcss")("./tests/dummy/config/tailwind.config.js"),
+          require('tailwindcss')('./tests/dummy/config/tailwind.config.js'),
         ],
       },
     },
@@ -20,5 +20,6 @@ module.exports = function (defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  return app.toTree();
+  const { maybeEmbroider } = require('@embroider/test-setup');
+  return maybeEmbroider(app);
 };

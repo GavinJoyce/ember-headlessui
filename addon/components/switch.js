@@ -1,6 +1,6 @@
-import Component from "@glimmer/component";
-import { action } from "@ember/object";
-import { guidFor } from "@ember/object/internals";
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 
 export default class Switch extends Component {
   guid = `${guidFor(this)}-tailwindui-switch`;
@@ -23,7 +23,7 @@ export default class Switch extends Component {
   @action
   onButtonKeyUp(event) {
     event.preventDefault();
-    if (event.key === " ") {
+    if (event.key === ' ') {
       event.preventDefault();
       this._toggle();
     }
