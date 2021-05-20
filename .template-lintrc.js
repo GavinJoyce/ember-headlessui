@@ -2,4 +2,8 @@
 
 module.exports = {
   extends: 'octane',
+
+  rules: {
+    'no-down-event-binding': 'warn',
+  },
 };
