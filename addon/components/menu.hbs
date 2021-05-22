@@ -1,6 +1,7 @@
 <div
   id={{this.guid}}
   {{on 'pointerdown' this.onPointerDown}}
+  {{click-outside this.close}}
   ...attributes
 >
   {{yield (hash

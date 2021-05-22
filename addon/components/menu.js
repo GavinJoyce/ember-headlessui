@@ -30,10 +30,12 @@ export default class Menu extends Component {
 
   @action
   close() {
-    this.isOpen = false;
-    next(() => {
-      document.getElementById(this.buttonGuid).focus();
-    });
+    if (this.isOpen) {
+      this.isOpen = false;
+      next(() => {
+        document.getElementById(this.buttonGuid).focus();
+      });
+    }
   }
 
   @action
