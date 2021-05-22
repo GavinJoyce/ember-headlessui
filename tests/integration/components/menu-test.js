@@ -13,6 +13,7 @@ import {
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { Keys } from 'ember-headlessui/utils/keyboard';
 
 function assertClosedMenuButton(selector) {
   QUnit.assert.dom(selector).hasAttribute('id');
@@ -166,7 +167,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertClosedMenuButton('[data-test-menu-button]');
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertOpenMenuButton('[data-test-menu-button]');
 
@@ -192,7 +193,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertClosedMenuButton('[data-test-menu-button]');
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertOpenMenuButton('[data-test-menu-button]');
 
@@ -223,7 +224,7 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertOpenMenuButton('[data-test-menu-button]');
 
@@ -256,7 +257,7 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertOpenMenuButton('[data-test-menu-button]');
 
@@ -284,7 +285,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertOpenMenuButton('[data-test-menu-button]');
 
@@ -314,7 +315,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertOpenMenuButton('[data-test-menu-button]');
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertClosedMenuButton('[data-test-menu-button]');
       });
@@ -347,7 +348,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         await triggerEvent('[data-test-item-b]', 'mouseover');
 
-        await triggerKeyEvent('[data-test-item-b]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-item-b]', 'keydown', Keys.Enter);
 
         assert.dom(itemClicked).hasText('Item B');
 
@@ -376,7 +377,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
-        await triggerKeyEvent('[data-test-menu-button]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
         assertOpenMenuButton('[data-test-menu-button]');
 
@@ -385,7 +386,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         await triggerEvent('[data-test-item-b]', 'mouseover');
 
-        await triggerKeyEvent('[data-test-item-b]', 'keydown', 'Enter');
+        await triggerKeyEvent('[data-test-item-b]', 'keydown', Keys.Enter);
 
         assert.dom(itemClicked).hasText('Item B');
 
@@ -393,14 +394,57 @@ module('Integration | Component | <Menu>', (hooks) => {
       });
     });
 
-    // TODO: '`Space` key'
-    // - it should be possible to open the menu with Space
-    // - it should have no active menu item when there are no menu items at all
-    // - it should focus the first non disabled menu item when opening with Space
-    // - it should focus the first non disabled menu item when opening with Space (jump over multiple disabled ones)
-    // - it should have no active menu item upon Space key press, when there are no non-disabled menu items
-    // - it should be possible to close the menu with Space when there is no active menuitem
-    // - it should be possible to close the menu with Space and invoke the active menu item
+    module('`Space` key', function () {
+      test('it should be possible to open the menu with Space', async (assert) => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-is-selected={{item.isActive}}>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element data-test-is-selected={{item.isActive}}>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element data-test-is-selected={{item.isActive}}>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
+
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        assertMenuButtonLinkedWithMenuItems(
+          '[data-test-menu-button]',
+          '[data-test-menu-items]'
+        );
+
+        assertMenuItems('[data-test-menu]', 3);
+
+        assert
+          .dom('[data-test-is-selected]')
+          .hasText('Item A', 'The first item is selected');
+      });
+
+      // - it should be possible to open the menu with Space
+      // - it should have no active menu item when there are no menu items at all
+      // - it should focus the first non disabled menu item when opening with Space
+      // - it should focus the first non disabled menu item when opening with Space (jump over multiple disabled ones)
+      // - it should have no active menu item upon Space key press, when there are no non-disabled menu items
+      // - it should be possible to close the menu with Space when there is no active menuitem
+      // - it should be possible to close the menu with Space and invoke the active menu item
+    });
 
     // TODO: '`Escape` key'
     // - it should be possible to open the menu with Escape
@@ -453,26 +497,88 @@ module('Integration | Component | <Menu>', (hooks) => {
     // - it should be possible to type words with spaces
     // - it should not be possible to search for a disabled item
 
-    // TODO: Mouse interactions
-    // - it should be possible to open a menu on click
-    // - it should be possible to close a menu on click
-    // - it should focus the menu when you try to focus the button again (when the menu is already open)
-    // - it should be a no-op when we click outside of a closed menu
-    // - it should be possible to click outside of the menu which should close the menu
-    // - it should be possible to click outside of the menu which should close the menu (even if we press the menu button)
-    // - it should be possible to click outside of the menu on another menu button which should close the current menu and open the new menu
-    // - it should be possible to hover an item and make it active
-    // - it should make a menu item active when you move the mouse over it
-    // - it should be a no-op when we move the mouse and the menu item is already active
-    // - it should be a no-op when we move the mouse and the menu item is disabled
-    // - it should not be possible to hover an item that is disabled
-    // - it should be possible to mouse leave an item and make it inactive
-    // - it should be possible to mouse leave a disabled item and be a no-op
-    // - it should be possible to click a menu item, which closes the menu
-    // - it should be possible to click a menu item, which closes the menu and invokes the @click handler
-    // - it should be possible to click a disabled menu item, which is a no-op
-    // - it should be possible focus a menu item, so that it becomes active
-    // - it should not be possible to focus a menu item which is disabled
-    // - it should not be possible to activate a disabled item
+    module('Mouse interactions', function () {
+      test('it should be possible to open and close a menu on click', async () => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>Item A</item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>Item B</item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>Item C</item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        await click('[data-test-menu-button]');
+
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        assertMenuButtonLinkedWithMenuItems(
+          '[data-test-menu-button]',
+          '[data-test-menu-items]'
+        );
+
+        assertMenuItems('[data-test-menu]', 3);
+
+        await click('[data-test-menu-button]');
+
+        assertClosedMenuButton('[data-test-menu-button]');
+      });
+
+      // - it should focus the menu when you try to focus the button again (when the menu is already open)
+      // - it should be a no-op when we click outside of a closed menu
+      test('it should be possible to click outside of the menu which should close the menu', async (assert) => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>Item A</item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>Item B</item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>Item C</item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        await click('[data-test-menu-button]');
+
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        await click(document.body);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        assert.dom('[data-test-menu-button]').isFocused();
+      });
+      // - it should be possible to click outside of the menu which should close the menu (even if we press the menu button)
+      // - it should be possible to click outside of the menu on another menu button which should close the current menu and open the new menu
+      // - it should be possible to hover an item and make it active
+      // - it should make a menu item active when you move the mouse over it
+      // - it should be a no-op when we move the mouse and the menu item is already active
+      // - it should be a no-op when we move the mouse and the menu item is disabled
+      // - it should not be possible to hover an item that is disabled
+      // - it should be possible to mouse leave an item and make it inactive
+      // - it should be possible to mouse leave a disabled item and be a no-op
+      // - it should be possible to click a menu item, which closes the menu
+      // - it should be possible to click a menu item, which closes the menu and invokes the @click handler
+      // - it should be possible to click a disabled menu item, which is a no-op
+      // - it should be possible focus a menu item, so that it becomes active
+      // - it should not be possible to focus a menu item which is disabled
+      // - it should not be possible to activate a disabled item
+    });
   });
 });
