@@ -17,4 +17,9 @@ Router.map(function () {
   this.route('switch', function () {
     this.route('switch-basic');
   });
+
+  this.route('dialog', function () {
+    this.route('dialog-modal');
+    this.route('dialog-slide-over');
+  });
 });
