@@ -1,0 +1,5 @@
+{{#let (element this.tagName) as |Tag|}}
+  <Tag id={{@guid}} {{this.ariaDescribedby @dialogGuid}} ...attributes>
+    {{yield (hash isOpen=@isOpen)}}
+  </Tag>
+{{/let}}
