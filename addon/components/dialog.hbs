@@ -1,0 +1,43 @@
+{{#if @isOpen}}
+  {{#let (element this.tagName) as |Tag|}}
+    {{#in-element this.$portalRoot insertBefore=null}}
+      <Tag
+        id={{this.guid}}
+
+        role="dialog"
+        aria-modal="true"
+
+        {{focus-trap}}
+        {{click-outside @onClose}}
+        {{this.handleEscapeKey @isOpen @onClose}}
+        {{on "click" this.stopPropagation}}
+
+        ...attributes
+      >
+        {{yield (hash
+          isOpen=@isOpen
+          onClose=@onClose
+          Overlay=(
+            component "dialog/-overlay"
+            guid=this.overlayGuid
+            dialogGuid=this.guid
+            isOpen=@isOpen
+            onClose=@onClose
+          )
+          Title=(
+            component "dialog/-title"
+            guid=this.titleGuid
+            dialogGuid=this.guid
+            isOpen=@isOpen
+          )
+          Description=(
+            component "dialog/-description"
+            guid=this.descriptionGuid
+            dialogGuid=this.guid
+            isOpen=@isOpen
+          )
+        )}}
+      </Tag>
+    {{/in-element}}
+  {{/let}}
+{{/if}}
