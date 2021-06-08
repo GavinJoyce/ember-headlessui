@@ -29,6 +29,7 @@
     "@ember/render-modifiers": "^1.0.2",
     "ember-cli-babel": "^7.26.3",
     "ember-cli-htmlbars": "^5.7.1",
+    "ember-click-outside-modifier": "^2.0.0",
     "ember-element-helper": "^0.3.1",
     "ember-focus-trap": "^0.7.0",
     "ember-truth-helpers": "^3.0.0"

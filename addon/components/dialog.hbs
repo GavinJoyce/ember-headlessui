@@ -8,7 +8,7 @@
         aria-modal="true"
 
         {{focus-trap}}
-        {{click-outside @onClose}}
+        {{click-outside @onClose event='mouseup'}}
         {{this.handleEscapeKey @isOpen @onClose}}
         {{on "click" this.stopPropagation}}
 
