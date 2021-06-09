@@ -1,16 +1,24 @@
 import Component from '@glimmer/component';
 import { typeOf } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
+import { getOwnConfig } from '@embroider/macros';
 
 import { modifier } from 'ember-modifier';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
+function getPortalRoot() {
+  const { rootElement } = getOwnConfig();
+
+  // If we looked up a `rootElement` config at build-time, use that; otherwise use the body
+  return rootElement ? document.querySelector(rootElement) : document.body;
+}
+
 export default class DialogComponent extends Component {
   DEFAULT_TAG_NAME = 'div';
 
   guid = `${guidFor(this)}-headlessui-dialog`;
-  $portalRoot = document.body;
+  $portalRoot = getPortalRoot();
 
   handleEscapeKey = modifier((_element, [isOpen, onClose]) => {
     let handler = (event) => {
