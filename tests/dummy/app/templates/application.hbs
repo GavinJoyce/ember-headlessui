@@ -3,9 +3,9 @@
     <header
       class="relative z-10 flex items-center justify-between flex-shrink-0 px-4 py-4 bg-gray-700 border-b border-gray-200 sm:px-6 lg:px-8"
     >
-      <a href="/">
+      <LinkTo @route="index">
         <Logo class="h-6" />
-      </a>
+      </LinkTo>
     </header>
     <main class="flex-1 overflow-auto bg-gray-50">
       {{outlet}}
