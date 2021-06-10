@@ -85,7 +85,7 @@ module('Integration | Component | <Switch>', function (hooks) {
       assertSwitchState({
         state: SwitchState.On,
         text: 'On',
-        buttonTagName: 'div',
+        buttonTagName: 'button',
       });
       assert.dom('[data-test-switch]').hasTagName('div');
     });
@@ -101,7 +101,7 @@ module('Integration | Component | <Switch>', function (hooks) {
       assertSwitchState({
         state: SwitchState.Off,
         text: 'Off',
-        buttonTagName: 'div',
+        buttonTagName: 'button',
       });
     });
 
