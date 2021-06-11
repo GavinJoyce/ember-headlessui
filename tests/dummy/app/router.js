@@ -16,6 +16,7 @@ Router.map(function () {
 
   this.route('switch', function () {
     this.route('switch-basic');
+    this.route('switch-checkbox');
   });
 
   this.route('dialog', function () {
