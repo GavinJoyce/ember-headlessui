@@ -88,12 +88,4 @@ export default class DialogComponent extends Component {
   get descriptionGuid() {
     return `${this.guid}-description`;
   }
-
-  get $element() {
-    return document.getElementById(this.guid);
-  }
-
-  stopPropagation(event) {
-    event.stopPropagation();
-  }
 }
