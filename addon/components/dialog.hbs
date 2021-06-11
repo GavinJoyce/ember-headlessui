@@ -7,7 +7,7 @@
         role="dialog"
         aria-modal="true"
 
-        {{focus-trap}}
+        {{focus-trap focusTrapOptions=(hash initialFocus=@initialFocus)}}
         {{click-outside @onClose event='mouseup'}}
         {{this.handleEscapeKey @isOpen @onClose}}
 

@@ -38,7 +38,7 @@ function assertActiveElement(element) {
       return;
     }
 
-    Qunit.assert.equal(element, document.activeElement);
+    Qunit.assert.equal(document.activeElement, element);
   } catch (err) {
     Error.captureStackTrace(err, assertActiveElement);
     throw err;

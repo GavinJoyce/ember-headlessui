@@ -499,4 +499,28 @@ module('Integration | Component | <Dialog>', function (hooks) {
       async function () {}
     );
   });
+
+  module('InitialFocus', function () {
+    test('it should focus requested element', async function (assert) {
+      this.set('isOpen', false);
+
+      await render(hbs`
+        <button id='trigger' type="button" {{on "click" (set this.isOpen true)}}>
+          Trigger
+        </button>
+        <Dialog
+          @isOpen={{this.isOpen}}
+          @onClose={{set this.isOpen false}}
+          @initialFocus='[data-test-focused-button]'
+        >
+          <input type="text" value="first">
+          <button data-test-focused-button type="button">focused</button>
+        </Dialog>
+      `);
+      await click('#trigger');
+      await assert.waitFor(() => {
+        assertActiveElement(getByText('focused'));
+      });
+    });
+  });
 });
