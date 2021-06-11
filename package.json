@@ -78,6 +78,7 @@
     "prettier": "^2.2.1",
     "qunit": "^2.14.1",
     "qunit-dom": "^1.6.0",
+    "qunit-wait-for": "^2.0.1",
     "tailwindcss": "^1.8.10"
   },
   "engines": {
