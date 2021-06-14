@@ -23,7 +23,8 @@
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each"
+    "test:ember-compatibility": "ember try:each",
+    "release": "dotenv release-it --"
   },
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
@@ -44,6 +45,7 @@
     "@tailwindcss/ui": "^0.6.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
+    "dotenv-cli": "^4.0.0",
     "ember-auto-import": "^1.11.2",
     "ember-cli": "~3.26.1",
     "ember-cli-dependency-checker": "^3.2.0",
@@ -79,6 +81,8 @@
     "qunit": "^2.14.1",
     "qunit-dom": "^1.6.0",
     "qunit-wait-for": "^2.0.1",
+    "release-it": "^14.8.0",
+    "release-it-lerna-changelog": "^3.1.0",
     "tailwindcss": "^1.8.10"
   },
   "engines": {
