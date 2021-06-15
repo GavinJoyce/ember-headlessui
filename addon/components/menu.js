@@ -33,7 +33,7 @@ export default class Menu extends Component {
     if (this.isOpen) {
       this.isOpen = false;
       next(() => {
-        document.getElementById(this.buttonGuid).focus();
+        this.buttonElement && this.buttonElement.focus();
       });
     }
   }
