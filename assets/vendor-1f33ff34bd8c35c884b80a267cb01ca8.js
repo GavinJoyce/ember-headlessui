@@ -4417,7 +4417,7 @@ function o(){var e
 w(this,o)
 for(var t=arguments.length,n=new Array(t),r=0;r<t;r++)n[r]=arguments[r]
 return P(k(e=i.call.apply(i,[this].concat(n))),"guid","".concat(Ember.guidFor(k(e)),"-tailwindui-menu")),_(k(e),"isOpen",g,k(e)),_(k(e),"items",y,k(e)),_(k(e),"activeItem",b,k(e)),e}return t=o,(n=[{key:"activeItemIndex",get:function(){return this.items.indexOf(this.activeItem)}},{key:"toggle",value:function(){this.isOpen?this.close():this.open()}},{key:"open",value:function(){this.isOpen=!0}},{key:"close",value:function(){var e=this
-this.isOpen&&(this.isOpen=!1,Ember.run.next((function(){document.getElementById(e.buttonGuid).focus()})))}},{key:"goToFirstItem",value:function(){var e=this.items.find((function(e){return e.isEnabled}))
+this.isOpen&&(this.isOpen=!1,Ember.run.next((function(){e.buttonElement&&e.buttonElement.focus()})))}},{key:"goToFirstItem",value:function(){var e=this.items.find((function(e){return e.isEnabled}))
 this._setActiveItem(e)}},{key:"goToLastItem",value:function(){var e=this.items.slice().reverse().find((function(e){return e.isEnabled}))
 this._setActiveItem(e)}},{key:"goToPreviousItem",value:function(){var e=this,t=this.items.slice().reverse().find((function(t,n){return!(-1!==e.activeItemIndex&&e.items.length-n-1>=e.activeItemIndex)&&t.isEnabled}))
 this._setActiveItem(t)}},{key:"goToNextItem",value:function(){var e=this,t=this.items.find((function(t,n){return!(n<=e.activeItemIndex)&&t.isEnabled}))
