@@ -93,5 +93,8 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
