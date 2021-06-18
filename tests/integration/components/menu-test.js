@@ -564,6 +564,30 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assert.dom('[data-test-menu-button]').isFocused();
       });
+
+      test('it should not focus button when does not exist', async function (assert) {
+        this.set('isShowButton', true);
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            {{#if this.isShowButton}}
+              <menu.Button data-test-menu-button>Trigger</menu.Button>
+            {{/if}}
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>Item A</item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        await click('[data-test-menu-button]');
+
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        this.set('isShowButton', false);
+        await click(document.body);
+        assert.dom('[data-test-menu-button]').doesNotExist();
+      });
       // - it should be possible to click outside of the menu which should close the menu (even if we press the menu button)
       // - it should be possible to click outside of the menu on another menu button which should close the current menu and open the new menu
       // - it should be possible to hover an item and make it active
