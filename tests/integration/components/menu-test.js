@@ -15,6 +15,14 @@ import {
 import { hbs } from 'ember-cli-htmlbars';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
+function getMenu() {
+  return find('[role="menu"]');
+}
+
+function getMenuItems() {
+  return Array.from(findAll('[role="menuitem"]'));
+}
+
 function assertClosedMenuButton(selector) {
   QUnit.assert.dom(selector).hasAttribute('id');
   QUnit.assert.dom(selector).hasAttribute('aria-haspopup');
@@ -43,6 +51,15 @@ function assertMenuButtonLinkedWithMenuItems(
     .hasAria('labelledby', menuButtonElement.id);
 }
 
+function assertMenuLinkedWithMenuItem(item, menu = getMenu()) {
+  const itemElement = find(item);
+
+  // Ensure link between menu & menu item is correct
+  QUnit.assert
+    .dom(menu)
+    .hasAria('activedescendant', itemElement.getAttribute('id'));
+}
+
 function assertMenuItems(menuSelector, expectedCount) {
   let itemsSelector = `${menuSelector} [role="menuitem"]`;
   QUnit.assert.dom(itemsSelector).exists({ count: expectedCount });
@@ -60,7 +77,7 @@ function assertMenuItemsAreCollaped(selector) {
   QUnit.assert.dom(selector).isNotVisible();
 }
 
-function assertNoActiveMenuItem(menuSelector) {
+function assertNoActiveMenuItem(menuSelector = getMenu()) {
   QUnit.assert.dom(menuSelector).doesNotHaveAria('activedescendant');
 }
 
@@ -155,23 +172,23 @@ module('Integration | Component | <Menu>', (hooks) => {
 
   module('Keyboard interactions', function () {
     module('`Enter` key', function () {
-      test('it should be possible to open the menu with Enter', async (assert) => {
+      test('it should be possible to open the menu with Enter', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item A
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item B
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item C
                 </item.Element>
               </items.Item>
@@ -192,9 +209,9 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertMenuItems('[data-test-menu]', 3);
 
-        assert
-          .dom('[data-test-is-selected]')
-          .hasText('Item A', 'The first item is selected');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[0]);
       });
 
       test('it should have no active menu item when there are no menu items at all', async () => {
@@ -214,23 +231,23 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertNoActiveMenuItem('[data-test-menu]');
       });
 
-      test('it should focus the first non disabled menu item when opening with Enter', async (assert) => {
+      test('it should focus the first non disabled menu item when opening with Enter', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item @isDisabled={{true}} as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item A
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item B
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item C
                 </item.Element>
               </items.Item>
@@ -242,28 +259,28 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertOpenMenuButton('[data-test-menu-button]');
 
-        assert
-          .dom('[data-test-is-selected]')
-          .hasText('Item B', 'The first non-disabled item is selected');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[1]);
       });
 
-      test('it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)', async (assert) => {
+      test('it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item @isDisabled={{true}} as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item A
                 </item.Element>
               </items.Item>
               <items.Item @isDisabled={{true}} as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item B
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item C
                 </item.Element>
               </items.Item>
@@ -275,23 +292,23 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertOpenMenuButton('[data-test-menu-button]');
 
-        assert
-          .dom('[data-test-is-selected]')
-          .hasText('Item C', 'The first non-disabled item is selected');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[2]);
       });
 
-      test('it should have no active menu item upon Enter key press, when there are no non-disabled menu items', async function (assert) {
+      test('it should have no active menu item upon Enter key press, when there are no non-disabled menu items', async function () {
         await render(hbs`
         <Menu data-test-menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
-              <item.Element data-test-is-selected={{item.isActive}}>
+              <item.Element>
                 Item A
               </item.Element>
             </items.Item>
             <items.Item @isDisabled={{true}} as |item|>
-              <item.Element data-test-is-selected={{item.isActive}}>
+              <item.Element>
                 Item B
               </item.Element>
             </items.Item>
@@ -303,7 +320,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertOpenMenuButton('[data-test-menu-button]');
 
-        assert.dom('[data-test-is-selected]').doesNotExist();
+        assertNoActiveMenuItem();
       });
 
       test('it should be possible to close the menu with Enter when there is no active menuitem', async function () {
@@ -312,12 +329,12 @@ module('Integration | Component | <Menu>', (hooks) => {
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
-              <item.Element data-test-is-selected={{item.isActive}}>
+              <item.Element>
                 Item A
               </item.Element>
             </items.Item>
             <items.Item @isDisabled={{true}} as |item|>
-              <item.Element data-test-is-selected={{item.isActive}}>
+              <item.Element>
                 Item B
               </item.Element>
             </items.Item>
@@ -409,23 +426,23 @@ module('Integration | Component | <Menu>', (hooks) => {
     });
 
     module('`Space` key', function () {
-      test('it should be possible to open the menu with Space', async (assert) => {
+      test('it should be possible to open the menu with Space', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item A
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item B
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-is-selected={{item.isActive}}>
+                <item.Element>
                   Item C
                 </item.Element>
               </items.Item>
@@ -446,9 +463,9 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertMenuItems('[data-test-menu]', 3);
 
-        assert
-          .dom('[data-test-is-selected]')
-          .hasText('Item A', 'The first item is selected');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[0]);
       });
 
       // - it should be possible to open the menu with Space
@@ -506,18 +523,18 @@ module('Integration | Component | <Menu>', (hooks) => {
     // - it should have no active menu item upon PageUp key press, when there are no non-disabled menu items
 
     module('`Any` key aka search', function () {
-      test('it should be possible to type a full word that has a perfect match', async (assert) => {
+      test('it should be possible to type a full word that has a perfect match', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
-                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                <item.Element>
                   alice
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                <item.Element>
                   bob
                 </item.Element>
               </items.Item>
@@ -528,21 +545,23 @@ module('Integration | Component | <Menu>', (hooks) => {
         await click('[data-test-menu-button]');
         await type('[data-test-menu-items]', 'bob');
 
-        assert.dom('[data-test-b]').hasAttribute('data-test-is-active');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[1]);
       });
 
-      test('it should be possible to type a partial of a word', async (assert) => {
+      test('it should be possible to type a partial of a word', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
-                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                <item.Element>
                   alice
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                <item.Element>
                   bob
                 </item.Element>
               </items.Item>
@@ -553,25 +572,27 @@ module('Integration | Component | <Menu>', (hooks) => {
         await click('[data-test-menu-button]');
         await type('[data-test-menu-items]', 'bo');
 
-        assert.dom('[data-test-b]').hasAttribute('data-test-is-active');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[1]);
 
         await type('[data-test-menu-items]', 'ali');
 
-        assert.dom('[data-test-a]').hasAttribute('data-test-is-active');
+        assertMenuLinkedWithMenuItem(items[0]);
       });
 
-      test('it should be possible to type words with spaces', async (assert) => {
+      test('it should be possible to type words with spaces', async () => {
         await render(hbs`
           <Menu data-test-menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
-                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                <item.Element>
                   value a
                 </item.Element>
               </items.Item>
               <items.Item as |item|>
-                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                <item.Element>
                   value b
                 </item.Element>
               </items.Item>
@@ -582,11 +603,13 @@ module('Integration | Component | <Menu>', (hooks) => {
         await click('[data-test-menu-button]');
         await type('[data-test-menu-items]', 'value b');
 
-        assert.dom('[data-test-b]').hasAttribute('data-test-is-active');
+        const items = getMenuItems();
+
+        assertMenuLinkedWithMenuItem(items[1]);
 
         await type('[data-test-menu-items]', 'value a');
 
-        assert.dom('[data-test-a]').hasAttribute('data-test-is-active');
+        assertMenuLinkedWithMenuItem(items[0]);
       });
 
       test('it should not be possible to search for a disabled item', async () => {
@@ -595,13 +618,13 @@ module('Integration | Component | <Menu>', (hooks) => {
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
-                <item.Element data-test-a data-test-is-active={{item.isActive}}>
-                  value a
+                <item.Element>
+                  alice
                 </item.Element>
               </items.Item>
               <items.Item @isDisabled={{true}} as |item|>
-                <item.Element data-test-b data-test-is-active={{item.isActive}}>
-                  value b
+                <item.Element>
+                  bob
                 </item.Element>
               </items.Item>
             </menu.Items>
@@ -609,7 +632,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         `);
 
         await click('[data-test-menu-button]');
-        await type('[data-test-menu-items]', 'value b');
+        await type('[data-test-menu-items]', 'bob');
 
         assertNoActiveMenuItem('[data-test-menu-items]');
       });
