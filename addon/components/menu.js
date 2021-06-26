@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
 import { next } from '@ember/runloop';
 
@@ -9,6 +10,7 @@ export default class Menu extends Component {
   @tracked isOpen = false;
   @tracked items = [];
   @tracked activeItem;
+  @tracked searchTerm = '';
 
   get activeItemIndex() {
     return this.items.indexOf(this.activeItem);
@@ -84,6 +86,25 @@ export default class Menu extends Component {
   @action
   goToItem(item) {
     this._setActiveItem(item);
+  }
+
+  @restartableTask
+  *searchTask(nextCharacter) {
+    this.searchTerm += nextCharacter.toLowerCase();
+
+    const searchResult = this.items.find((item) => {
+      const textValue = item.element.textContent.toLowerCase().trim();
+
+      return item.isEnabled && textValue.startsWith(this.searchTerm);
+    });
+
+    if (searchResult) {
+      this._setActiveItem(searchResult);
+    }
+
+    yield timeout(350);
+
+    this.searchTerm = '';
   }
 
   @action
