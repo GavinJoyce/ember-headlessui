@@ -1,15 +1,15 @@
-{{#let (element (or @tagName "a")) as |Tag|}}
+{{#let (element (or @tagName 'a')) as |Tag|}}
   <Tag
-    {{did-insert @registerItemElement}}
-    {{on "mouseover" @onMouseOver}}
-    {{on "click" @onClick}}
-    {{will-destroy @unregisterItemElement}}
     id={{@guid}}
     role='menuitem'
-    tabindex="-1"
+    tabindex='-1'
     disabled={{@isDisabled}}
     data-disabled={{@isDisabled}}
     ...attributes
+    {{did-insert @registerItemElement}}
+    {{on 'mouseover' @onMouseOver}}
+    {{on 'click' @onClick}}
+    {{will-destroy @unregisterItemElement}}
   >
     {{yield}}
   </Tag>
