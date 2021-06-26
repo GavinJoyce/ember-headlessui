@@ -1,21 +1,21 @@
-<div class="flex items-start justify-center w-screen h-full p-12 bg-gray-50">
+<div class='flex items-start justify-center w-screen h-full p-12 bg-gray-50'>
   <Switch
     @isOn={{this.isOn}}
     @onUpdate={{set this.isOn}}
-    class="flex items-center space-x-4"
+    class='flex items-center space-x-4'
     as |switch|
   >
     <switch.Button
-      class="
-        h-6 w-6 rounded border-2
-        {{if switch.isOn "border-indigo-700" "border-gray-300"}}
-      "
-      role="checkbox"
+      class='h-6 w-6 rounded border-2
+        {{if switch.isOn 'border-indigo-700' 'border-gray-300'}}
+        '
+      role='checkbox'
     >
-      <div class="
-        h-full w-full transition duration-200
-        {{if switch.isOn "bg-indigo-600" "bg-gray-200"}}
-      " />
+      <div
+        class='h-full w-full transition duration-200
+          {{if switch.isOn 'bg-indigo-600' 'bg-gray-200'}}
+          '
+      ></div>
     </switch.Button>
     <switch.Label>Enable notifications</switch.Label>
   </Switch>

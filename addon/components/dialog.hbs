@@ -3,39 +3,38 @@
     {{#in-element this.$portalRoot insertBefore=null}}
       <Tag
         id={{this.guid}}
-
-        role="dialog"
-        aria-modal="true"
-
+        role='dialog'
+        aria-modal='true'
+        ...attributes
         {{focus-trap focusTrapOptions=(hash initialFocus=@initialFocus)}}
         {{click-outside @onClose event='mouseup'}}
         {{this.handleEscapeKey @isOpen @onClose}}
-
-        ...attributes
       >
-        {{yield (hash
-          isOpen=@isOpen
-          onClose=@onClose
-          Overlay=(
-            component "dialog/-overlay"
-            guid=this.overlayGuid
-            dialogGuid=this.guid
+        {{yield
+          (hash
             isOpen=@isOpen
             onClose=@onClose
+            Overlay=(component
+              'dialog/-overlay'
+              guid=this.overlayGuid
+              dialogGuid=this.guid
+              isOpen=@isOpen
+              onClose=@onClose
+            )
+            Title=(component
+              'dialog/-title'
+              guid=this.titleGuid
+              dialogGuid=this.guid
+              isOpen=@isOpen
+            )
+            Description=(component
+              'dialog/-description'
+              guid=this.descriptionGuid
+              dialogGuid=this.guid
+              isOpen=@isOpen
+            )
           )
-          Title=(
-            component "dialog/-title"
-            guid=this.titleGuid
-            dialogGuid=this.guid
-            isOpen=@isOpen
-          )
-          Description=(
-            component "dialog/-description"
-            guid=this.descriptionGuid
-            dialogGuid=this.guid
-            isOpen=@isOpen
-          )
-        )}}
+        }}
       </Tag>
     {{/in-element}}
   {{/let}}

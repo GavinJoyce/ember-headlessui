@@ -1,5 +1,5 @@
 {{#let (element this.tagName) as |Tag|}}
-  <Tag id={{@guid}} {{this.ariaLabelledby @dialogGuid}} ...attributes>
+  <Tag id={{@guid}} ...attributes {{this.ariaLabelledby @dialogGuid}}>
     {{yield (hash isOpen=@isOpen)}}
   </Tag>
 {{/let}}

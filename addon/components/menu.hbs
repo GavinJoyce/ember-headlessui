@@ -1,39 +1,41 @@
 <div
   id={{this.guid}}
+  ...attributes
   {{on 'pointerdown' this.onPointerDown}}
   {{click-outside this.close event='mouseup'}}
-  ...attributes
 >
-  {{yield (hash
-    isOpen=this.isOpen
-    Button=(
-      component 'menu/button'
-      guid=this.buttonGuid
-      menuGuid=this.guid
-      itemsGuid=this.itemsGuid
+  {{yield
+    (hash
       isOpen=this.isOpen
-      onClick=this.toggle
-      openMenu=this.open
-      closeMenu=this.close
-      goToFirstItem=this.goToFirstItem
-      goToLastItem=this.goToLastItem
-      goToNextItem=this.goToNextItem
-      goToPreviousItem=this.goToPreviousItem
+      Button=(component
+        'menu/button'
+        guid=this.buttonGuid
+        menuGuid=this.guid
+        itemsGuid=this.itemsGuid
+        isOpen=this.isOpen
+        onClick=this.toggle
+        openMenu=this.open
+        closeMenu=this.close
+        goToFirstItem=this.goToFirstItem
+        goToLastItem=this.goToLastItem
+        goToNextItem=this.goToNextItem
+        goToPreviousItem=this.goToPreviousItem
+      )
+      Items=(component
+        'menu/items'
+        guid=this.itemsGuid
+        buttonGuid=this.buttonGuid
+        isOpen=this.isOpen
+        closeMenu=this.close
+        activeItem=this.activeItem
+        registerItem=this.registerItem
+        unregisterItem=this.unregisterItem
+        goToFirstItem=this.goToFirstItem
+        goToLastItem=this.goToLastItem
+        goToNextItem=this.goToNextItem
+        goToPreviousItem=this.goToPreviousItem
+        goToItem=this.goToItem
+      )
     )
-    Items=(
-      component 'menu/items'
-      guid=this.itemsGuid
-      buttonGuid=this.buttonGuid
-      isOpen=this.isOpen
-      closeMenu=this.close
-      activeItem=this.activeItem
-      registerItem=this.registerItem
-      unregisterItem=this.unregisterItem
-      goToFirstItem=this.goToFirstItem
-      goToLastItem=this.goToLastItem
-      goToNextItem=this.goToNextItem
-      goToPreviousItem=this.goToPreviousItem
-      goToItem=this.goToItem
-    )
-  )}}
+  }}
 </div>

@@ -1,5 +1,5 @@
 {{#let (element this.tagName) as |Tag|}}
-  <Tag id={{@guid}} role="button" {{on "click" this.handleClick}} ...attributes>
+  <Tag id={{@guid}} role='button' ...attributes {{on 'click' this.handleClick}}>
     {{yield (hash isOpen=@isOpen)}}
   </Tag>
 {{/let}}

@@ -1,14 +1,14 @@
-{{#let (element (or @tagName "button")) as |Tag|}}
+{{#let (element (or @tagName 'button')) as |Tag|}}
   <Tag
     id={{@guid}}
-    role="switch"
-    tabindex="0"
-    aria-checked="{{@isOn}}"
+    role='switch'
+    tabindex='0'
+    aria-checked='{{@isOn}}'
     aria-labelledby={{@labelGuid}}
-    {{on "click" @onClick}}
-    {{on "keyup" @onKeyUp}}
     ...attributes
     data-test-headlessui-switch-button
+    {{on 'click' @onClick}}
+    {{on 'keyup' @onKeyUp}}
   >
     {{yield}}
   </Tag>

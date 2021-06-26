@@ -3,20 +3,20 @@
   data-test-headlessui-switch
   data-test-headlessui-switch-is-on={{@isOn}}
 >
-  {{yield (hash
-    isOn=@isOn
-    Label=(
-      component 'switch/label'
-      guid=this.labelGuid
-      onClick=this.onLabelClick
-    )
-    Button=(
-      component 'switch/button'
-      guid=this.buttonGuid
-      labelGuid=this.labelGuid
+  {{yield
+    (hash
       isOn=@isOn
-      onClick=this.onButtonClick
-      onKeyUp=this.onButtonKeyUp
+      Label=(component
+        'switch/label' guid=this.labelGuid onClick=this.onLabelClick
+      )
+      Button=(component
+        'switch/button'
+        guid=this.buttonGuid
+        labelGuid=this.labelGuid
+        isOn=@isOn
+        onClick=this.onButtonClick
+        onKeyUp=this.onButtonKeyUp
+      )
     )
-  )}}
+  }}
 </div>
