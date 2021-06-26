@@ -16,6 +16,10 @@ export default class Items extends Component {
         return this.args.goToNextItem();
       case 'ArrowUp':
         return this.args.goToPreviousItem();
+      default:
+        if (event.key.length === 1) {
+          return this.args.search(event.key);
+        }
     }
   }
 }

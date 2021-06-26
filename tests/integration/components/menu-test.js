@@ -64,6 +64,20 @@ function assertNoActiveMenuItem(menuSelector) {
   QUnit.assert.dom(menuSelector).doesNotHaveAria('activedescendant');
 }
 
+async function type(selector, value) {
+  let finalKeyEventProcessing;
+
+  for (const char of value) {
+    finalKeyEventProcessing = triggerKeyEvent(
+      selector,
+      'keydown',
+      char.toUpperCase()
+    );
+  }
+
+  await finalKeyEventProcessing;
+}
+
 module('Integration | Component | <Menu>', (hooks) => {
   setupRenderingTest(hooks);
 
@@ -491,11 +505,115 @@ module('Integration | Component | <Menu>', (hooks) => {
     // - it should be possible to use the PageUp key to go to the last menu item if that is the only non-disabled menu item
     // - it should have no active menu item upon PageUp key press, when there are no non-disabled menu items
 
-    // TODO: 'Any` key aka search'
-    // - it should be possible to type a full word that has a perfect match
-    // - it should be possible to type a partial of a word
-    // - it should be possible to type words with spaces
-    // - it should not be possible to search for a disabled item
+    module('`Any` key aka search', function () {
+      test('it should be possible to type a full word that has a perfect match', async (assert) => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                  alice
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                  bob
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        await click('[data-test-menu-button]');
+        await type('[data-test-menu-items]', 'bob');
+
+        assert.dom('[data-test-b]').hasAttribute('data-test-is-active');
+      });
+
+      test('it should be possible to type a partial of a word', async (assert) => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                  alice
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                  bob
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        await click('[data-test-menu-button]');
+        await type('[data-test-menu-items]', 'bo');
+
+        assert.dom('[data-test-b]').hasAttribute('data-test-is-active');
+
+        await type('[data-test-menu-items]', 'ali');
+
+        assert.dom('[data-test-a]').hasAttribute('data-test-is-active');
+      });
+
+      test('it should be possible to type words with spaces', async (assert) => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                  value a
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                  value b
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        await click('[data-test-menu-button]');
+        await type('[data-test-menu-items]', 'value b');
+
+        assert.dom('[data-test-b]').hasAttribute('data-test-is-active');
+
+        await type('[data-test-menu-items]', 'value a');
+
+        assert.dom('[data-test-a]').hasAttribute('data-test-is-active');
+      });
+
+      test('it should not be possible to search for a disabled item', async () => {
+        await render(hbs`
+          <Menu data-test-menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-a data-test-is-active={{item.isActive}}>
+                  value a
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element data-test-b data-test-is-active={{item.isActive}}>
+                  value b
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        await click('[data-test-menu-button]');
+        await type('[data-test-menu-items]', 'value b');
+
+        assertNoActiveMenuItem('[data-test-menu-items]');
+      });
+    });
 
     module('Mouse interactions', function () {
       test('it should be possible to open and close a menu on click', async () => {
