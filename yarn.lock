@@ -5788,6 +5788,13 @@ ember-source@~3.26.1:
     semver "^7.3.4"
     silent-error "^1.1.1"
 
+ember-template-lint-plugin-prettier@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-template-lint-plugin-prettier/-/ember-template-lint-plugin-prettier-2.0.1.tgz#38889c8094309b63fd1bc0cbe1033023b2a01bc8"
+  integrity sha512-MPlyq1lNlL7U7EamXbmpjIUjHVQUARwmR+TJEmWZcf8lq/ExnV6Jyk3uvmrEXKOfsQS6egpoNgs3wqfh8qAP6Q==
+  dependencies:
+    prettier-linter-helpers "^1.0.0"
+
 ember-template-lint@^3.2.0:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-3.4.2.tgz#d9480957b576b2b7ed02b4bf6bdb7c4b80243581"
