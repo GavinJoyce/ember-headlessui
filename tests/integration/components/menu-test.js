@@ -60,19 +60,6 @@ function assertMenuLinkedWithMenuItem(item, menu = getMenu()) {
     .hasAria('activedescendant', itemElement.getAttribute('id'));
 }
 
-function assertMenuItems(menuSelector, expectedCount) {
-  let itemsSelector = `${menuSelector} [role="menuitem"]`;
-  QUnit.assert.dom(itemsSelector).exists({ count: expectedCount });
-
-  let itemElements = findAll(itemsSelector);
-
-  itemElements.forEach((itemElement) => {
-    QUnit.assert.dom(itemElement).hasAttribute('id');
-    QUnit.assert.dom(itemElement).hasAttribute('role', 'menuitem');
-    QUnit.assert.dom(itemElement).hasAttribute('tabindex', '-1');
-  });
-}
-
 function assertMenuItemsAreCollaped(selector) {
   QUnit.assert.dom(selector).isNotVisible();
 }
@@ -100,7 +87,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
   test('it renders', async (assert) => {
     await render(hbs`
-      <Menu data-test-menu as |menu|>
+      <Menu as |menu|>
         <menu.Button data-test-menu-button>Trigger</menu.Button>
         <menu.Items data-test-menu-items as |items|>
           <items.Item>Item A</items.Item>
@@ -109,8 +96,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         </menu.Items>
       </Menu>
     `);
-
-    assert.dom('[data-test-menu]').isVisible();
 
     assert.dom('[data-test-menu-button]').hasText('Trigger');
 
@@ -123,7 +108,7 @@ module('Integration | Component | <Menu>', (hooks) => {
     module('Menu', () => {
       test('Menu yields an object', async (assert) => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger {{if menu.isOpen "visible" "hidden" }}</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item>Item A</items.Item>
@@ -147,7 +132,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('Item yields an object', async function (assert) {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger {{if menu.isOpen "visible" "hidden" }}</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -172,9 +157,9 @@ module('Integration | Component | <Menu>', (hooks) => {
 
   module('Keyboard interactions', function () {
     module('`Enter` key', function () {
-      test('it should be possible to open the menu with Enter', async () => {
+      test('it should be possible to open the menu with Enter', async (assert) => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -207,16 +192,16 @@ module('Integration | Component | <Menu>', (hooks) => {
           '[data-test-menu-items]'
         );
 
-        assertMenuItems('[data-test-menu]', 3);
-
         const items = getMenuItems();
+
+        assert.equal(items.length, 3, 'There are three visible menu items');
 
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
       test('it should have no active menu item when there are no menu items at all', async () => {
         await render(hbs`
-        <Menu data-test-menu as |menu|>
+        <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items />
         </Menu>
@@ -228,12 +213,12 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         assertOpenMenuButton('[data-test-menu-button]');
 
-        assertNoActiveMenuItem('[data-test-menu]');
+        assertNoActiveMenuItem();
       });
 
       test('it should focus the first non disabled menu item when opening with Enter', async () => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item @isDisabled={{true}} as |item|>
@@ -266,7 +251,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)', async () => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item @isDisabled={{true}} as |item|>
@@ -299,7 +284,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('it should have no active menu item upon Enter key press, when there are no non-disabled menu items', async function () {
         await render(hbs`
-        <Menu data-test-menu as |menu|>
+        <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
@@ -325,7 +310,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('it should be possible to close the menu with Enter when there is no active menuitem', async function () {
         await render(hbs`
-        <Menu data-test-menu as |menu|>
+        <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
@@ -356,7 +341,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         this.set('onClick', (item) => (itemClicked = item.target));
 
         await render(hbs`
-        <Menu data-test-menu as |menu|>
+        <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item as |item|>
@@ -391,7 +376,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         this.set('onClick', (item) => (itemClicked = item.target));
 
         await render(hbs`
-        <Menu data-test-menu as |menu|>
+        <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item as |item|>
@@ -426,9 +411,9 @@ module('Integration | Component | <Menu>', (hooks) => {
     });
 
     module('`Space` key', function () {
-      test('it should be possible to open the menu with Space', async () => {
+      test('it should be possible to open the menu with Space', async (assert) => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -461,10 +446,9 @@ module('Integration | Component | <Menu>', (hooks) => {
           '[data-test-menu-items]'
         );
 
-        assertMenuItems('[data-test-menu]', 3);
-
         const items = getMenuItems();
 
+        assert.equal(items.length, 3, 'There are three visible menu items');
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
@@ -525,7 +509,7 @@ module('Integration | Component | <Menu>', (hooks) => {
     module('`Any` key aka search', function () {
       test('it should be possible to type a full word that has a perfect match', async () => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -552,7 +536,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('it should be possible to type a partial of a word', async () => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -583,7 +567,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('it should be possible to type words with spaces', async () => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -614,7 +598,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       test('it should not be possible to search for a disabled item', async () => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -639,9 +623,9 @@ module('Integration | Component | <Menu>', (hooks) => {
     });
 
     module('Mouse interactions', function () {
-      test('it should be possible to open and close a menu on click', async () => {
+      test('it should be possible to open and close a menu on click', async (assert) => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -668,7 +652,9 @@ module('Integration | Component | <Menu>', (hooks) => {
           '[data-test-menu-items]'
         );
 
-        assertMenuItems('[data-test-menu]', 3);
+        const items = getMenuItems();
+
+        assert.equal(items.length, 3, 'There are three visible menu items');
 
         await click('[data-test-menu-button]');
 
@@ -679,7 +665,7 @@ module('Integration | Component | <Menu>', (hooks) => {
       // - it should be a no-op when we click outside of a closed menu
       test('it should be possible to click outside of the menu which should close the menu', async (assert) => {
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
@@ -709,7 +695,7 @@ module('Integration | Component | <Menu>', (hooks) => {
       test('it should not focus button when does not exist', async function (assert) {
         this.set('isShowButton', true);
         await render(hbs`
-          <Menu data-test-menu as |menu|>
+          <Menu as |menu|>
             {{#if this.isShowButton}}
               <menu.Button data-test-menu-button>Trigger</menu.Button>
             {{/if}}
