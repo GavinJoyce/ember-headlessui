@@ -26,6 +26,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Generate Fallback Page
+        run: cp dist/index.html dist/404.html
+
       - name: Upload to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
