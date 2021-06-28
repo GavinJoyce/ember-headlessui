@@ -3,9 +3,9 @@
   aria-haspopup={{true}}
   aria-controls={{@itemsGuid}}
   aria-expanded={{@isOpen}}
-  id='{{@menuGuid}}-button'
+  id={{@buttonGuid}}
   ...attributes
-  {{on 'click' @onClick}}
+  {{on 'click' @toggleMenu}}
   {{on 'keydown' this.onKeydown}}
 >
   {{yield}}
