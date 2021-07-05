@@ -4,6 +4,10 @@ function getDialog() {
   return document.querySelector('[role="dialog"]');
 }
 
+function getDialogs() {
+  return Array.from(document.querySelectorAll('[role="dialog"]'));
+}
+
 function getDialogOverlay() {
   return document.querySelector('[id$="-headlessui-dialog-overlay"]');
 }
@@ -14,6 +18,12 @@ function getDialogTitle() {
 
 function getDialogDescription() {
   return document.querySelector('[id$="-headlessui-dialog-description"]');
+}
+
+function getDialogOverlays() {
+  return Array.from(
+    document.querySelectorAll('[id$="-headlessui-dialog-overlay"]')
+  );
 }
 
 const DialogState = {
@@ -31,14 +41,15 @@ function assertNever(x) {
   throw new Error('Unexpected object: ' + x);
 }
 
-function assertActiveElement(element) {
+function assertActiveElement(element, comment) {
   try {
     if (element === null) {
       Qunit.assert.notEqual(element, null);
       return;
     }
-
-    Qunit.assert.equal(document.activeElement, element);
+    return Qunit.assert.waitFor(() => {
+      Qunit.assert.equal(document.activeElement, element, comment);
+    });
   } catch (err) {
     Error.captureStackTrace(err, assertActiveElement);
     throw err;
@@ -523,7 +534,9 @@ export {
   assertDialogOverlay,
   assertDialogTitle,
   getDialog,
+  getDialogs,
   getDialogOverlay,
+  getDialogOverlays,
   assertActiveElement,
   getByText,
 };

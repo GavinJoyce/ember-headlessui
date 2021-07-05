@@ -7,8 +7,10 @@
         aria-modal='true'
         ...attributes
         {{focus-trap focusTrapOptions=(hash initialFocus=@initialFocus)}}
-        {{click-outside @onClose event='mouseup'}}
-        {{this.handleEscapeKey @isOpen @onClose}}
+        {{click-outside this.onClose event='mouseup'}}
+        {{this.handleEscapeKey @isOpen this.onClose}}
+        {{did-insert (fn this.dialogStackProvider.push this)}}
+        {{will-destroy (fn this.dialogStackProvider.remove this)}}
       >
         {{yield
           (hash
