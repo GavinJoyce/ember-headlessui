@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
-import { next } from '@ember/runloop';
 
 export default class Menu extends Component {
   guid = `${guidFor(this)}-tailwindui-menu`;
@@ -32,12 +31,7 @@ export default class Menu extends Component {
 
   @action
   close() {
-    if (this.isOpen) {
-      this.isOpen = false;
-      next(() => {
-        this.buttonElement && this.buttonElement.focus();
-      });
-    }
+    this.isOpen = false;
   }
 
   @action
@@ -122,16 +116,6 @@ export default class Menu extends Component {
     let index = items.indexOf(item);
     items.splice(index, 1);
     this.items = items;
-  }
-
-  @action
-  onPointerDown(event) {
-    if (event.defaultPrevented) return;
-    if (!this.isOpen) return;
-
-    next(() => {
-      this.buttonElement.focus();
-    });
   }
 
   _setActiveItem(item) {

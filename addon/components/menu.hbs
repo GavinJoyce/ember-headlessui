@@ -1,42 +1,34 @@
-<div
-  id={{this.guid}}
-  ...attributes
-  {{on 'pointerdown' this.onPointerDown}}
-  {{click-outside this.close event='mouseup'}}
->
-  {{yield
-    (hash
+{{yield
+  (hash
+    isOpen=this.isOpen
+    Button=(component
+      'menu/button'
+      buttonGuid=this.buttonGuid
+      itemsGuid=this.itemsGuid
       isOpen=this.isOpen
-      Button=(component
-        'menu/button'
-        guid=this.buttonGuid
-        menuGuid=this.guid
-        itemsGuid=this.itemsGuid
-        isOpen=this.isOpen
-        onClick=this.toggle
-        openMenu=this.open
-        closeMenu=this.close
-        goToFirstItem=this.goToFirstItem
-        goToLastItem=this.goToLastItem
-        goToNextItem=this.goToNextItem
-        goToPreviousItem=this.goToPreviousItem
-      )
-      Items=(component
-        'menu/items'
-        guid=this.itemsGuid
-        buttonGuid=this.buttonGuid
-        isOpen=this.isOpen
-        closeMenu=this.close
-        activeItem=this.activeItem
-        registerItem=this.registerItem
-        unregisterItem=this.unregisterItem
-        goToFirstItem=this.goToFirstItem
-        goToLastItem=this.goToLastItem
-        goToNextItem=this.goToNextItem
-        goToPreviousItem=this.goToPreviousItem
-        goToItem=this.goToItem
-        search=(perform this.searchTask)
-      )
+      openMenu=this.open
+      closeMenu=this.close
+      toggleMenu=this.toggle
+      goToFirstItem=this.goToFirstItem
+      goToLastItem=this.goToLastItem
+      goToNextItem=this.goToNextItem
+      goToPreviousItem=this.goToPreviousItem
     )
-  }}
-</div>
+    Items=(component
+      'menu/items'
+      buttonGuid=this.buttonGuid
+      itemsGuid=this.itemsGuid
+      isOpen=this.isOpen
+      closeMenu=this.close
+      activeItem=this.activeItem
+      registerItem=this.registerItem
+      unregisterItem=this.unregisterItem
+      goToFirstItem=this.goToFirstItem
+      goToLastItem=this.goToLastItem
+      goToNextItem=this.goToNextItem
+      goToPreviousItem=this.goToPreviousItem
+      goToItem=this.goToItem
+      search=(perform this.searchTask)
+    )
+  )
+}}

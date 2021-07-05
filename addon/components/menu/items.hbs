@@ -1,12 +1,21 @@
 {{#if @isOpen}}
   <div
-    id={{@guid}}
+    id={{@itemsGuid}}
     aria-labelledby={{@buttonGuid}}
     aria-activedescendant={{@activeItem.element.id}}
     tabindex='-1'
     role='menu'
     ...attributes
     {{on 'keydown' this.onKeydown}}
+    {{focus-trap
+      focusTrapOptions=(hash
+        allowOutsideClick=this.allowClickOutsideFocusTrap
+        clickOutsideDeactivates=this.clickOutsideFocusTrapDeactivates
+        fallbackFocus=this.menuItemsElement
+        initialFocus=this.menuItemsElement
+        onDeactivate=@closeMenu
+      )
+    }}
   >
     {{yield
       (hash
