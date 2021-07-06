@@ -6,6 +6,8 @@ import { getOwnConfig } from '@embroider/macros';
 import { modifier } from 'ember-modifier';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 function getPortalRoot() {
   const { rootElement } = getOwnConfig();
@@ -15,6 +17,9 @@ function getPortalRoot() {
 }
 
 export default class DialogComponent extends Component {
+  @service
+  dialogStackProvider;
+
   DEFAULT_TAG_NAME = 'div';
 
   guid = `${guidFor(this)}-headlessui-dialog`;
@@ -87,5 +92,11 @@ export default class DialogComponent extends Component {
 
   get descriptionGuid() {
     return `${this.guid}-description`;
+  }
+
+  @action
+  onClose() {
+    if (this.dialogStackProvider.hasOpenChild(this)) return;
+    this.args.onClose();
   }
 }

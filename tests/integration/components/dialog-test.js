@@ -1,8 +1,13 @@
 import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, setupOnerror } from '@ember/test-helpers';
-import triggerKeyEvent from '@ember/test-helpers/dom/trigger-key-event';
+import {
+  click,
+  render,
+  setupOnerror,
+  triggerKeyEvent,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import userEvent from '@testing-library/user-event';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
@@ -13,7 +18,9 @@ import {
   assertDialogOverlay,
   assertDialogTitle,
   getDialog,
+  getDialogs,
   getDialogOverlay,
+  getDialogOverlays,
   assertActiveElement,
   getByText,
 } from '../../accessibility-assertions';
@@ -484,19 +491,274 @@ module('Integration | Component | <Dialog>', function (hooks) {
   });
 
   module('Nesting', function () {
-    todo(
-      'it should be possible to open nested Dialog components and close them with `Escape`',
-      async function () {}
-    );
+    test.each(
+      'it should be possible to open nested Dialog components and close them with `$strategy`',
+      [
+        {
+          strategy: 'outside click',
+          action: () => click(document.body),
+        },
+        {
+          strategy: 'ESCAPE click',
+          action: () =>
+            triggerKeyEvent(document.activeElement, 'keyup', Keys.Escape),
+        },
+        {
+          strategy: 'click on Dialog.Overlay',
+          action: () => click(getDialogOverlays().pop()),
+        },
+      ],
+      async function (assert, { action }) {
+        await render(hbs`
+          {{#let (hash value=false) as |state|}}
+            <button
+              type="button"
+              {{on 'click' (set state.value true)}}>
+              Open 1
+            </button>
+            <Dialogs::Nested
+              @isOpen={{state.value}}
+              @onClose={{set state.value false}}
+              @level={{1}}
+            />
+          {{/let}}
+        `);
 
-    todo(
-      'it should be possible to open nested Dialog components and close them with `Outside Click`',
-      async function () {}
-    );
+        assert.equal(getDialogs(), 0, 'Verify we have no open dialogs');
 
-    todo(
-      'it should be possible to open nested Dialog components and close them with `Click on Dialog.Overlay`',
-      async function () {}
+        await click(getByText('Open 1'), 'Open Dialog 1');
+
+        assert.equal(
+          getDialogs().length,
+          1,
+          'Verify that we have 1 open dialog'
+        );
+
+        await assertActiveElement(
+          getByText('Open 2 a'),
+          'Verify that the `Open 2 a` has focus'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 b'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 c'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 a'),
+          'Verify that we can tab around'
+        );
+
+        // Open Dialog 2 via the second button
+        await click(getByText('Open 2 b'));
+
+        assert.equal(
+          getDialogs().length,
+          2,
+          'Verify that we have 2 open dialogs'
+        );
+
+        await assertActiveElement(
+          getByText('Open 3 a'),
+          'Verify that the `Open 3 a` has focus'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 b'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 c'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 a'),
+          'Verify that we can tab around'
+        );
+
+        //close the top most dialog with ${strategy}
+        await action();
+
+        assert.equal(
+          getDialogs().length,
+          1,
+          'Verify that we have 1 open dialog'
+        );
+
+        await assertActiveElement(
+          getByText('Open 2 b'),
+          'Verify that the `Open 2 b` button got focused again'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 c'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 a'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 b'),
+          'Verify that we can tab around'
+        );
+
+        // Open Dialog 2 via the second button
+        await click(getByText('Open 2 b'));
+
+        await assertActiveElement(
+          getByText('Open 3 a'),
+          'Verify that the `Open 3 a` has focus'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 b'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 c'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 a'),
+          'Verify that we can tab around'
+        );
+
+        assert.equal(
+          getDialogs().length,
+          2,
+          'Verify that we have 2 open dialogs'
+        );
+
+        // Open Dialog 3 via button c
+        await click(getByText('Open 3 c'));
+
+        await assertActiveElement(
+          getByText('Open 4 a'),
+          'Verify that the `Open 4 a` has focus'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 4 b'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 4 c'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 4 a'),
+          'Verify that we can tab around'
+        );
+
+        assert.equal(
+          getDialogs().length,
+          3,
+          'Verify that we have 3 open dialogs'
+        );
+
+        //close the top most dialog with ${strategy}
+        await action();
+
+        await assertActiveElement(
+          getByText('Open 3 c'),
+          'Verify that the `Open 3 c` button got focused again'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 a'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 b'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 3 c'),
+          'Verify that we can tab around'
+        );
+
+        assert.equal(
+          getDialogs().length,
+          2,
+          'Verify that we have 2 open dialogs'
+        );
+
+        //close the top most dialog with ${strategy}
+        await action();
+
+        assert.equal(
+          getDialogs().length,
+          1,
+          'Verify that we have 1 open dialog'
+        );
+
+        await assertActiveElement(
+          getByText('Open 2 b'),
+          'Verify that the `Open 2 b` button got focused again'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 c'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 a'),
+          'Verify that we can tab around'
+        );
+
+        userEvent.tab();
+        await assertActiveElement(
+          getByText('Open 2 b'),
+          'Verify that we can tab around'
+        );
+
+        //close the top most dialog with ${strategy}
+        await action();
+
+        assert.equal(getDialogs(), 0, 'Verify that we have 0 open dialogs');
+
+        await assertActiveElement(
+          getByText('Open 1'),
+          'Verify that we have 1 open dialog'
+        );
+      }
     );
   });
 

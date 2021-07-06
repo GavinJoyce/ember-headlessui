@@ -44,6 +44,8 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@tailwindcss/ui": "^0.6.0",
+    "@testing-library/dom": "^8.1.0",
+    "@testing-library/user-event": "^13.1.9",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv-cli": "^4.0.0",
