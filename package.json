@@ -20,6 +20,8 @@
     "lint:hbs:fix": "ember-template-lint . --fix",
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
+    "lint:other": "prettier --check \"**/*.{json,md,yml}\"",
+    "lint:other:fix": "prettier --write \"**/*.{json,md,yml}\"",
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
@@ -106,6 +108,7 @@
   },
   "lint-staged": {
     "*.js": "eslint --fix",
-    "*.hbs": "ember-template-lint --fix"
+    "*.hbs": "ember-template-lint --fix",
+    "*.{json,md,yml}": "prettier --write"
   }
 }
