@@ -95,7 +95,9 @@
     "qunit-wait-for": "^2.0.1",
     "release-it": "^14.8.0",
     "release-it-lerna-changelog": "^3.1.0",
-    "tailwindcss": "^2.2.7"
+    "tailwindcss": "^2.2.7",
+    "testdouble": "^3.16.1",
+    "testdouble-qunit": "^3.0.0"
   },
   "resolutions": {
     "@embroider/core": "^0.43.5",
