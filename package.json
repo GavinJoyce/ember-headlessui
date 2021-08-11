@@ -5,7 +5,10 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GavinJoyce/ember-headlessui.git"
+  },
   "license": "MIT",
   "author": "",
   "directories": {

@@ -8,7 +8,8 @@
     "publish": true
   },
   "github": {
-    "release": true
+    "release": true,
+    "tokenRef": "GITHUB_AUTH"
   },
   "plugins": {
     "release-it-lerna-changelog": {
