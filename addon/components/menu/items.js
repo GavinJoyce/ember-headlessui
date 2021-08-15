@@ -2,8 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class Items extends Component {
-  get menuItemsElement() {
-    return document.getElementById(this.args.itemsGuid);
+  get menuItemsElementSelector() {
+    return `#${this.args.itemsGuid}`;
   }
 
   @action
