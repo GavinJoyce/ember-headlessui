@@ -509,19 +509,19 @@ module('Integration | Component | <Dialog>', function (hooks) {
         },
       ],
       async function (assert, { action }) {
+        this.isOpen = false;
+
         await render(hbs`
-          {{#let (hash value=false) as |state|}}
-            <button
-              type="button"
-              {{on 'click' (set state.value true)}}>
-              Open 1
-            </button>
-            <Dialogs::Nested
-              @isOpen={{state.value}}
-              @onClose={{set state.value false}}
-              @level={{1}}
-            />
-          {{/let}}
+          <button
+            type="button"
+            {{on 'click' (set this.isOpen true)}}>
+            Open 1
+          </button>
+          <Dialogs::Nested
+            @isOpen={{this.isOpen}}
+            @onClose={{set this.isOpen false}}
+            @level={{1}}
+          />
         `);
 
         assert.equal(getDialogs(), 0, 'Verify we have no open dialogs');
