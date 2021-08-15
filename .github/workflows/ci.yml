@@ -78,7 +78,13 @@ jobs:
     needs: ['lint', 'test']
     strategy:
       matrix:
-        ember-try-scenario: [ember-minimum-supported, ember-release]
+        ember-try-scenario:
+          [
+            ember-minimum-supported,
+            ember-release,
+            embroider-safe,
+            embroider-optimized,
+          ]
 
     steps:
       - uses: actions/checkout@v2
