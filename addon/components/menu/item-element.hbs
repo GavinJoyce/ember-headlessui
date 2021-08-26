@@ -1,4 +1,7 @@
-{{#let (element (or @tagName 'a')) as |Tag|}}
+{{#let
+  (if this.tagNameIsComponent @tagName (element (or @tagName 'a')))
+  as |Tag|
+}}
   <Tag
     id={{@guid}}
     role='menuitem'

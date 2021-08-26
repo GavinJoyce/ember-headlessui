@@ -153,6 +153,28 @@ module('Integration | Component | <Menu>', (hooks) => {
           .hasText('Item A [isActive:false] [isDisabled:false]');
       });
     });
+
+    test('it should be possible to use a custom component as a menu item', async function (assert) {
+      await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            {{#let (component 'link-to' route="menu") as |Link|}}
+              <items.Item as |item|>
+                <item.Element @tagName={{Link}} data-test-item-a>
+                  Item A
+                </item.Element>
+              </items.Item>
+            {{/let}}
+          </menu.Items>
+        </Menu>
+      `);
+
+      await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
+
+      assert.dom('[data-test-item-a]').hasTagName('a');
+      assert.dom('[data-test-item-a]').hasAttribute('href', '/menu');
+    });
   });
 
   module('Keyboard interactions', function () {
