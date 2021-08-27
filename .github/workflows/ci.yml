@@ -61,7 +61,7 @@ jobs:
     strategy:
       matrix:
         ember-try-scenario:
-          [ember--3.25, ember-release, ember-beta, ember-canary]
+          [ember-minimum-supported, ember-release, ember-beta, ember-canary]
 
     steps:
       - uses: actions/checkout@v2
