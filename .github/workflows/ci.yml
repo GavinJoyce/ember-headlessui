@@ -60,8 +60,7 @@ jobs:
     needs: ['lint', 'test']
     strategy:
       matrix:
-        ember-try-scenario:
-          [ember-minimum-supported, ember-release, ember-beta, ember-canary]
+        ember-try-scenario: [ember-minimum-supported, ember-release]
 
     steps:
       - uses: actions/checkout@v2
