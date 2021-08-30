@@ -1,3 +1,9 @@
+## v0.6.0 (2021-08-30)
+
+##### :rocket: Enhancement
+
+- [#74](https://github.com/GavinJoyce/ember-headlessui/pull/74) feat(menu): allow item element to be a component ([@alexlafroscia](https://github.com/alexlafroscia))
+
 ## v0.5.0 (2021-08-11)
 
 #### :boom: Breaking Change
