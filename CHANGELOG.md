@@ -1,3 +1,13 @@
+## v0.7.0 (2021-08-30)
+
+#### :rocket: Enhancement
+
+- [#75](https://github.com/GavinJoyce/ember-headlessui/pull/75) feat(menu): yield actions to open/close menu ([@alexlafroscia](https://github.com/alexlafroscia))
+
+#### Committers: 1
+
+- Alex LaFroscia ([@alexlafroscia](https://github.com/alexlafroscia))
+
 ## v0.6.0 (2021-08-30)
 
 ##### :rocket: Enhancement
