@@ -104,6 +104,29 @@ module('Integration | Component | <Menu>', (hooks) => {
     assertMenuItemsAreCollaped('[data-test-menu-items]');
   });
 
+  test('controlling open/close programmatically', async (assert) => {
+    await render(hbs`
+      <Menu as |menu|>
+        <button data-test-open {{on 'click' menu.open}}>Open</button>
+        <button data-test-close {{on 'click' menu.close}}>Close</button>
+
+        <menu.Items data-test-menu-items as |items|>
+          <items.Item>Item A</items.Item>
+          <items.Item>Item B</items.Item>
+          <items.Item>Item C</items.Item>
+        </menu.Items>
+      </Menu>
+    `);
+
+    await click('[data-test-open]');
+
+    assert.dom('[data-test-menu-items]').exists();
+
+    await click('[data-test-close]');
+
+    assert.dom('[data-test-menu-items]').doesNotExist();
+  });
+
   module('Rendering', () => {
     module('Menu', () => {
       test('Menu yields an object', async (assert) => {
