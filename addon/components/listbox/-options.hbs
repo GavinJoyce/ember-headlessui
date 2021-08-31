@@ -1,0 +1,27 @@
+{{#if @isOpen}}
+  <ul
+    id={{@guid}}
+    tabindex="-1"
+    role='listbox'
+    aria-labelledby={{if @hasLabelElement (concat @guid '-label') (concat @guid '-button')}}
+    aria-activedescendant={{@activeOptionGuid}}
+    {{did-insert @registerOptionsElement}}
+    {{will-destroy @unregisterOptionsElement}}
+    {{on 'keypress' @handleKeyPress}}
+    {{on 'keydown' @handleKeyDown}}
+    ...attributes
+    class="pb-1"
+    >
+    {{yield (hash
+      Option=(component
+        'listbox/-option'
+        registerOptionElement=@registerOptionElement
+        activeOptionGuid=@activeOptionGuid
+        selectedOptionGuid=@selectedOptionGuid
+        setActiveOption=@setActiveOption
+        unsetActiveOption=@unsetActiveOption
+        setSelectedOption=@setSelectedOption
+        )
+      )}}
+  </ul>
+{{/if}}

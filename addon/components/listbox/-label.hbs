@@ -1,0 +1,10 @@
+{{#let (element (or @as 'label')) as |Tag|}}
+  <Tag
+    id='{{@guid}}-label'
+    for='{{@guid}}-button'
+    {{on 'click' @handleLabelClick}}
+    {{did-insert @registerLabelElement}}
+    ...attributes>
+    {{yield}}
+  </Tag>
+{{/let}}
