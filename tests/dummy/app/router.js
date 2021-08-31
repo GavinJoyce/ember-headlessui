@@ -14,6 +14,10 @@ Router.map(function () {
     this.route('menu-with-transition-and-popper');
   });
 
+  this.route('listbox', function () {
+    this.route('listbox-basic');
+  });
+
   this.route('switch', function () {
     this.route('switch-basic');
     this.route('switch-checkbox');
