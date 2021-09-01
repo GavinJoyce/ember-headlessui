@@ -1,33 +1,35 @@
 {{#if @isOpen}}
-  <ul
-    id={{@guid}}
-    tabindex="0"
-    role='listbox'
-    aria-labelledby={{if @hasLabelElement (concat @guid '-label') (concat @guid '-button')}}
-    aria-activedescendant={{@activeOptionGuid}}
-    {{did-insert @registerOptionsElement}}
-    {{will-destroy @unregisterOptionsElement}}
-    {{on 'keypress' @handleKeyPress}}
-    {{on 'keydown' @handleKeyDown}}
-    {{focus-trap focusTrapOptions=(hash
-      returnFocusOnDeactivate=true
-      clickOutsideDeactivates=false
-      allowOutsideClick=true
-      fallbackFocus=(concat '#' @guid)
-    )}}
-    ...attributes
-    class="pb-1"
-    >
-    {{yield (hash
-      Option=(component
-        'listbox/-option'
-        registerOptionElement=@registerOptionElement
-        activeOptionGuid=@activeOptionGuid
-        selectedOptionGuid=@selectedOptionGuid
-        setActiveOption=@setActiveOption
-        unsetActiveOption=@unsetActiveOption
-        setSelectedOption=@setSelectedOption
-        )
+  {{#let (element (or @as 'ul')) as |Tag|}}
+    <Tag
+      id={{@guid}}
+      tabindex="0"
+      role='listbox'
+      aria-labelledby={{if @hasLabelElement (concat @guid '-label') (concat @guid '-button')}}
+      aria-activedescendant={{@activeOptionGuid}}
+      {{did-insert @registerOptionsElement}}
+      {{will-destroy @unregisterOptionsElement}}
+      {{on 'keypress' @handleKeyPress}}
+      {{on 'keydown' @handleKeyDown}}
+      {{focus-trap focusTrapOptions=(hash
+        returnFocusOnDeactivate=true
+        clickOutsideDeactivates=false
+        allowOutsideClick=true
+        fallbackFocus=(concat '#' @guid)
       )}}
-  </ul>
+      ...attributes
+      class="pb-1"
+      >
+      {{yield (hash
+        Option=(component
+          'listbox/-option'
+          registerOptionElement=@registerOptionElement
+          activeOptionGuid=@activeOptionGuid
+          selectedOptionGuid=@selectedOptionGuid
+          setActiveOption=@setActiveOption
+          unsetActiveOption=@unsetActiveOption
+          setSelectedOption=@setSelectedOption
+          )
+        )}}
+    </Tag>
+  {{/let}}
 {{/if}}
