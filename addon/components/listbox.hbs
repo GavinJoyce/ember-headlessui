@@ -1,50 +1,46 @@
-<div
-  {{did-insert this.registerDocumentClickListener}}
-  {{will-destroy this.unregisterDocumentClickListener}}>
-
-  {{yield
-    (hash
+{{yield
+  (hash
+    isOpen=this.isOpen
+    disabled=(if @disabled true false)
+    Options=(component
+      'listbox/-options'
       isOpen=this.isOpen
-      disabled=(if @disabled true false)
-      Options=(component
-        'listbox/-options'
-        isOpen=this.isOpen
-        guid=this.guid
-        registerOptionElement=this.registerOptionElement
-        registerOptionsElement=this.registerOptionsElement
-        unregisterOptionsElement=this.unregisterOptionsElement
-        hasLabelElement=this.labelElement
-        activeOptionGuid=this.activeOptionGuid
-        selectedOptionGuid=this.selectedOptionGuid
-        setActiveOption=this.setActiveOption
-        unsetActiveOption=this.unsetActiveOption
-        setSelectedOption=this.setSelectedOption
-        handleKeyPress=this.handleKeyPress
-        handleKeyDown=this.handleKeyDown
-        openListbox=this.openListbox
-        closeListbox=this.closeListbox
-      )
-      Button=(component
-        'listbox/-button'
-        guid=this.guid
-        isOpen=this.isOpen
-        registerButtonElement=this.registerButtonElement
-        handleButtonClick=this.handleButtonClick
-        handleKeyPress=this.handleKeyPress
-        handleKeyDown=this.handleKeyDown
-        disabled=@disabled
-        openListbox=this.openListbox
-        closeListbox=this.closeListbox
-      )
-      Label=(component
-        'listbox/-label'
-        guid=this.guid
-        isOpen=this.isOpen
-        disabled=@disabled
-        registerLabelElement=this.registerLabelElement
-        handleLabelClick=this.handleLabelClick
-      )
+      guid=this.guid
+      registerOptionElement=this.registerOptionElement
+      registerOptionsElement=this.registerOptionsElement
+      unregisterOptionsElement=this.unregisterOptionsElement
+      hasLabelElement=this.labelElement
+      activeOptionGuid=this.activeOptionGuid
+      selectedOptionGuid=this.selectedOptionGuid
+      setActiveOption=this.setActiveOption
+      unsetActiveOption=this.unsetActiveOption
+      setSelectedOption=this.setSelectedOption
+      handleKeyPress=this.handleKeyPress
+      handleKeyDown=this.handleKeyDown
+      openListbox=this.openListbox
+      closeListbox=this.closeListbox
     )
-  }}
-
-</div>
+    Button=(component
+      'listbox/-button'
+      guid=this.guid
+      isOpen=this.isOpen
+      registerButtonElement=this.registerButtonElement
+      handleButtonClick=this.handleButtonClick
+      handleKeyPress=this.handleKeyPress
+      handleKeyDown=this.handleKeyDown
+      handleClickOutside=this.handleClickOutside
+      disabled=@disabled
+      openListbox=this.openListbox
+      closeListbox=this.closeListbox
+      optionsElement=this.optionsElement
+    )
+    Label=(component
+      'listbox/-label'
+      guid=this.guid
+      isOpen=this.isOpen
+      disabled=@disabled
+      registerLabelElement=this.registerLabelElement
+      handleLabelClick=this.handleLabelClick
+    )
+  )
+}}

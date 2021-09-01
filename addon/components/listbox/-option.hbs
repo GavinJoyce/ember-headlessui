@@ -1,12 +1,13 @@
 {{#let (element (or @as 'li')) as |Tag|}}
   <Tag
     role='option'
-    id='{{this.guid}}-option' tabindex='-1'
+    id='{{this.guid}}-option'
+    tabindex='-1'
     {{did-insert (fn @registerOptionElement @value)}}
     {{on 'focus' (fn @setActiveOption this)}}
     {{on 'mouseover' (fn @setActiveOption this)}}
     {{on 'mouseout' @unsetActiveOption}}
-    {{on 'click' (fn @setSelectedOption this)}}
+    {{on 'click' this.handleClick}}
     {{aria "selected" value=this.isSelectedOption removeWhen=(not this.isSelectedOption)}}
     disabled={{if @disabled true false}}
     ...attributes

@@ -11,6 +11,7 @@
     {{aria "expanded" value=@isOpen removeWhen=@disabled}}
     disabled={{if @disabled true false}}
     {{did-insert @registerButtonElement}}
+    {{click-outside @handleClickOutside}}
     ...attributes
   >
     {{yield}}

@@ -1,7 +1,7 @@
 {{#if @isOpen}}
   <ul
     id={{@guid}}
-    tabindex="-1"
+    tabindex="0"
     role='listbox'
     aria-labelledby={{if @hasLabelElement (concat @guid '-label') (concat @guid '-button')}}
     aria-activedescendant={{@activeOptionGuid}}
@@ -9,6 +9,12 @@
     {{will-destroy @unregisterOptionsElement}}
     {{on 'keypress' @handleKeyPress}}
     {{on 'keydown' @handleKeyDown}}
+    {{focus-trap focusTrapOptions=(hash
+      returnFocusOnDeactivate=true
+      clickOutsideDeactivates=false
+      allowOutsideClick=true
+      fallbackFocus=(concat '#' @guid)
+    )}}
     ...attributes
     class="pb-1"
     >

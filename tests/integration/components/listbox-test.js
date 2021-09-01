@@ -2670,7 +2670,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(document.body);
 
       // Focus the label
-      await click(getListboxLabel(), { ctrlKey: true });
+      await click(getListboxLabel(), { button: 2 });
 
       // Ensure that the body is still active
       await assertActiveElement(document.body);
@@ -2731,7 +2731,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
 
       // Try to open the listbox
-      await click(getListboxButton(), { ctrlKey: true });
+      await click(getListboxButton(), { button: 2 });
 
       // Verify it is still closed
       assertListboxButton({ state: ListboxState.InvisibleUnmounted });
@@ -2898,14 +2898,14 @@ module('Integration | Component | <Listbox>', function (hooks) {
              </listbox.Options>
            </Listbox>
            <Listbox as |listbox|>
-              <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
-              <listbox.Options data-test="headlessui-listbox-options-1" as |options|>
-                <options.Option @value="a">a</options.Option>
-                <options.Option @value="b">b</options.Option>
-                <options.Option @value="c">c</options.Option>
-              </listbox.Options>
-            </Listbox>
-          </div>
+             <listbox.Button data-test="headlessui-listbox-button-2">Trigger</listbox.Button>
+             <listbox.Options data-test="headlessui-listbox-options-2" as |options|>
+               <options.Option @value="a">a</options.Option>
+               <options.Option @value="b">b</options.Option>
+               <options.Option @value="c">c</options.Option>
+             </listbox.Options>
+           </Listbox>
+         </div>
       `);
 
       let [button1, button2] = getListboxButtons();

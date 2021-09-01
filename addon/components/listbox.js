@@ -42,7 +42,6 @@ export default class ListboxComponent extends Component {
       this._isOpen = true;
     } else {
       this._isOpen = false;
-      this.buttonElement.focus();
     }
   }
 
@@ -53,10 +52,26 @@ export default class ListboxComponent extends Component {
 
   @action
   handleButtonClick(e) {
-    if (e.ctrlKey) return;
+    if (e.button !== 0) return;
     this.activateBehaviour = ACTIVATE_NONE;
-
     this.isOpen = !this.isOpen;
+  }
+
+  @action
+  handleClickOutside(e) {
+    if (e.button !== 0) return;
+    this.closeListbox();
+
+    for (let i = 0; i < e.path?.length; i++) {
+      if (typeof e.path[i].focus === 'function') {
+        e.path[i].focus();
+      }
+
+      if (document.activeElement === e.path[i]) {
+        e.stopPropagation();
+        break;
+      }
+    }
   }
 
   @action
@@ -112,7 +127,8 @@ export default class ListboxComponent extends Component {
   @action
   handleLabelClick(e) {
     e.preventDefault();
-    if (e.ctrlKey) return;
+    e.stopPropagation();
+    if (e.ctrlKey || e.button !== 0) return;
     this.buttonElement.focus();
   }
 
@@ -124,13 +140,6 @@ export default class ListboxComponent extends Component {
   @action
   registerButtonElement(buttonElement) {
     this.buttonElement = buttonElement;
-  }
-
-  @action
-  registerDocumentClickListener() {
-    this._handleDocumentClick = this.handleDocumentClick.bind(this);
-
-    document.addEventListener('click', this._handleDocumentClick);
   }
 
   @action
@@ -165,7 +174,6 @@ export default class ListboxComponent extends Component {
   @action
   registerOptionsElement(optionsElement) {
     this.optionsElement = optionsElement;
-    this.optionsElement.focus();
   }
 
   @action
@@ -217,11 +225,6 @@ export default class ListboxComponent extends Component {
   }
 
   @action
-  unregisterDocumentClickListener() {
-    document.removeEventListener('click', this._handleDocumentClick);
-  }
-
-  @action
   unregisterOptionsElement() {
     this.optionsElement = undefined;
   }
@@ -229,36 +232,6 @@ export default class ListboxComponent extends Component {
   @action
   unsetActiveOption() {
     this.activeOptionIndex = undefined;
-  }
-
-  handleDocumentClick(e) {
-    if (e.ctrlKey) return;
-
-    if (
-      !this.buttonElement?.contains(e.target) &&
-      !this.optionsElement?.contains(e.target)
-    ) {
-      this.isOpen = false;
-
-      let hasFocus = this.focusAncestor(e.target);
-
-      if (!hasFocus) {
-        this.buttonElement.focus();
-      }
-    }
-  }
-
-  focusAncestor(element) {
-    if (!element) return false;
-    if (element.tagName === 'BODY') return false;
-
-    element.focus();
-
-    if (document.activeElement === element) {
-      return true;
-    } else {
-      return this.focusAncestor(element.parentElement);
-    }
   }
 
   setNextOptionActive() {
