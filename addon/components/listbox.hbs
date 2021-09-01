@@ -1,7 +1,7 @@
 {{yield
   (hash
     isOpen=this.isOpen
-    disabled=(if @disabled true false)
+    disabled=this.isDisabled
     Options=(component
       'listbox/-options'
       isOpen=this.isOpen
@@ -29,7 +29,7 @@
       handleKeyPress=this.handleKeyPress
       handleKeyDown=this.handleKeyDown
       handleClickOutside=this.handleClickOutside
-      disabled=@disabled
+      isDisabled=this.isDisabled
       openListbox=this.openListbox
       closeListbox=this.closeListbox
       optionsElement=this.optionsElement
@@ -38,7 +38,6 @@
       'listbox/-label'
       guid=this.guid
       isOpen=this.isOpen
-      disabled=@disabled
       registerLabelElement=this.registerLabelElement
       handleLabelClick=this.handleLabelClick
     )

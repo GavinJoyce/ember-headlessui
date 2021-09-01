@@ -25,6 +25,10 @@ export default class ListboxComponent extends Component {
     return this.optionElements[this.activeOptionIndex]?.id;
   }
 
+  get isDisabled() {
+    return !!this.args.disabled;
+  }
+
   get selectedOptionGuid() {
     return this.optionElements[this.selectedOptionIndex]?.id;
   }

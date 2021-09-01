@@ -8,8 +8,8 @@
     {{on 'click' @handleButtonClick}}
     {{on 'keydown' @handleKeyDown}}
     {{on 'keypress' @handleKeyPress}}
-    {{aria "expanded" value=@isOpen removeWhen=@disabled}}
-    disabled={{if @disabled true false}}
+    {{aria "expanded" value=@isOpen removeWhen=@isDisabled}}
+    disabled={{@isDisabled}}
     {{did-insert @registerButtonElement}}
     {{click-outside @handleClickOutside}}
     ...attributes
