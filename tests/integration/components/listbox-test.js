@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   click,
@@ -28,8 +28,6 @@ import {
   getListbox,
   getListboxes,
 } from '../../accessibility-assertions';
-
-import sinon from 'sinon';
 
 async function typeWord(word) {
   word.split('').forEach((char) => {
@@ -313,7 +311,10 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox Rendering composition', () => {
-    // TODO test 'should be possible to conditionally render classNames (aka className can be a function?!)'
+    todo(
+      'should be possible to conditionally render classNames (aka className can be a function?!)',
+      async function () {}
+    );
 
     test('should be possible to swap the Listbox option with a button for example', async () => {
       await render(hbs`
@@ -350,7 +351,10 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox composition', () => {
-    // TODO test should be possible to wrap the Listbox.Options with a Transition component
+    todo(
+      'test should be possible to wrap the Listbox.Options with a Transition component',
+      async function () {}
+    );
   });
 
   module('Listbox keyboard actions', () => {
@@ -779,14 +783,14 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListboxButton());
     });
 
-    test('should be possible to close the listbox with Enter and choose the active listbox option', async function () {
-      let handleChange = sinon.spy();
-
-      this.set('handleChange', handleChange);
+    test('should be possible to close the listbox with Enter and choose the active listbox option', async function (assert) {
+      let callValue = '',
+        callCount = 0;
 
       this.set('onChange', (value) => {
         this.set('selectedOption', value);
-        this.handleChange(value);
+        callValue = value;
+        callCount++;
       });
 
       await render(hbs`
@@ -830,7 +834,8 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
 
       // Verify we got the change event
-      sinon.assert.calledOnceWithExactly(handleChange, 'a');
+      assert.equal(callCount, 1, 'handleChange called once exactly');
+      assert.equal(callValue, 'a', 'handleChange called with "a"');
 
       // Verify the button is focused again
       await assertActiveElement(getListboxButton());
@@ -1103,14 +1108,14 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible to close the listbox with Space and choose the active listbox option', async function () {
-      let handleChange = sinon.spy();
-
-      this.set('handleChange', handleChange);
+    test('should be possible to close the listbox with Space and choose the active listbox option', async function (assert) {
+      let callValue = '',
+        callCount = 0;
 
       this.set('onChange', (value) => {
         this.set('selectedOption', value);
-        this.handleChange(value);
+        callValue = value;
+        callCount++;
       });
 
       await render(hbs`
@@ -1148,7 +1153,8 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
 
       // Verify we got the change event
-      sinon.assert.calledOnceWithExactly(handleChange, 'a');
+      assert.equal(callCount, 1, 'handleChange called once exactly');
+      assert.equal(callValue, 'a', 'handleChange called with "a"');
 
       // Verify the button is focused again
       await assertActiveElement(getListboxButton());
@@ -2953,9 +2959,12 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListboxButton());
     });
 
-    test('should be possible to click outside of the listbox, on an element which is within a focusable element, which closes the listbox', async function () {
-      let handleFocus = sinon.spy();
-      this.set('handleFocus', handleFocus);
+    test('should be possible to click outside of the listbox, on an element which is within a focusable element, which closes the listbox', async function (assert) {
+      let callCount = 0;
+
+      this.set('handleFocus', () => {
+        callCount++;
+      });
 
       await render(hbs`
         <div>
@@ -2989,7 +2998,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(document.getElementById('btn'));
 
       // Ensure that the focus button only got focus once (first click)
-      sinon.assert.calledOnce(handleFocus);
+      assert.equal(callCount, 1, 'handleFocus called once exactly');
     });
 
     test('should be possible to hover an option and make it active', async () => {
@@ -3213,14 +3222,14 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible to click a listbox option, which closes the listbox', async function () {
-      let handleChange = sinon.spy();
-
-      this.set('handleChange', handleChange);
+    test('should be possible to click a listbox option, which closes the listbox', async function (assert) {
+      let callValue = '',
+        callCount = 0;
 
       this.set('onChange', (value) => {
         this.set('selectedOption', value);
-        this.handleChange(value);
+        callValue = value;
+        callCount++;
       });
 
       await render(hbs`
@@ -3244,7 +3253,8 @@ module('Integration | Component | <Listbox>', function (hooks) {
       // We should be able to click the first option
       await click(options[1]);
       assertListbox({ state: ListboxState.InvisibleUnmounted });
-      sinon.assert.calledOnceWithExactly(handleChange, 'bob');
+      assert.equal(callCount, 1, 'handleChange called once exactly');
+      assert.equal(callValue, 'bob', 'handleChange called with "bob"');
 
       // Verify the button is focused again
       await assertActiveElement(getListboxButton());
@@ -3256,14 +3266,14 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(getListboxOptions()[1]);
     });
 
-    test('should be possible to click a disabled listbox option, which is a no-op', async function () {
-      let handleChange = sinon.spy();
-
-      this.set('handleChange', handleChange);
+    test('should be possible to click a disabled listbox option, which is a no-op', async function (assert) {
+      let callValue = '',
+        callCount = 0;
 
       this.set('onChange', (value) => {
         this.set('selectedOption', value);
-        this.handleChange(value);
+        callValue = value;
+        callCount++;
       });
 
       await render(hbs`
@@ -3288,7 +3298,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await click(options[1]);
       assertListbox({ state: ListboxState.Visible });
       await assertActiveElement(getListbox());
-      sinon.assert.notCalled(handleChange);
+      assert.equal(callCount, 0, 'handleChange not called');
 
       // Close the listbox
       await click(getListboxButton());
