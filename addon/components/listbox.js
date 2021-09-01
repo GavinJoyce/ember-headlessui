@@ -17,7 +17,7 @@ export default class ListboxComponent extends Component {
   labelElement;
   optionsElement;
   optionElements = [];
-  optionValues = [];
+  optionValues = {};
   search = '';
   @tracked selectedOptionIndex;
 
@@ -42,7 +42,7 @@ export default class ListboxComponent extends Component {
       this.activeOptionIndex = undefined;
       this.selectedOptionIndex = undefined;
       this.optionElements = [];
-      this.optionValues = [];
+      this.optionValues = {};
       this._isOpen = true;
     } else {
       this._isOpen = false;
@@ -119,7 +119,7 @@ export default class ListboxComponent extends Component {
     ) {
       this.activateBehaviour = ACTIVATE_FIRST;
       if (this.isOpen) {
-        this.setSelectedOption(undefined, event);
+        this.setSelectedOption(event.target, event);
         this.isOpen = false;
       } else {
         this.isOpen = true;
@@ -152,12 +152,18 @@ export default class ListboxComponent extends Component {
   }
 
   @action
-  registerOptionElement(optionValue, optionElement) {
+  registerOptionElement(optionComponent, optionElement) {
     this.optionElements.push(optionElement);
-    this.optionValues.push(optionValue);
+    this.optionValues[optionComponent.guid + '-option'] =
+      optionComponent.args.value;
+
+    // store the index at which the option appears in the list
+    // so we can avoid a O(n) find operation later
+    optionComponent.index = this.optionElements.length - 1;
+    optionElement.setAttribute('data-index', this.optionElements.length - 1);
 
     if (this.args.value) {
-      if (this.args.value === optionValue) {
+      if (this.args.value === optionComponent.args.value) {
         this.selectedOptionIndex = this.activeOptionIndex =
           this.optionElements.length - 1;
       }
@@ -195,35 +201,32 @@ export default class ListboxComponent extends Component {
 
   @action
   setSelectedOption(optionComponent, e) {
-    let optionId, optionValue, found;
+    let optionIndex, optionValue;
 
-    if (optionComponent) {
-      optionId = optionComponent.guid + '-option';
+    if (optionComponent.constructor.name === 'ListboxOptionComponent') {
       optionValue = optionComponent.args.value;
+      optionIndex = optionComponent.index;
     } else if (this.activeOptionIndex !== undefined) {
-      optionId = this.optionElements[this.activeOptionIndex].id;
-      optionValue = this.optionValues[this.activeOptionIndex];
+      optionValue =
+        this.optionValues[this.optionElements[this.activeOptionIndex].id];
+      optionIndex = parseInt(
+        this.optionElements[this.activeOptionIndex].getAttribute('data-index')
+      );
     } else {
       return;
     }
 
-    this.optionElements.find((o, i) => {
-      if (!found && o.id === optionId && !o.hasAttribute('disabled')) {
-        this.selectedOptionIndex = i;
+    if (!this.optionElements[optionIndex].hasAttribute('disabled')) {
+      this.selectedOptionIndex = optionIndex;
 
-        if (this.args.onChange) {
-          this.args.onChange(optionValue);
-        }
-
-        if (e.type === 'click') {
-          this.isOpen = false;
-        }
-
-        found = true;
+      if (this.args.onChange) {
+        this.args.onChange(optionValue);
       }
-    });
 
-    if (!found) {
+      if (e.type === 'click') {
+        this.isOpen = false;
+      }
+    } else {
       this.optionsElement.focus();
     }
   }
