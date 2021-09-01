@@ -61,11 +61,11 @@ module('Integration | Component | <Listbox>', function (hooks) {
     });
   });
 
-  test('should be possible to render a Listbox using a "open" property', async function () {
+  test('should be possible to render a Listbox using a "isOpen" property', async function () {
     await render(hbs`
       <Listbox as |listbox|>
         <listbox.Button data-test="my-custom-property">Trigger</listbox.Button>
-        {{#if listbox.open}}
+        {{#if listbox.isOpen}}
           <listbox.Options as |options|>
             <options.Option>option</options.Option>
           </listbox.Options>
@@ -107,7 +107,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
     test('should be possible to render a <listbox.Label> using yielded props', async () => {
       await render(hbs`
         <Listbox as |listbox|>
-          <listbox.Label data-test="headlessui-listbox-label-1">{{listbox.open}} {{listbox.disabled}}</listbox.Label>
+          <listbox.Label data-test="headlessui-listbox-label-1">{{listbox.isOpen}} {{listbox.disabled}}</listbox.Label>
           <listbox.Button data-test="my-custom-property">Trigger</listbox.Button>
           <listbox.Options as |options|>
             <options.Option>option</options.Option>
@@ -171,7 +171,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label>Label</listbox.Label>
-          <listbox.Button data-test="headlessui-listbox-button-1">{{listbox.open}} {{listbox.disabled}}</listbox.Button>
+          <listbox.Button data-test="headlessui-listbox-button-1">{{listbox.isOpen}} {{listbox.disabled}}</listbox.Button>
           <listbox.Options as |options|>
             <options.Option @value="a">Option A</options.Option>
             <options.Option @value="b">Option B</options.Option>
@@ -201,7 +201,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label>Label</listbox.Label>
-          <listbox.Button data-test="headlessui-listbox-button-1" @as="p" @role="button">{{listbox.open}} {{listbox.disabled}}</listbox.Button>
+          <listbox.Button data-test="headlessui-listbox-button-1" @as="p" @role="button">{{listbox.isOpen}} {{listbox.disabled}}</listbox.Button>
           <listbox.Options as |options|>
             <options.Option @value="a">Option A</options.Option>
             <options.Option @value="b">Option B</options.Option>
@@ -255,9 +255,9 @@ module('Integration | Component | <Listbox>', function (hooks) {
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
           <listbox.Options as |options|>
-            <options.Option @value="a">{{listbox.open}}</options.Option>
-            <options.Option @value="b">{{listbox.open}}</options.Option>
-            <options.Option @value="c">{{listbox.open}}</options.Option>
+            <options.Option @value="a">{{listbox.isOpen}}</options.Option>
+            <options.Option @value="b">{{listbox.isOpen}}</options.Option>
+            <options.Option @value="c">{{listbox.isOpen}}</options.Option>
           </listbox.Options>
         </Listbox>
       `);

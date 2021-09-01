@@ -4,7 +4,7 @@
 
   {{yield
     (hash
-      open=this.isOpen
+      isOpen=this.isOpen
       disabled=(if @disabled true false)
       Options=(component
         'listbox/-options'
@@ -21,6 +21,8 @@
         setSelectedOption=this.setSelectedOption
         handleKeyPress=this.handleKeyPress
         handleKeyDown=this.handleKeyDown
+        openListbox=this.openListbox
+        closeListbox=this.closeListbox
       )
       Button=(component
         'listbox/-button'
@@ -31,6 +33,8 @@
         handleKeyPress=this.handleKeyPress
         handleKeyDown=this.handleKeyDown
         disabled=@disabled
+        openListbox=this.openListbox
+        closeListbox=this.closeListbox
       )
       Label=(component
         'listbox/-label'

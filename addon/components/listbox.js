@@ -13,7 +13,7 @@ export default class ListboxComponent extends Component {
   activateBehaviour = ACTIVATE_NONE;
   buttonElement;
   guid = `${guidFor(this)}-headlessui-listbox`;
-  @tracked isOpen = false;
+  @tracked _isOpen = false;
   labelElement;
   optionsElement;
   optionElements = [];
@@ -29,16 +29,34 @@ export default class ListboxComponent extends Component {
     return this.optionElements[this.selectedOptionIndex]?.id;
   }
 
+  get isOpen() {
+    return this._isOpen;
+  }
+
+  set isOpen(isOpen) {
+    if (isOpen) {
+      this.activeOptionIndex = undefined;
+      this.selectedOptionIndex = undefined;
+      this.optionElements = [];
+      this.optionValues = [];
+      this._isOpen = true;
+    } else {
+      this._isOpen = false;
+      this.buttonElement.focus();
+    }
+  }
+
+  @action
+  closeListbox() {
+    this.isOpen = false;
+  }
+
   @action
   handleButtonClick(e) {
     if (e.ctrlKey) return;
     this.activateBehaviour = ACTIVATE_NONE;
 
-    if (this.isOpen) {
-      this.close();
-    } else {
-      this.open();
-    }
+    this.isOpen = !this.isOpen;
   }
 
   @action
@@ -46,7 +64,7 @@ export default class ListboxComponent extends Component {
     if (event.key === 'ArrowDown') {
       if (!this.isOpen) {
         this.activateBehaviour = ACTIVATE_FIRST;
-        this.open();
+        this.isOpen = true;
       } else {
         this.setNextOptionActive();
       }
@@ -57,7 +75,7 @@ export default class ListboxComponent extends Component {
     } else if (event.key === 'ArrowUp') {
       if (!this.isOpen) {
         this.activateBehaviour = ACTIVATE_LAST;
-        this.open();
+        this.isOpen = true;
       } else {
         this.setPreviousOptionActive();
       }
@@ -70,7 +88,7 @@ export default class ListboxComponent extends Component {
     } else if (event.key === 'End' || event.key === 'PageDown') {
       this.setLastOptionActive();
     } else if (event.key === 'Escape') {
-      this.close();
+      this.isOpen = false;
     }
   }
 
@@ -83,9 +101,9 @@ export default class ListboxComponent extends Component {
       this.activateBehaviour = ACTIVATE_FIRST;
       if (this.isOpen) {
         this.setSelectedOption(undefined, event);
-        this.close();
+        this.isOpen = false;
       } else {
-        this.open();
+        this.isOpen = true;
       }
     } else if (event.key.length === 1) {
       this.addSearchCharacter(event.key);
@@ -96,6 +114,11 @@ export default class ListboxComponent extends Component {
     e.preventDefault();
     if (e.ctrlKey) return;
     this.buttonElement.focus();
+  }
+
+  @action
+  openListbox() {
+    this.isOpen = true;
   }
 
   @action
@@ -181,7 +204,7 @@ export default class ListboxComponent extends Component {
         }
 
         if (e.type === 'click') {
-          this.close();
+          this.isOpen = false;
         }
 
         found = true;
@@ -299,18 +322,5 @@ export default class ListboxComponent extends Component {
         break;
       }
     }
-  }
-
-  open() {
-    this.activeOptionIndex = undefined;
-    this.selectedOptionIndex = undefined;
-    this.optionElements = [];
-    this.optionValues = [];
-    this.isOpen = true;
-  }
-
-  close() {
-    this.isOpen = false;
-    this.buttonElement.focus();
   }
 }
