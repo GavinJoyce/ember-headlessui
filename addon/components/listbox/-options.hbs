@@ -10,10 +10,8 @@
       {{will-destroy @unregisterOptionsElement}}
       {{on 'keypress' @handleKeyPress}}
       {{on 'keydown' @handleKeyDown}}
-      {{focus-trap focusTrapOptions=(hash
-        returnFocusOnDeactivate=true
-        clickOutsideDeactivates=false
-        allowOutsideClick=true
+      {{focus-trap shouldSelfFocus=true focusTrapOptions=(hash
+        allowOutsideClick=@handleClickOutside
         fallbackFocus=(concat '#' @guid)
       )}}
       ...attributes

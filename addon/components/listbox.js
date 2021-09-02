@@ -63,19 +63,15 @@ export default class ListboxComponent extends Component {
 
   @action
   handleClickOutside(e) {
-    if (e.button !== 0) return;
-    this.closeListbox();
-
     for (let i = 0; i < e.path?.length; i++) {
-      if (typeof e.path[i].focus === 'function') {
-        e.path[i].focus();
-      }
-
-      if (document.activeElement === e.path[i]) {
-        e.stopPropagation();
-        break;
+      if (e.path[i] === this.buttonElement) {
+        return true;
       }
     }
+
+    this.closeListbox();
+
+    return true;
   }
 
   @action

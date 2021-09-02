@@ -11,7 +11,6 @@
     aria-expanded={{if (not @isDisabled) (if @isOpen "true" "false")}}
     disabled={{@isDisabled}}
     {{did-insert @registerButtonElement}}
-    {{click-outside @handleClickOutside}}
     ...attributes
   >
     {{yield}}
