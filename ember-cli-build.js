@@ -4,6 +4,15 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
+    autoImport: {
+      webpack: {
+        node: {
+          // Required to import `testdouble` in tests
+          global: true,
+        },
+      },
+    },
+
     postcssOptions: {
       compile: {
         plugins: [

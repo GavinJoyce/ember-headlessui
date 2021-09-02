@@ -1,0 +1,20 @@
+<Transition
+  @show={{@show}}
+  @unmount={{@unmount}}
+  @tagName={{@tagName}}
+  @enter={{@enter}}
+  @enterFrom={{@enterFrom}}
+  @enterTo={{@enterTo}}
+  @leave={{@leave}}
+  @leaveFrom={{@leaveFrom}}
+  @leaveTo={{@leaveTo}}
+  @beforeEnter={{@beforeEnter}}
+  @afterEnter={{@afterEnter}}
+  @beforeLeave={{@beforeLeave}}
+  @afterLeave={{@afterLeave}}
+  {{did-insert @parent.trackDomNode}}
+  {{will-destroy @parent.untrackDomNode}}
+  ...attributes
+>
+  {{yield}}
+</Transition>

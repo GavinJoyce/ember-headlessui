@@ -41,7 +41,8 @@
     "ember-concurrency": "^2.1.0",
     "ember-element-helper": "^0.5.5",
     "ember-focus-trap": "^0.7.0",
-    "ember-truth-helpers": "^3.0.0"
+    "ember-truth-helpers": "^3.0.0",
+    "tracked-maps-and-sets": "^3.0.1"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -95,7 +96,9 @@
     "qunit-wait-for": "^2.0.1",
     "release-it": "^14.8.0",
     "release-it-lerna-changelog": "^3.1.0",
-    "tailwindcss": "^2.2.7"
+    "tailwindcss": "^2.2.7",
+    "testdouble": "^3.16.1",
+    "testdouble-qunit": "^3.0.0"
   },
   "resolutions": {
     "@embroider/core": "^0.43.5",
