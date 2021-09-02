@@ -154,8 +154,7 @@ export default class ListboxComponent extends Component {
   @action
   registerOptionElement(optionComponent, optionElement) {
     this.optionElements.push(optionElement);
-    this.optionValues[optionComponent.guid + '-option'] =
-      optionComponent.args.value;
+    this.optionValues[optionComponent.guid] = optionComponent.args.value;
 
     // store the index at which the option appears in the list
     // so we can avoid a O(n) find operation later
@@ -189,12 +188,9 @@ export default class ListboxComponent extends Component {
   @action
   setActiveOption(optionComponent) {
     this.optionElements.find((o, i) => {
-      if (
-        o.id === optionComponent.guid + '-option' &&
-        !o.hasAttribute('disabled')
-      ) {
+      if (o.id === optionComponent.guid && !o.hasAttribute('disabled')) {
         this.activeOptionIndex = i;
-        document.querySelector('#' + optionComponent.guid + '-option').focus();
+        document.querySelector('#' + optionComponent.guid).focus();
       }
     });
   }

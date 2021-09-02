@@ -1,7 +1,7 @@
 {{#let (element (or @as 'li')) as |Tag|}}
   <Tag
     role='option'
-    id='{{this.guid}}-option'
+    id={{this.guid}}
     tabindex='-1'
     {{did-insert (fn @registerOptionElement this)}}
     {{on 'focus' (fn @setActiveOption this)}}

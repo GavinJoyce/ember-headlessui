@@ -4,7 +4,7 @@ import { guidFor } from '@ember/object/internals';
 import { action } from '@ember/object';
 
 export default class ListboxOptionComponent extends Component {
-  @tracked guid = `${guidFor(this)}-headlessui-listbox`;
+  @tracked guid = `${guidFor(this)}-headlessui-listbox-option`;
 
   @action
   handleClick(e) {
@@ -15,10 +15,10 @@ export default class ListboxOptionComponent extends Component {
   }
 
   get isActiveOption() {
-    return this.args.activeOptionGuid == this.guid + '-option';
+    return this.args.activeOptionGuid == this.guid;
   }
 
   get isSelectedOption() {
-    return this.args.selectedOptionGuid == this.guid + '-option';
+    return this.args.selectedOptionGuid == this.guid;
   }
 }
