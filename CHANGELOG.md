@@ -1,3 +1,13 @@
+## v0.8.0 (2021-09-02)
+
+#### :rocket: Enhancement
+
+- [#68](https://github.com/GavinJoyce/ember-headlessui/pull/68) Implement `Transition` Component ([@alexlafroscia](https://github.com/alexlafroscia))
+
+#### Committers: 1
+
+- Alex LaFroscia ([@alexlafroscia](https://github.com/alexlafroscia))
+
 ## v0.7.0 (2021-08-30)
 
 #### :rocket: Enhancement
