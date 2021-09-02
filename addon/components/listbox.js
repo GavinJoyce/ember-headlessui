@@ -187,7 +187,7 @@ export default class ListboxComponent extends Component {
 
   @action
   setActiveOption(optionComponent) {
-    this.optionElements.find((o, i) => {
+    this.optionElements.forEach((o, i) => {
       if (o.id === optionComponent.guid && !o.hasAttribute('disabled')) {
         this.activeOptionIndex = i;
         document.querySelector('#' + optionComponent.guid).focus();
