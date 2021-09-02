@@ -75,7 +75,7 @@ export default class ListboxComponent extends Component {
   }
 
   @action
-  handleKeyDown(event) {
+  handleKeyUp(event) {
     if (event.key === 'ArrowDown') {
       if (!this.isOpen) {
         this.activateBehaviour = ACTIVATE_FIRST;

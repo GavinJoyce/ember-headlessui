@@ -4,7 +4,8 @@
     for='{{@guid}}-button'
     {{on 'click' @handleLabelClick}}
     {{did-insert @registerLabelElement}}
-    ...attributes>
+    ...attributes
+  >
     {{yield}}
   </Tag>
 {{/let}}

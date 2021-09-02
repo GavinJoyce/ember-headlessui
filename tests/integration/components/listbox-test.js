@@ -547,7 +547,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListboxOption({ selected: true }, options[1]);
 
       // Close/Hide the listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'Escape');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'Escape');
 
       // Re-open the listbox
       await click(getListboxButton());
@@ -1202,7 +1202,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListboxButtonLinkedWithListbox();
 
       // Close listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'Escape');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'Escape');
 
       // Verify it is closed
       assertListboxButton({ state: ListboxState.InvisibleUnmounted });
@@ -1354,7 +1354,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowDown');
 
       // Verify it is visible
       assertListboxButton({ state: ListboxState.Visible });
@@ -1411,15 +1411,15 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
 
       // We should be able to go down once
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowDown');
       assertActiveListboxOption(options[1]);
 
       // We should be able to go down again
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowDown');
       assertActiveListboxOption(options[2]);
 
       // We should NOT be able to go down again (because last option). Current implementation won't go around.
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowDown');
       assertActiveListboxOption(options[2]);
     });
 
@@ -1460,7 +1460,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
 
       // We should be able to go down once
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowDown');
       assertActiveListboxOption(options[2]);
     });
 
@@ -1540,15 +1540,15 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
 
       // We should be able to go right once
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowRight');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowRight');
       assertActiveListboxOption(options[1]);
 
       // We should be able to go right again
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowRight');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowRight');
       assertActiveListboxOption(options[2]);
 
       // We should NOT be able to go right again (because last option). Current implementation won't go around.
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowRight');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowRight');
       assertActiveListboxOption(options[2]);
     });
   });
@@ -1582,7 +1582,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       // Verify it is visible
       assertListboxButton({ state: ListboxState.Visible });
@@ -1630,7 +1630,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Try to open the listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       // Verify it is still closed
       assertListboxButton({
@@ -1668,7 +1668,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       // Verify it is visible
       assertListboxButton({ state: ListboxState.Visible });
@@ -1704,7 +1704,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
       assertListbox({ state: ListboxState.Visible });
       await assertActiveElement(getListbox());
 
@@ -1739,7 +1739,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       // Verify we have listbox options
       let options = getListboxOptions();
@@ -1785,11 +1785,11 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
 
       // We should not be able to go up (because those are disabled)
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
       assertActiveListboxOption(options[2]);
 
       // We should not be able to go down (because this is the last option)
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowDown');
       assertActiveListboxOption(options[2]);
     });
 
@@ -1821,7 +1821,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       // Verify it is visible
       assertListboxButton({ state: ListboxState.Visible });
@@ -1839,15 +1839,15 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
 
       // We should be able to go down once
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
       assertActiveListboxOption(options[1]);
 
       // We should be able to go down again
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
       assertActiveListboxOption(options[0]);
 
       // We should NOT be able to go up again (because first option). Current implementation won't go around.
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
       assertActiveListboxOption(options[0]);
     });
   });
@@ -1881,7 +1881,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       // Verify it is visible
       assertListboxButton({ state: ListboxState.Visible });
@@ -1900,15 +1900,15 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
 
       // We should be able to go left once
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowLeft');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowLeft');
       assertActiveListboxOption(options[1]);
 
       // We should be able to go left again
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowLeft');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowLeft');
       assertActiveListboxOption(options[0]);
 
       // We should NOT be able to go left again (because first option). Current implementation won't go around.
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowLeft');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowLeft');
       assertActiveListboxOption(options[0]);
     });
   });
@@ -1944,7 +1944,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
 
       // We should be able to go to the last option
-      await triggerKeyEvent(document.activeElement, 'keydown', 'End');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'End');
       assertActiveListboxOption(options[2]);
     });
 
@@ -1981,7 +1981,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
 
       // We should be able to go to the last non-disabled option
-      await triggerKeyEvent(document.activeElement, 'keydown', 'End');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'End');
       assertActiveListboxOption(options[1]);
     });
 
@@ -2013,7 +2013,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'End');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'End');
 
       let options = getListboxOptions();
       assertActiveListboxOption(options[0]);
@@ -2047,7 +2047,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'End');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'End');
 
       assertNoActiveListboxOption();
     });
@@ -2084,7 +2084,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
 
       // We should be able to go to the last option
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageDown');
       assertActiveListboxOption(options[2]);
     });
 
@@ -2121,7 +2121,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
 
       // We should be able to go to the last non-disabled option
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageDown');
       assertActiveListboxOption(options[1]);
     });
 
@@ -2153,7 +2153,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageDown');
 
       let options = getListboxOptions();
       assertActiveListboxOption(options[0]);
@@ -2187,7 +2187,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageDown');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageDown');
 
       assertNoActiveListboxOption();
     });
@@ -2216,7 +2216,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       let options = getListboxOptions();
 
@@ -2224,7 +2224,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
 
       // We should be able to go to the first option
-      await triggerKeyEvent(document.activeElement, 'keydown', 'Home');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'Home');
       assertActiveListboxOption(options[0]);
     });
 
@@ -2256,7 +2256,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'Home');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'Home');
 
       let options = getListboxOptions();
 
@@ -2292,7 +2292,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'Home');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'Home');
 
       let options = getListboxOptions();
       assertActiveListboxOption(options[3]);
@@ -2326,7 +2326,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'Home');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'Home');
 
       assertNoActiveListboxOption();
     });
@@ -2355,7 +2355,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       let options = getListboxOptions();
 
@@ -2363,7 +2363,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
 
       // We should be able to go to the first option
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageUp');
       assertActiveListboxOption(options[0]);
     });
 
@@ -2395,7 +2395,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageUp');
 
       let options = getListboxOptions();
 
@@ -2431,7 +2431,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageUp');
 
       let options = getListboxOptions();
       assertActiveListboxOption(options[3]);
@@ -2465,7 +2465,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
 
       // We should not be able to go to the end
-      await triggerKeyEvent(document.activeElement, 'keydown', 'PageUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'PageUp');
 
       assertNoActiveListboxOption();
     });
@@ -2518,7 +2518,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       let options = getListboxOptions();
 
@@ -2554,7 +2554,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       let options = getListboxOptions();
 
@@ -2590,7 +2590,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       let options = getListboxOptions();
 
@@ -2620,7 +2620,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       getListboxButton()?.focus();
 
       // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keydown', 'ArrowUp');
+      await triggerKeyEvent(document.activeElement, 'keyup', 'ArrowUp');
 
       let options = getListboxOptions();
 
@@ -3267,12 +3267,10 @@ module('Integration | Component | <Listbox>', function (hooks) {
     });
 
     test('should be possible to click a disabled listbox option, which is a no-op', async function (assert) {
-      let callValue = '',
-        callCount = 0;
+      let callCount = 0;
 
       this.set('onChange', (value) => {
         this.set('selectedOption', value);
-        callValue = value;
         callCount++;
       });
 

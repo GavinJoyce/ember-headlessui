@@ -771,8 +771,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
 
 function assertListbox(
   { state, attributes, textContent },
-  listbox = getListbox(),
-  button = getListboxButton()
+  listbox = getListbox()
 ) {
   try {
     switch (state) {

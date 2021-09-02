@@ -6,9 +6,9 @@
     aria-controls={{@guid}}
     aria-labelledby='{{@guid}}-label {{@guid}}-button'
     {{on 'click' @handleButtonClick}}
-    {{on 'keydown' @handleKeyDown}}
+    {{on 'keyup' @handleKeyUp}}
     {{on 'keypress' @handleKeyPress}}
-    aria-expanded={{if (not @isDisabled) (if @isOpen "true" "false")}}
+    aria-expanded={{unless @isDisabled (if @isOpen 'true' 'false')}}
     disabled={{@isDisabled}}
     {{did-insert @registerButtonElement}}
     ...attributes
