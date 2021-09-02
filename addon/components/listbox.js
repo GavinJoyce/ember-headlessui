@@ -13,7 +13,7 @@ export default class ListboxComponent extends Component {
   activateBehaviour = ACTIVATE_NONE;
   buttonElement;
   guid = `${guidFor(this)}-headlessui-listbox`;
-  @tracked _isOpen = false;
+  @tracked _isOpen = this.args.isOpen || false;
   labelElement;
   optionsElement;
   optionElements = [];
