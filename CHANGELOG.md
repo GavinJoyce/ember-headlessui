@@ -1,3 +1,13 @@
+## v0.9.0 (2021-09-03)
+
+#### :rocket: Enhancement
+
+- [#76](https://github.com/GavinJoyce/ember-headlessui/pull/76) ✨ Implement `<Listbox />` component ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+
+#### Committers: 1
+
+- David McNamara ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+
 ## v0.8.0 (2021-09-02)
 
 #### :rocket: Enhancement
