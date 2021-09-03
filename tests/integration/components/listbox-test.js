@@ -278,6 +278,27 @@ module('Integration | Component | <Listbox>', function (hooks) {
       });
       await assertActiveElement(getListbox());
     });
+
+    test('should be possible to always render the Listbox.Options if we provide it a `static` prop', async (assert) => {
+      await render(hbs`
+        <Listbox as |listbox|>
+          <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+          <listbox.Options @static={{true}} as |options|>
+            <options.Option @value="a">Option A</options.Option>
+            <options.Option @value="b">Option B</options.Option>
+            <options.Option @value="c">Option C</options.Option>
+          </listbox.Options>
+        </Listbox>
+      `);
+
+      // Let's verify that the Listbox is already there
+      assert.dom(getListbox()).exists();
+    });
+
+    todo(
+      'should be possible to use a different render strategy for the Listbox.Options',
+      async () => {}
+    );
   });
 
   module('<listbox.Option>', () => {
@@ -496,73 +517,10 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should be possible to open the listbox with Enter, and focus the selected option (when using the `hidden` render strategy)', async (assert) => {
-      await render(hbs`
-        <Listbox @value="b" as |listbox|>
-           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
-           <listbox.Options data-test="headlessui-listbox-options-1" as |options|>
-             <options.Option @value="a">
-               Option A
-             </options.Option>
-             <options.Option @value="b">
-               Option B
-             </options.Option>
-             <options.Option @value="c">
-               Option C
-             </options.Option>
-           </listbox.Options>
-         </Listbox>
-      `);
-
-      assertListboxButton({
-        state: ListboxState.InvisibleHidden,
-        attributes: { 'data-test': 'headlessui-listbox-button-1' },
-      });
-      assertListbox({ state: ListboxState.InvisibleHidden });
-
-      // Focus the button
-      getListboxButton()?.focus();
-
-      // Open listbox
-      await triggerKeyEvent(document.activeElement, 'keypress', 'Enter');
-
-      // Verify it is visible
-      assertListboxButton({ state: ListboxState.Visible });
-      assertListbox({
-        state: ListboxState.Visible,
-        attributes: { 'data-test': 'headlessui-listbox-options-1' },
-      });
-      await assertActiveElement(getListbox());
-      assertListboxButtonLinkedWithListbox();
-
-      let options = getListboxOptions();
-
-      // Hover over Option A
-      await triggerEvent(options[0], 'mouseover');
-
-      // Verify that Option A is active
-      assertActiveListboxOption(options[0]);
-
-      // Verify that Option B is still selected
-      assertListboxOption({ selected: true }, options[1]);
-
-      // Close/Hide the listbox
-      await triggerKeyEvent(document.activeElement, 'keyup', 'Escape');
-
-      // Re-open the listbox
-      await click(getListboxButton());
-
-      options = getListboxOptions();
-
-      // Verify we have listbox options
-      assert.equal(options.length, 3);
-      options.forEach((option, i) =>
-        assertListboxOption({ selected: i === 1 }, option)
-      );
-
-      // Verify that the second listbox option is active (because it is already selected)
-      assertActiveListboxOption(options[1]);
-    });
+    todo(
+      'should be possible to open the listbox with Enter, and focus the selected option (when using the `hidden` render strategy)',
+      async () => {}
+    );
 
     test('should be possible to open the listbox with Enter, and focus the selected option (with a list of objects)', async function (assert) {
       this.set('myOptions', [

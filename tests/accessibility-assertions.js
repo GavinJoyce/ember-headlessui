@@ -771,10 +771,29 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
 
 function assertListbox(
   { state, attributes, textContent },
-  listbox = getListbox()
+  listbox = getListbox(),
+  orientation = 'vertical'
 ) {
   try {
     switch (state) {
+      case ListboxState.InvisibleHidden: {
+        if (listbox === null) return Qunit.assert.dom(listbox).exists();
+
+        assertHidden(listbox);
+
+        Qunit.assert.dom(listbox).hasAria('labelledby');
+        Qunit.assert.dom(listbox).hasAria('orientation', orientation);
+        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+        break;
+      }
       case ListboxState.InvisibleUnmounted: {
         Qunit.assert.dom(listbox).doesNotExist();
         break;
@@ -784,6 +803,7 @@ function assertListbox(
         Qunit.assert.dom(listbox).exists();
 
         Qunit.assert.dom(listbox).hasAria('labelledby', { any: true });
+        Qunit.assert.dom(listbox).hasAttribute('aria-orientation', orientation);
         Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
 
         if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
