@@ -26,6 +26,30 @@ function getDialogOverlays() {
   );
 }
 
+function getListboxButton() {
+  return document.querySelector('[role="button"]');
+}
+
+function getListboxButtons() {
+  return Array.from(document.querySelectorAll('[role="button"]'));
+}
+
+function getListboxLabel() {
+  return document.querySelector('[id$="-headlessui-listbox-label"]');
+}
+
+function getListboxOptions() {
+  return Array.from(document.querySelectorAll('[role="option"]'));
+}
+
+function getListbox() {
+  return document.querySelector('[role="listbox"]');
+}
+
+function getListboxes() {
+  return Array.from(document.querySelectorAll('[role="listbox"]'));
+}
+
 const DialogState = {
   /** The dialog is visible to the user. */
   Visible: 'Visible',
@@ -34,6 +58,12 @@ const DialogState = {
   InvisibleHidden: 'InvisibleHidden',
 
   /** The dialog is **not** visible to the user. It's not in the DOM, it is unmounted. */
+  InvisibleUnmounted: 'InvisibleUnmounted',
+};
+
+const ListboxState = {
+  Visible: 'Visible',
+  InvisibleHidden: 'InvisibleHidden',
   InvisibleUnmounted: 'InvisibleUnmounted',
 };
 
@@ -527,8 +557,276 @@ function getByText(text) {
   return null;
 }
 
+function assertListboxButton(
+  { state, attributes, textContent },
+  button = getListboxButton()
+) {
+  try {
+    if (button === null) return Qunit.assert.ok(button);
+    Qunit.assert.dom(button).hasAttribute('id');
+    Qunit.assert.dom(button).hasAria('haspopup', 'listbox');
+    if (textContent) {
+      Qunit.assert.dom(button).hasText(textContent);
+    }
+    switch (state) {
+      case ListboxState.InvisibleUnmounted: {
+        Qunit.assert.dom(button).doesNotHaveAria('listbox');
+        if (button.hasAttribute('disabled')) {
+          Qunit.assert.dom(button).doesNotHaveAria('expanded');
+          Qunit.assert.dom(button).isDisabled();
+        } else {
+          Qunit.assert.dom(button).hasAria('expanded', 'false');
+        }
+        break;
+      }
+      case ListboxState.Visible: {
+        Qunit.assert.dom(button).hasAria('controls', { any: true });
+        Qunit.assert.dom(button).hasAria('expanded', 'true');
+        break;
+      }
+      default:
+        Qunit.assert.ok(
+          state,
+          'you have to provide state to assertListboxButton'
+        );
+    }
+
+    for (let attributeName in attributes) {
+      Qunit.assert
+        .dom(button)
+        .hasAttribute(attributeName, attributes[attributeName]);
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertListboxButton);
+    throw err;
+  }
+}
+
+function assertListboxLabelLinkedWithListbox(
+  label = getListboxLabel(),
+  listbox = getListbox()
+) {
+  try {
+    if (label === null) return Qunit.assert.ok(label);
+    if (listbox === null) return Qunit.assert.ok(listbox);
+
+    Qunit.assert
+      .dom(listbox)
+      .hasAttribute('aria-labelledby', label.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertListboxLabelLinkedWithListbox);
+    throw err;
+  }
+}
+
+function assertListboxButtonLinkedWithListbox(
+  button = getListboxButton(),
+  listbox = getListbox()
+) {
+  try {
+    if (button === null) return Qunit.assert.ok(button);
+    if (listbox === null) return Qunit.assert.ok(listbox);
+
+    // Ensure link between button & listbox is correct
+    Qunit.assert
+      .dom(button)
+      .hasAttribute('aria-controls', listbox.getAttribute('id'));
+    Qunit.assert
+      .dom(listbox)
+      .hasAttribute('aria-labelledby', button.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertListboxButtonLinkedWithListbox);
+    throw err;
+  }
+}
+
+function assertActiveListboxOption(item, listbox = getListbox()) {
+  try {
+    if (item === null) return Qunit.assert.ok(item);
+    if (listbox === null) return Qunit.assert.ok(listbox);
+
+    // Ensure link between listbox & listbox item is correct
+    Qunit.assert
+      .dom(listbox)
+      .hasAttribute('aria-activedescendant', item.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertActiveListboxOption);
+    throw err;
+  }
+}
+
+function assertNoActiveListboxOption(listbox = getListbox()) {
+  try {
+    if (listbox === null) return Qunit.assert.ok(listbox);
+
+    // Ensure we don't have an active listbox
+    Qunit.assert.dom(listbox).doesNotHaveAttribute('aria-activedescendant');
+  } catch (err) {
+    Error.captureStackTrace(err, assertNoActiveListboxOption);
+    throw err;
+  }
+}
+
+function assertNoSelectedListboxOption(items = getListboxOptions()) {
+  try {
+    for (let item of items)
+      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+  } catch (err) {
+    Error.captureStackTrace(err, assertNoSelectedListboxOption);
+    throw err;
+  }
+}
+
+function assertListboxButtonLinkedWithListboxLabel(
+  button = getListboxButton(),
+  label = getListboxLabel()
+) {
+  try {
+    if (button === null) return Qunit.assert.ok(button);
+    if (label === null) return Qunit.assert.ok(label);
+
+    // Ensure link between button & label is correct
+    Qunit.assert
+      .dom(button)
+      .hasAttribute('aria-labelledby', `${label.id} ${button.id}`);
+  } catch (err) {
+    Error.captureStackTrace(err, assertListboxButtonLinkedWithListboxLabel);
+    throw err;
+  }
+}
+
+function assertListboxLabel(
+  { attributes, tag, textContent },
+  label = getListboxLabel()
+) {
+  try {
+    if (label === null) return Qunit.assert.ok(label);
+
+    // Ensure menu button have these properties
+    Qunit.assert.dom(label).hasAttribute('id');
+
+    if (textContent) {
+      Qunit.assert.dom(label).hasText(textContent);
+    }
+
+    if (tag) {
+      Qunit.assert.dom(label).hasTagName(tag);
+    }
+
+    // Ensure menu button has the following attributes
+    for (let attributeName in attributes) {
+      Qunit.assert
+        .dom(label)
+        .hasAttribute(attributeName, attributes[attributeName]);
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertListboxLabel);
+    throw err;
+  }
+}
+
+export function assertListboxOption({ tag, attributes, selected }, item) {
+  try {
+    if (item === null) return Qunit.assert.notOk(item);
+
+    // Check that some attributes exists, doesn't really matter what the values are at this point in
+    // time, we just require them.
+    Qunit.assert.dom(item).hasAttribute('id');
+
+    // Check that we have the correct values for certain attributes
+    Qunit.assert.dom(item).hasAttribute('role', 'option');
+    if (!item.getAttribute('aria-disabled'))
+      Qunit.assert.dom(item).hasAttribute('tabindex', '-1');
+
+    // Ensure listbox button has the following attributes
+    if (!tag && !attributes && !selected) return;
+
+    for (let attributeName in attributes) {
+      Qunit.assert
+        .dom(item)
+        .hasAttribute(attributeName, attributes[attributeName]);
+    }
+
+    if (tag) {
+      Qunit.assert.dom(item).hasTagName(tag);
+    }
+
+    if (selected != null) {
+      switch (selected) {
+        case true:
+          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
+
+        case false:
+          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+
+        default:
+          Qunit.assert.ok();
+      }
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertListboxOption);
+    throw err;
+  }
+}
+
+function assertListbox(
+  { state, attributes, textContent },
+  listbox = getListbox(),
+  orientation = 'vertical'
+) {
+  try {
+    switch (state) {
+      case ListboxState.InvisibleHidden: {
+        if (listbox === null) return Qunit.assert.dom(listbox).exists();
+
+        assertHidden(listbox);
+
+        Qunit.assert.dom(listbox).hasAria('labelledby');
+        Qunit.assert.dom(listbox).hasAria('orientation', orientation);
+        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+        break;
+      }
+      case ListboxState.InvisibleUnmounted: {
+        Qunit.assert.dom(listbox).doesNotExist();
+        break;
+      }
+      case ListboxState.Visible: {
+        // Qunit.assert.dom(listbox).isVisible();
+        Qunit.assert.dom(listbox).exists();
+
+        Qunit.assert.dom(listbox).hasAria('labelledby', { any: true });
+        Qunit.assert.dom(listbox).hasAttribute('aria-orientation', orientation);
+        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+        break;
+      }
+      default:
+        Qunit.assert.ok(state, 'you have to provide state to assertListbox');
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertListbox);
+    throw err;
+  }
+}
+
 export {
   DialogState,
+  ListboxState,
   assertDialog,
   assertDialogDescription,
   assertDialogOverlay,
@@ -539,4 +837,19 @@ export {
   getDialogOverlays,
   assertActiveElement,
   getByText,
+  assertListboxButton,
+  assertListboxButtonLinkedWithListbox,
+  assertListboxButtonLinkedWithListboxLabel,
+  assertListboxLabel,
+  assertListboxLabelLinkedWithListbox,
+  assertActiveListboxOption,
+  assertNoActiveListboxOption,
+  assertNoSelectedListboxOption,
+  getListboxOptions,
+  assertListbox,
+  getListbox,
+  getListboxes,
+  getListboxButton,
+  getListboxButtons,
+  getListboxLabel,
 };

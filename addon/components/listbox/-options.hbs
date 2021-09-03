@@ -1,0 +1,41 @@
+{{#if (or @isOpen @static)}}
+  {{#let (element (or @as 'ul')) as |Tag|}}
+    <Tag
+      id={{@guid}}
+      tabindex='0'
+      role='listbox'
+      aria-labelledby={{if
+        @hasLabelElement
+        (concat @guid '-label')
+        (concat @guid '-button')
+      }}
+      aria-activedescendant={{@activeOptionGuid}}
+      aria-orientation='vertical'
+      {{did-insert @registerOptionsElement}}
+      {{will-destroy @unregisterOptionsElement}}
+      {{on 'keypress' @handleKeyPress}}
+      {{on 'keyup' @handleKeyUp}}
+      {{focus-trap
+        shouldSelfFocus=true
+        focusTrapOptions=(hash
+          allowOutsideClick=@handleClickOutside fallbackFocus=(concat '#' @guid)
+        )
+      }}
+      ...attributes
+    >
+      {{yield
+        (hash
+          Option=(component
+            'listbox/-option'
+            registerOptionElement=@registerOptionElement
+            activeOptionGuid=@activeOptionGuid
+            selectedOptionGuid=@selectedOptionGuid
+            setActiveOption=@setActiveOption
+            unsetActiveOption=@unsetActiveOption
+            setSelectedOption=@setSelectedOption
+          )
+        )
+      }}
+    </Tag>
+  {{/let}}
+{{/if}}
