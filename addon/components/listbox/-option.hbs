@@ -8,10 +8,7 @@
     {{on 'mouseover' (fn @setActiveOption this)}}
     {{on 'mouseout' @unsetActiveOption}}
     {{on 'click' this.handleClick}}
-    aria-selected={{if
-      this.isSelectedOption
-      (if this.isSelectedOption 'true' 'false')
-    }}
+    aria-selected={{if this.isSelectedOption 'true'}}
     disabled={{if @disabled true false}}
     ...attributes
   >
