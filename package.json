@@ -41,6 +41,7 @@
     "ember-concurrency": "^2.1.0",
     "ember-element-helper": "^0.5.5",
     "ember-focus-trap": "^0.7.0",
+    "ember-set-helper": "^2.0.1",
     "ember-truth-helpers": "^3.0.0",
     "tracked-maps-and-sets": "^3.0.1"
   },
@@ -73,7 +74,6 @@
     "ember-page-title": "^6.2.1",
     "ember-qunit": "^5.1.4",
     "ember-resolver": "^8.0.2",
-    "ember-simple-set-helper": "^0.1.2",
     "ember-source": "~3.28.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^3.5.1",
