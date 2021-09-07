@@ -2,7 +2,7 @@
   <button
     type='button'
     class='inline-flex items-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-    {{on 'click' (set this.isOpen true)}}
+    {{on 'click' (set this 'isOpen' true)}}
   >
     Open dialog
   </button>
@@ -11,7 +11,7 @@
     class='fixed inset-0 z-10 overflow-y-auto'
     @as='div'
     @isOpen={{this.isOpen}}
-    @onClose={{set this.isOpen false}}
+    @onClose={{set this 'isOpen' false}}
     as |dialog|
   >
     <div

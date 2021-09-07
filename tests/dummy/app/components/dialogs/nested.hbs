@@ -23,17 +23,17 @@
         <button
           type='button'
           class='inline-flex items-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-          {{on 'click' (set this.value true)}}
+          {{on 'click' (set this 'value' true)}}
         >Open {{inc @level}} a</button>
         <button
           type='button'
           class='inline-flex items-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-          {{on 'click' (set this.value true)}}
+          {{on 'click' (set this 'value' true)}}
         >Open {{inc @level}} b</button>
         <button
           type='button'
           class='inline-flex items-center px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-          {{on 'click' (set this.value true)}}
+          {{on 'click' (set this 'value' true)}}
         >Open {{inc @level}} c</button>
       </div>
 
@@ -41,7 +41,7 @@
   </div>
   <Dialogs::Nested
     @isOpen={{this.value}}
-    @onClose={{set this.value false}}
+    @onClose={{set this 'value' false}}
     @level={{inc @level}}
   />
 </Dialog>

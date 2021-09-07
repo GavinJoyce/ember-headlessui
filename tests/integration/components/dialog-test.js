@@ -160,10 +160,10 @@ module('Integration | Component | <Dialog>', function (hooks) {
         this.set('isOpen', false);
 
         await render(hbs`
-          <button id="trigger" type="button" {{on "click" (set this.isOpen true)}}>
+          <button id="trigger" type="button" {{on "click" (set this "isOpen" true)}}>
             Trigger
           </button>
-          <Dialog @isOpen={{this.isOpen}} @onClose={{set this.isOpen false}}>
+          <Dialog @isOpen={{this.isOpen}} @onClose={{set this "isOpen" false}}>
             <pre>Hello</pre>
             <div tabindex="0"></div>
           </Dialog>
@@ -180,13 +180,13 @@ module('Integration | Component | <Dialog>', function (hooks) {
         this.set('isOpen', false);
 
         await render(hbs`
-          <button id="trigger" type="button" {{on "click" (set this.isOpen true)}}>
+          <button id="trigger" type="button" {{on "click" (set this "isOpen" true)}}>
             Trigger
           </button>
           <Dialog
             class="relative bg-blue-500"
             @isOpen={{this.isOpen}}
-            @onClose={{set this.isOpen false}}
+            @onClose={{set this "isOpen" false}}
           >
             <div tabindex="0"></div>
           </Dialog>
@@ -225,13 +225,13 @@ module('Integration | Component | <Dialog>', function (hooks) {
         this.set('isOpen', false);
 
         await render(hbs`
-          <button id="trigger" type="button" {{on "click" (set this.isOpen true)}}>
+          <button id="trigger" type="button" {{on "click" (set this "isOpen" true)}}>
             Trigger
           </button>
           <Dialog
             class="relative bg-blue-500"
             @isOpen={{this.isOpen}}
-            @onClose={{set this.isOpen false}}
+            @onClose={{set this "isOpen" false}}
             as |d|
           >
             <d.Overlay>Hello</d.Overlay>
@@ -316,11 +316,11 @@ module('Integration | Component | <Dialog>', function (hooks) {
         this.set('isOpen', false);
 
         await render(hbs`
-          <button type="button" {{on "click" (set this.isOpen true)}}>
+          <button type="button" {{on "click" (set this "isOpen" true)}}>
             Trigger
           </button>
 
-          <Dialog @isOpen={{this.isOpen}} @onClose={{set this.isOpen false}}>
+          <Dialog @isOpen={{this.isOpen}} @onClose={{set this "isOpen" false}}>
             Hello
             <div tabindex="0"></div>
           </Dialog>
@@ -347,11 +347,11 @@ module('Integration | Component | <Dialog>', function (hooks) {
       this.set('isOpen', false);
 
       await render(hbs`
-        <button type="button" {{on "click" (set this.isOpen true)}}>
+        <button type="button" {{on "click" (set this "isOpen" true)}}>
           Trigger
         </button>
 
-        <Dialog @isOpen={{this.isOpen}} @onClose={{set this.isOpen false}} as |d|>
+        <Dialog @isOpen={{this.isOpen}} @onClose={{set this "isOpen" false}} as |d|>
           <d.Overlay />
           Contents
           <div tabindex="0"></div>
@@ -371,11 +371,11 @@ module('Integration | Component | <Dialog>', function (hooks) {
       this.set('isOpen', false);
 
       await render(hbs`
-        <button type="button" {{on "click" (set this.isOpen true)}}>
+        <button type="button" {{on "click" (set this "isOpen" true)}}>
           Trigger
         </button>
 
-        <Dialog @isOpen={{this.isOpen}} @onClose={{set this.isOpen false}}>
+        <Dialog @isOpen={{this.isOpen}} @onClose={{set this "isOpen" false}}>
           Contents
           <div tabindex="0"></div>
         </Dialog>
@@ -409,7 +409,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
       await render(hbs`
         {{!-- template-lint-disable no-invalid-interactive  --}}
         <div {{on "click" this.wrapperFn}}>
-          <Dialog @isOpen={{this.isOpen}} @onClose={{set this.isOpen false}} as |d|>
+          <Dialog @isOpen={{this.isOpen}} @onClose={{set this "isOpen" false}} as |d|>
             Contents
             <d.Overlay />
             <div tabindex="0"></div>
@@ -469,7 +469,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
         <div {{on "click" this.wrapperFn}}>
           <Dialog
             @isOpen={{this.isOpen}}
-            @onClose={{set this.isOpen false}}
+            @onClose={{set this "isOpen" false}}
             as |dialog|
           >
             Contents
@@ -514,12 +514,12 @@ module('Integration | Component | <Dialog>', function (hooks) {
         await render(hbs`
           <button
             type="button"
-            {{on 'click' (set this.isOpen true)}}>
+            {{on 'click' (set this "isOpen" true)}}>
             Open 1
           </button>
           <Dialogs::Nested
             @isOpen={{this.isOpen}}
-            @onClose={{set this.isOpen false}}
+            @onClose={{set this "isOpen" false}}
             @level={{1}}
           />
         `);
@@ -767,12 +767,12 @@ module('Integration | Component | <Dialog>', function (hooks) {
       this.set('isOpen', false);
 
       await render(hbs`
-        <button id='trigger' type="button" {{on "click" (set this.isOpen true)}}>
+        <button id='trigger' type="button" {{on "click" (set this "isOpen" true)}}>
           Trigger
         </button>
         <Dialog
           @isOpen={{this.isOpen}}
-          @onClose={{set this.isOpen false}}
+          @onClose={{set this "isOpen" false}}
           @initialFocus='[data-test-focused-button]'
         >
           <input type="text" value="first">
