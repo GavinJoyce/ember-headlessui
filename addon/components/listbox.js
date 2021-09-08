@@ -234,11 +234,10 @@ export default class ListboxComponent extends Component {
   }
 
   setNextOptionActive() {
-    for (
-      let i = this.activeOptionIndex + 1;
-      i < this.optionElements.length;
-      i++
-    ) {
+    let nextActiveOptionIndex =
+      this.activeOptionIndex !== undefined ? this.activeOptionIndex + 1 : 0;
+
+    for (let i = nextActiveOptionIndex; i < this.optionElements.length; i++) {
       if (!this.optionElements[i].hasAttribute('disabled')) {
         this.activeOptionIndex = i;
         break;
@@ -247,7 +246,12 @@ export default class ListboxComponent extends Component {
   }
 
   setPreviousOptionActive() {
-    for (let i = this.activeOptionIndex - 1; i >= 0; i--) {
+    let previousActiveOptionIndex =
+      this.activeOptionIndex !== undefined
+        ? this.activeOptionIndex - 1
+        : this.optionElements.length - 1;
+
+    for (let i = previousActiveOptionIndex; i >= 0; i--) {
       if (!this.optionElements[i].hasAttribute('disabled')) {
         this.activeOptionIndex = i;
         break;
