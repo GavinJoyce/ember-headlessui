@@ -28,6 +28,7 @@ import {
   getListbox,
   getListboxes,
 } from '../../accessibility-assertions';
+import Component from '@glimmer/component';
 
 async function typeWord(word) {
   word.split('').forEach((char) => {
@@ -372,10 +373,73 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox composition', () => {
-    todo(
-      'test should be possible to wrap the Listbox.Options with a Transition component',
-      async function () {}
-    );
+    test('test should be possible to wrap the Listbox.Options with a Transition component', async function (assert) {
+      let order = [];
+
+      this.set('orderFn', (value) => {
+        order.push(value);
+      });
+
+      this.owner.register(
+        'component:debug',
+        class DebugComponent extends Component {
+          constructor() {
+            super(...arguments);
+            this.args.fn('Mounting - ' + this.args.name);
+          }
+
+          willDestroy() {
+            this.args.fn('Unmounting - ' + this.args.name);
+          }
+        }
+      );
+
+      await render(hbs`
+        <Listbox as |listbox|>
+           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+           <Debug @name="Listbox" @fn={{this.orderFn}}/>
+           <Transition @show={{listbox.isOpen}}>
+             <Debug @name="Transition" @fn={{this.orderFn}}/>
+             <listbox.Options
+               @isOpen={{true}}
+               as |options|>
+               <options.Option as |option|>
+                 {{option.active}} {{option.selected}} {{option.disabled}}
+                 <Debug @name="Listbox.Option" @fn={{this.orderFn}}/>
+               </options.Option>
+             </listbox.Options>
+            </Transition>
+         </Listbox>
+      `);
+
+      assertListboxButton({
+        state: ListboxState.InvisibleUnmounted,
+        attributes: { 'data-test': 'headlessui-listbox-button-1' },
+      });
+      assertListbox({ state: ListboxState.InvisibleUnmounted });
+
+      await click(getListboxButton());
+
+      assertListboxButton({
+        state: ListboxState.Visible,
+        attributes: { 'data-test': 'headlessui-listbox-button-1' },
+      });
+      assertListbox({
+        state: ListboxState.Visible,
+        textContent: 'false false false',
+      });
+
+      await click(getListboxButton());
+
+      // Verify that we tracked the `mounts` and `unmounts` in the correct order
+      assert.deepEqual(order, [
+        'Mounting - Listbox',
+        'Mounting - Transition',
+        'Mounting - Listbox.Option',
+        'Unmounting - Transition',
+        'Unmounting - Listbox.Option',
+      ]);
+    });
   });
 
   module('Listbox keyboard actions', () => {
