@@ -246,6 +246,32 @@ module('Integration | Component | transition', function (hooks) {
         // Make sure the rendering process is complete before finishing the test
         await renderComplete;
       });
+
+      test('should be possible to passthrough the enter classes and immediately apply the enter transitions when appear is set to true on Child component', async function (assert) {
+        // NOTE: We must *not* await rendering; the transition will have completed by the time it resolves
+        const renderComplete = render(hbs`
+          <Transition
+            @show={{true}}
+          as |t|>
+            <t.Child
+              @appear={{true}}
+              @enter="enter"
+              @enterFrom="enter-from"
+              data-test-transition
+            >
+              Children
+            </t.Child>
+          </Transition>
+        `);
+
+        await assert.waitFor(() => {
+          assert.dom('[data-test-transition]').hasClass('enter');
+          assert.dom('[data-test-transition]').hasClass('enter-from');
+        });
+
+        // Make sure the rendering process is complete before finishing the test
+        await renderComplete;
+      });
     });
   });
 
