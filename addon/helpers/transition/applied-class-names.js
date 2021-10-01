@@ -1,5 +1,7 @@
 import Helper from '@ember/component/helper';
+
 import { dropTask, timeout } from 'ember-concurrency';
+
 import {
   ClassNameSet,
   splitClassNames,

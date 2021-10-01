@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask, timeout } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
+
+import { restartableTask, timeout } from 'ember-concurrency';
 
 export default class Menu extends Component {
   guid = `${guidFor(this)}-tailwindui-menu`;

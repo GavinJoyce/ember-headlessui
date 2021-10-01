@@ -2,17 +2,18 @@
 //      We should endevour to have a similar test suite to it:
 //      https://github.com/tailwindlabs/headlessui/blob/412cc950aa7545c1d78ac0791ae136fa9c15294a/packages/%40headlessui-vue/src/components/menu/menu.test.tsx
 
-import QUnit, { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import {
   click,
-  render,
   find,
   findAll,
+  render,
   triggerEvent,
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import QUnit, { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 function getMenu() {
@@ -85,7 +86,7 @@ async function type(selector, value) {
 module('Integration | Component | <Menu>', (hooks) => {
   setupRenderingTest(hooks);
 
-  test('it renders', async (assert) => {
+  test('it renders', async function (assert) {
     await render(hbs`
       <Menu as |menu|>
         <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -104,7 +105,7 @@ module('Integration | Component | <Menu>', (hooks) => {
     assertMenuItemsAreCollaped('[data-test-menu-items]');
   });
 
-  test('controlling open/close programmatically', async (assert) => {
+  test('controlling open/close programmatically', async function (assert) {
     await render(hbs`
       <Menu as |menu|>
         <button data-test-open {{on 'click' menu.open}}>Open</button>
@@ -129,7 +130,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
   module('Rendering', () => {
     module('Menu', () => {
-      test('Menu yields an object', async (assert) => {
+      test('Menu yields an object', async function (assert) {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger {{if menu.isOpen "visible" "hidden" }}</menu.Button>
@@ -202,7 +203,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
   module('Keyboard interactions', function () {
     module('`Enter` key', function () {
-      test('it should be possible to open the menu with Enter', async (assert) => {
+      test('it should be possible to open the menu with Enter', async function (assert) {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -244,7 +245,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
-      test('it should have no active menu item when there are no menu items at all', async () => {
+      test('it should have no active menu item when there are no menu items at all', async function () {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -261,7 +262,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertNoActiveMenuItem();
       });
 
-      test('it should focus the first non disabled menu item when opening with Enter', async () => {
+      test('it should focus the first non disabled menu item when opening with Enter', async function () {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -294,7 +295,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[1]);
       });
 
-      test('it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)', async () => {
+      test('it should focus the first non disabled menu item when opening with Enter (jump over multiple disabled ones)', async function () {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -456,7 +457,7 @@ module('Integration | Component | <Menu>', (hooks) => {
     });
 
     module('`Space` key', function () {
-      test('it should be possible to open the menu with Space', async (assert) => {
+      test('it should be possible to open the menu with Space', async function (assert) {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -552,7 +553,7 @@ module('Integration | Component | <Menu>', (hooks) => {
     // - it should have no active menu item upon PageUp key press, when there are no non-disabled menu items
 
     module('`Any` key aka search', function () {
-      test('it should be possible to type a full word that has a perfect match', async () => {
+      test('it should be possible to type a full word that has a perfect match', async function () {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -579,7 +580,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[1]);
       });
 
-      test('it should be possible to type a partial of a word', async () => {
+      test('it should be possible to type a partial of a word', async function () {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -610,7 +611,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
-      test('it should be possible to type words with spaces', async () => {
+      test('it should be possible to type words with spaces', async function () {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -641,7 +642,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
-      test('it should not be possible to search for a disabled item', async () => {
+      test('it should not be possible to search for a disabled item', async function () {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -668,7 +669,7 @@ module('Integration | Component | <Menu>', (hooks) => {
     });
 
     module('Mouse interactions', function () {
-      test('it should be possible to open and close a menu on click', async (assert) => {
+      test('it should be possible to open and close a menu on click', async function (assert) {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -708,7 +709,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
       // - it should focus the menu when you try to focus the button again (when the menu is already open)
       // - it should be a no-op when we click outside of a closed menu
-      test('it should be possible to click outside of the menu which should close the menu', async (assert) => {
+      test('it should be possible to click outside of the menu which should close the menu', async function (assert) {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>

@@ -1,4 +1,5 @@
 import { module, test } from 'qunit';
+
 import { rawTimeout as timeout } from 'ember-concurrency';
 import {
   ClassNameSet,

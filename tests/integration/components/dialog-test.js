@@ -1,5 +1,3 @@
-import { module, test, todo } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import {
   click,
   render,
@@ -7,22 +5,24 @@ import {
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import userEvent from '@testing-library/user-event';
+import { module, test, todo } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
+import userEvent from '@testing-library/user-event';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 import {
-  DialogState,
+  assertActiveElement,
   assertDialog,
   assertDialogDescription,
   assertDialogOverlay,
   assertDialogTitle,
+  DialogState,
+  getByText,
   getDialog,
-  getDialogs,
   getDialogOverlay,
   getDialogOverlays,
-  assertActiveElement,
-  getByText,
+  getDialogs,
 } from '../../accessibility-assertions';
 
 module('Integration | Component | <Dialog>', function (hooks) {
