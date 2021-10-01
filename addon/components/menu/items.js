@@ -17,8 +17,12 @@ export default class Items extends Component {
         this.args.closeMenu();
         break;
       case 'ArrowDown':
+        event.preventDefault();
+        event.stopPropagation();
         return this.args.goToNextItem();
       case 'ArrowUp':
+        event.preventDefault();
+        event.stopPropagation();
         return this.args.goToPreviousItem();
       default:
         if (event.key.length === 1) {
