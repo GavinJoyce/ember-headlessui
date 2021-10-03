@@ -1,5 +1,5 @@
-import Service from '@ember/service';
 import { action } from '@ember/object';
+import Service from '@ember/service';
 
 export default class DialogStackProviderService extends Service {
   stack = [];

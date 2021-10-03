@@ -1,5 +1,3 @@
-import { module, test, todo } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import {
   click,
   render,
@@ -7,22 +5,24 @@ import {
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import userEvent from '@testing-library/user-event';
+import { module, test, todo } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
+import userEvent from '@testing-library/user-event';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 import {
-  DialogState,
+  assertActiveElement,
   assertDialog,
   assertDialogDescription,
   assertDialogOverlay,
   assertDialogTitle,
+  DialogState,
+  getByText,
   getDialog,
-  getDialogs,
   getDialogOverlay,
   getDialogOverlays,
-  assertActiveElement,
-  getByText,
+  getDialogs,
 } from '../../accessibility-assertions';
 
 module('Integration | Component | <Dialog>', function (hooks) {
@@ -30,6 +30,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
 
   module('Safe guards', function () {
     test('should error when we are using a <Dialog::-Overlay /> without a parent <Dialog />', async function (assert) {
+      assert.expect(1);
+
       setupOnerror(function (err) {
         assert.equal(
           err.message,
@@ -42,6 +44,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
     });
 
     test('should error when we are using a <Dialog::-Title /> without a parent <Dialog />', async function (assert) {
+      assert.expect(1);
+
       setupOnerror(function (err) {
         assert.equal(
           err.message,
@@ -54,6 +58,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
     });
 
     test('should error when we are using a <Dialog::-Description /> without a parent <Dialog />', async function (assert) {
+      assert.expect(1);
+
       setupOnerror(function (err) {
         assert.equal(
           err.message,
@@ -89,6 +95,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
   module('Rendering', function () {
     module('Dialog', function () {
       test('it should complain when the `isOpen` and `onClose` prop are missing', async function (assert) {
+        assert.expect(1);
+
         setupOnerror(function (err) {
           assert.equal(
             err.message,
@@ -101,6 +109,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
       });
 
       test('it should complain when an `isOpen` prop is provided without an `onClose` prop', async function (assert) {
+        assert.expect(1);
+
         setupOnerror(function (err) {
           assert.equal(
             err.message,
@@ -113,6 +123,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
       });
 
       test('it should complain when an `onClose` prop is provided without an `isOpen` prop', async function (assert) {
+        assert.expect(1);
+
         this.set('noop', function () {});
 
         setupOnerror(function (err) {
@@ -127,6 +139,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
       });
 
       test('it should complain when an `isOpen` prop is not a boolean', async function (assert) {
+        assert.expect(1);
+
         this.set('noop', function () {});
 
         setupOnerror(function (err) {
@@ -143,6 +157,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
       });
 
       test('it should complain when an `onClose` prop is not a function', async function (assert) {
+        assert.expect(1);
+
         setupOnerror(function (err) {
           assert.equal(
             err.message,

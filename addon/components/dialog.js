@@ -1,13 +1,12 @@
 import Component from '@glimmer/component';
-import { typeOf } from '@ember/utils';
-import { guidFor } from '@ember/object/internals';
-import { getOwnConfig } from '@embroider/macros';
-
-import { modifier } from 'ember-modifier';
-
-import { Keys } from 'ember-headlessui/utils/keyboard';
 import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
+import { typeOf } from '@ember/utils';
+
+import { getOwnConfig } from '@embroider/macros';
+import { Keys } from 'ember-headlessui/utils/keyboard';
+import { modifier } from 'ember-modifier';
 
 function getPortalRoot() {
   const { rootElement } = getOwnConfig();
@@ -17,8 +16,7 @@ function getPortalRoot() {
 }
 
 export default class DialogComponent extends Component {
-  @service
-  dialogStackProvider;
+  @service dialogStackProvider;
 
   DEFAULT_TAG_NAME = 'div';
 

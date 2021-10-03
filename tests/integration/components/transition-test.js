@@ -1,10 +1,11 @@
-import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { click, render, resetOnerror, setupOnerror } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import td from 'testdouble';
+import { module, skip, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+
 import { ARG_SHOW_MISSING_ERROR_MESSAGE } from 'ember-headlessui/components/transition';
 import { PARENT_MISSING_ERROR_MESSAGE } from 'ember-headlessui/components/transition/child';
+import td from 'testdouble';
 
 module('Integration | Component | transition', function (hooks) {
   setupRenderingTest(hooks);

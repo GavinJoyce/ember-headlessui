@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { getValue } from '@glimmer/tracking/primitives/cache';
+import { assert } from '@ember/debug';
 import { invokeHelper } from '@ember/helper';
 import { action } from '@ember/object';
 import { schedule } from '@ember/runloop';
-import { assert } from '@ember/debug';
+
 import {
   AppliedClassNamesManager,
   TransitionVisibilityManager,
