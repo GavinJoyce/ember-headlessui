@@ -164,9 +164,7 @@ module('Integration | Component | <Switch>', function (hooks) {
         assertSwitchState({ state: SwitchState.Off });
       });
     });
-  });
 
-  module('Keyboard interactions', function () {
     test('it should be possible to toggle the Switch with a click', async function () {
       this.set('isEnabled', false);
 

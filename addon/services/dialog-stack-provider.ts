@@ -1,22 +1,27 @@
 import { action } from '@ember/object';
 import Service from '@ember/service';
 
-export default class DialogStackProviderService extends Service {
-  stack = [];
+interface WithGuid {
+  guid: string;
+}
+
+export default class DialogStackProvider extends Service {
+  stack: string[] = [];
 
   @action
-  hasOpenChild(dialog) {
+  hasOpenChild(dialog: WithGuid) {
     return this.stack[this.stack.length - 1] !== dialog.guid;
   }
 
   @action
-  remove(dialog) {
+  remove(dialog: WithGuid) {
     let ix = this.stack.findIndex((guid) => guid === dialog.guid);
+
     this.stack.splice(ix, 1);
   }
 
   @action
-  push(dialog) {
+  push(dialog: WithGuid) {
     this.stack.push(dialog.guid);
   }
 }
