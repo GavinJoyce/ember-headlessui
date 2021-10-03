@@ -21,28 +21,13 @@
     "module": "es6",
     "experimentalDecorators": true,
     "paths": {
-      "dummy/tests/*": [
-        "tests/*"
-      ],
-      "dummy/*": [
-        "tests/dummy/app/*",
-        "app/*"
-      ],
-      "ember-headlessui": [
-        "addon"
-      ],
-      "ember-headlessui/*": [
-        "addon/*"
-      ],
-      "ember-headlessui/test-support": [
-        "addon-test-support"
-      ],
-      "ember-headlessui/test-support/*": [
-        "addon-test-support/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
+      "ember-headlessui": ["addon"],
+      "ember-headlessui/*": ["addon/*"],
+      "ember-headlessui/test-support": ["addon-test-support"],
+      "ember-headlessui/test-support/*": ["addon-test-support/*"],
+      "*": ["types/*"]
     }
   },
   "include": [
