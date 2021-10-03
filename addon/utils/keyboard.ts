@@ -1,4 +1,4 @@
-let Keys = {
+export const Keys = {
   Space: ' ',
   Enter: 'Enter',
   Escape: 'Escape',
@@ -16,6 +16,5 @@ let Keys = {
   PageDown: 'PageDown',
 
   Tab: 'Tab',
-};
+} as const;
 
-export { Keys };
