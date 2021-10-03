@@ -37,6 +37,7 @@ module.exports = function (defaults) {
         package: 'dummy',
         components: {
           '{{debug}}': { safeToIgnore: true },
+          '{{link-to}}': { safeToIgnore: true },
         },
       },
     ],
