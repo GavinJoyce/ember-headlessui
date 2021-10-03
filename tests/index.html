@@ -16,6 +16,13 @@
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
+
+    <script>
+      // testdouble support
+      // testdouble doesn't natively support the browser as it assumes
+      // that a `global` identifier will be available, but that is not the case for browsers
+      window.global = globalThis;
+    </script>
   </head>
   <body>
     {{content-for "body"}}
