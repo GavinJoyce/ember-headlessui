@@ -129,86 +129,81 @@ function assertDialog(options, dialog = getDialog()) {
     return;
   }
 
-  try {
-    switch (options.state) {
-      case DialogState.InvisibleHidden: {
-        if (dialog === null) {
-          Qunit.assert.notEqual(dialog, null);
+  switch (options.state) {
+    case DialogState.InvisibleHidden: {
+      if (dialog === null) {
+        Qunit.assert.notEqual(dialog, null);
 
-          return;
-        }
-
-        assertHidden(dialog);
-
-        Qunit.assert.dom(dialog).hasAttribute('role', 'dialog');
-        Qunit.assert.dom(dialog).doesNotHaveAttribute('aria-modal');
-
-        if (options.textContent) {
-          Qunit.assert.dom(dialog).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert.dom(dialog).hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+        return;
       }
 
-      case DialogState.Visible: {
-        if (dialog === null) {
-          Qunit.assert.notEqual(dialog, null);
+      assertHidden(dialog);
 
-          return;
-        }
+      Qunit.assert.dom(dialog).hasAttribute('role', 'dialog');
+      Qunit.assert.dom(dialog).doesNotHaveAttribute('aria-modal');
 
-        assertVisible(dialog);
-
-        Qunit.assert.dom(dialog).hasAttribute('role', 'dialog');
-        Qunit.assert.dom(dialog).hasAttribute('aria-modal', 'true');
-
-        if (options.textContent) {
-          Qunit.assert.dom(dialog).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert.dom(dialog).hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+      if (options.textContent) {
+        Qunit.assert.dom(dialog).hasText(options.textContent);
       }
 
-      case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(dialog, null);
-        break;
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert.dom(dialog).hasAttribute(attributeName, attributeValue);
       }
 
-      default: {
-        assertNever(options.state);
-      }
+      break;
     }
-  } catch (err) {
-    Error.captureStackTrace(err, assertDialog);
-    throw err;
+
+    case DialogState.Visible: {
+      if (dialog === null) {
+        Qunit.assert.notEqual(dialog, null);
+
+        return;
+      }
+
+      assertVisible(dialog);
+
+      Qunit.assert.dom(dialog).hasAttribute('role', 'dialog');
+      Qunit.assert.dom(dialog).hasAttribute('aria-modal', 'true');
+
+      if (options.textContent) {
+        Qunit.assert.dom(dialog).hasText(options.textContent);
+      }
+
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert.dom(dialog).hasAttribute(attributeName, attributeValue);
+      }
+
+      break;
+    }
+
+    case DialogState.InvisibleUnmounted: {
+      Qunit.assert.equal(dialog, null);
+      break;
+    }
+
+    default: {
+      assertNever(options.state);
+    }
   }
 }
 
@@ -225,81 +220,76 @@ function assertDialogOverlay(options, overlay = getDialogOverlay()) {
     return;
   }
 
-  try {
-    switch (options.state) {
-      case DialogState.InvisibleHidden: {
-        if (overlay === null) {
-          Qunit.assert.notEqual(overlay, null);
+  switch (options.state) {
+    case DialogState.InvisibleHidden: {
+      if (overlay === null) {
+        Qunit.assert.notEqual(overlay, null);
 
-          return;
-        }
-
-        assertHidden(overlay);
-
-        if (options.textContent) {
-          Qunit.assert.dom(overlay).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert.dom(overlay).hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+        return;
       }
 
-      case DialogState.Visible: {
-        if (overlay === null) {
-          Qunit.assert.notEqual(overlay, null);
+      assertHidden(overlay);
 
-          return;
-        }
-
-        assertVisible(overlay);
-
-        if (options.textContent) {
-          Qunit.assert.dom(overlay).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert.dom(overlay).hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+      if (options.textContent) {
+        Qunit.assert.dom(overlay).hasText(options.textContent);
       }
 
-      case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(overlay, null);
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
 
-        break;
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert.dom(overlay).hasAttribute(attributeName, attributeValue);
       }
 
-      default: {
-        assertNever(options.state);
-      }
+      break;
     }
-  } catch (err) {
-    Error.captureStackTrace(err, assertDialogOverlay);
-    throw err;
+
+    case DialogState.Visible: {
+      if (overlay === null) {
+        Qunit.assert.notEqual(overlay, null);
+
+        return;
+      }
+
+      assertVisible(overlay);
+
+      if (options.textContent) {
+        Qunit.assert.dom(overlay).hasText(options.textContent);
+      }
+
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert.dom(overlay).hasAttribute(attributeName, attributeValue);
+      }
+
+      break;
+    }
+
+    case DialogState.InvisibleUnmounted: {
+      Qunit.assert.equal(overlay, null);
+
+      break;
+    }
+
+    default: {
+      assertNever(options.state);
+    }
   }
 }
 
@@ -320,99 +310,94 @@ function assertDialogTitle(
     return;
   }
 
-  try {
-    switch (options.state) {
-      case DialogState.InvisibleHidden: {
-        if (title === null) {
-          Qunit.assert.notEqual(title, null);
+  switch (options.state) {
+    case DialogState.InvisibleHidden: {
+      if (title === null) {
+        Qunit.assert.notEqual(title, null);
 
-          return;
-        }
-
-        if (dialog === null) {
-          Qunit.assert.notEqual(dialog, null);
-
-          return;
-        }
-
-        assertHidden(title);
-
-        Qunit.assert.dom(title).hasAttribute('id');
-        Qunit.assert.dom(dialog).hasAttribute('aria-labelledby', title.id);
-
-        if (options.textContent) {
-          Qunit.assert.dom(title).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert.dom(title).hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+        return;
       }
 
-      case DialogState.Visible: {
-        if (title === null) {
-          Qunit.assert.notEqual(title, null);
+      if (dialog === null) {
+        Qunit.assert.notEqual(dialog, null);
 
-          return;
-        }
-
-        if (dialog === null) {
-          Qunit.assert.notEqual(dialog, null);
-
-          return;
-        }
-
-        assertVisible(title);
-
-        Qunit.assert.dom(title).hasAttribute('id');
-        Qunit.assert.dom(dialog).hasAttribute('aria-labelledby', title.id);
-
-        if (options.textContent) {
-          Qunit.assert.dom(title).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert.dom(title).hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+        return;
       }
 
-      case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(title, null);
+      assertHidden(title);
 
-        break;
+      Qunit.assert.dom(title).hasAttribute('id');
+      Qunit.assert.dom(dialog).hasAttribute('aria-labelledby', title.id);
+
+      if (options.textContent) {
+        Qunit.assert.dom(title).hasText(options.textContent);
       }
 
-      default: {
-        assertNever(options.state);
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert.dom(title).hasAttribute(attributeName, attributeValue);
       }
+
+      break;
     }
-  } catch (err) {
-    Error.captureStackTrace(err, assertDialogTitle);
-    throw err;
+
+    case DialogState.Visible: {
+      if (title === null) {
+        Qunit.assert.notEqual(title, null);
+
+        return;
+      }
+
+      if (dialog === null) {
+        Qunit.assert.notEqual(dialog, null);
+
+        return;
+      }
+
+      assertVisible(title);
+
+      Qunit.assert.dom(title).hasAttribute('id');
+      Qunit.assert.dom(dialog).hasAttribute('aria-labelledby', title.id);
+
+      if (options.textContent) {
+        Qunit.assert.dom(title).hasText(options.textContent);
+      }
+
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert.dom(title).hasAttribute(attributeName, attributeValue);
+      }
+
+      break;
+    }
+
+    case DialogState.InvisibleUnmounted: {
+      Qunit.assert.equal(title, null);
+
+      break;
+    }
+
+    default: {
+      assertNever(options.state);
+    }
   }
 }
 
@@ -433,107 +418,98 @@ function assertDialogDescription(
     return;
   }
 
-  try {
-    switch (options.state) {
-      case DialogState.InvisibleHidden: {
-        if (description === null) {
-          Qunit.assert.notEqual(description, null);
+  switch (options.state) {
+    case DialogState.InvisibleHidden: {
+      if (description === null) {
+        Qunit.assert.notEqual(description, null);
 
-          return;
+        return;
+      }
+
+      if (dialog === null) {
+        Qunit.assert.notEqual(dialog, null);
+
+        return;
+      }
+
+      assertHidden(description);
+
+      Qunit.assert.dom(description).hasAttribute('id');
+      Qunit.assert.dom(dialog).hasAttribute('aria-describedby', description.id);
+
+      if (options.textContent) {
+        Qunit.assert.dom(description).hasText(options.textContent);
+      }
+
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
         }
 
-        if (dialog === null) {
-          Qunit.assert.notEqual(dialog, null);
-
-          return;
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
         }
 
-        assertHidden(description);
-
-        Qunit.assert.dom(description).hasAttribute('id');
         Qunit.assert
-          .dom(dialog)
-          .hasAttribute('aria-describedby', description.id);
-
-        if (options.textContent) {
-          Qunit.assert.dom(description).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert
-            .dom(description)
-            .hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
+          .dom(description)
+          .hasAttribute(attributeName, attributeValue);
       }
 
-      case DialogState.Visible: {
-        if (description === null) {
-          Qunit.assert.notEqual(description, null);
-
-          return;
-        }
-
-        if (dialog === null) {
-          Qunit.assert.notEqual(dialog, null);
-
-          return;
-        }
-
-        assertVisible(description);
-
-        Qunit.assert.dom(description).hasAttribute('id');
-        Qunit.assert
-          .dom(dialog)
-          .hasAttribute('aria-describedby', description.id);
-
-        if (options.textContent) {
-          Qunit.assert.dom(description).hasText(options.textContent);
-        }
-
-        for (let attributeName in options.attributes) {
-          let attributeValue = options.attributes[attributeName];
-
-          if (attributeName === 'class') {
-            attributeValue = `ember-view ${attributeValue}`;
-          }
-
-          if (attributeName === 'id') {
-            attributeValue = new RegExp(`${attributeValue}$`);
-          }
-
-          Qunit.assert
-            .dom(description)
-            .hasAttribute(attributeName, attributeValue);
-        }
-
-        break;
-      }
-
-      case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(description, null);
-
-        break;
-      }
-
-      default: {
-        assertNever(options.state);
-      }
+      break;
     }
-  } catch (err) {
-    Error.captureStackTrace(err, assertDialogDescription);
-    throw err;
+
+    case DialogState.Visible: {
+      if (description === null) {
+        Qunit.assert.notEqual(description, null);
+
+        return;
+      }
+
+      if (dialog === null) {
+        Qunit.assert.notEqual(dialog, null);
+
+        return;
+      }
+
+      assertVisible(description);
+
+      Qunit.assert.dom(description).hasAttribute('id');
+      Qunit.assert.dom(dialog).hasAttribute('aria-describedby', description.id);
+
+      if (options.textContent) {
+        Qunit.assert.dom(description).hasText(options.textContent);
+      }
+
+      for (let attributeName in options.attributes) {
+        let attributeValue = options.attributes[attributeName];
+
+        if (attributeName === 'class') {
+          attributeValue = `ember-view ${attributeValue}`;
+        }
+
+        if (attributeName === 'id') {
+          attributeValue = new RegExp(`${attributeValue}$`);
+        }
+
+        Qunit.assert
+          .dom(description)
+          .hasAttribute(attributeName, attributeValue);
+      }
+
+      break;
+    }
+
+    case DialogState.InvisibleUnmounted: {
+      Qunit.assert.equal(description, null);
+
+      break;
+    }
+
+    default: {
+      assertNever(options.state);
+    }
   }
 }
 
@@ -561,44 +537,39 @@ function assertListboxButton(
   { state, attributes, textContent },
   button = getListboxButton()
 ) {
-  try {
-    if (button === null) return Qunit.assert.ok(button);
-    Qunit.assert.dom(button).hasAttribute('id');
-    Qunit.assert.dom(button).hasAria('haspopup', 'listbox');
-    if (textContent) {
-      Qunit.assert.dom(button).hasText(textContent);
-    }
-    switch (state) {
-      case ListboxState.InvisibleUnmounted: {
-        Qunit.assert.dom(button).doesNotHaveAria('listbox');
-        if (button.hasAttribute('disabled')) {
-          Qunit.assert.dom(button).doesNotHaveAria('expanded');
-          Qunit.assert.dom(button).isDisabled();
-        } else {
-          Qunit.assert.dom(button).hasAria('expanded', 'false');
-        }
-        break;
+  if (button === null) return Qunit.assert.ok(button);
+  Qunit.assert.dom(button).hasAttribute('id');
+  Qunit.assert.dom(button).hasAria('haspopup', 'listbox');
+  if (textContent) {
+    Qunit.assert.dom(button).hasText(textContent);
+  }
+  switch (state) {
+    case ListboxState.InvisibleUnmounted: {
+      Qunit.assert.dom(button).doesNotHaveAria('listbox');
+      if (button.hasAttribute('disabled')) {
+        Qunit.assert.dom(button).doesNotHaveAria('expanded');
+        Qunit.assert.dom(button).isDisabled();
+      } else {
+        Qunit.assert.dom(button).hasAria('expanded', 'false');
       }
-      case ListboxState.Visible: {
-        Qunit.assert.dom(button).hasAria('controls', { any: true });
-        Qunit.assert.dom(button).hasAria('expanded', 'true');
-        break;
-      }
-      default:
-        Qunit.assert.ok(
-          state,
-          'you have to provide state to assertListboxButton'
-        );
+      break;
     }
+    case ListboxState.Visible: {
+      Qunit.assert.dom(button).hasAria('controls', { any: true });
+      Qunit.assert.dom(button).hasAria('expanded', 'true');
+      break;
+    }
+    default:
+      Qunit.assert.ok(
+        state,
+        'you have to provide state to assertListboxButton'
+      );
+  }
 
-    for (let attributeName in attributes) {
-      Qunit.assert
-        .dom(button)
-        .hasAttribute(attributeName, attributes[attributeName]);
-    }
-  } catch (err) {
-    Error.captureStackTrace(err, assertListboxButton);
-    throw err;
+  for (let attributeName in attributes) {
+    Qunit.assert
+      .dom(button)
+      .hasAttribute(attributeName, attributes[attributeName]);
   }
 }
 
@@ -606,166 +577,126 @@ function assertListboxLabelLinkedWithListbox(
   label = getListboxLabel(),
   listbox = getListbox()
 ) {
-  try {
-    if (label === null) return Qunit.assert.ok(label);
-    if (listbox === null) return Qunit.assert.ok(listbox);
+  if (label === null) return Qunit.assert.ok(label);
+  if (listbox === null) return Qunit.assert.ok(listbox);
 
-    Qunit.assert
-      .dom(listbox)
-      .hasAttribute('aria-labelledby', label.getAttribute('id'));
-  } catch (err) {
-    Error.captureStackTrace(err, assertListboxLabelLinkedWithListbox);
-    throw err;
-  }
+  Qunit.assert
+    .dom(listbox)
+    .hasAttribute('aria-labelledby', label.getAttribute('id'));
 }
 
 function assertListboxButtonLinkedWithListbox(
   button = getListboxButton(),
   listbox = getListbox()
 ) {
-  try {
-    if (button === null) return Qunit.assert.ok(button);
-    if (listbox === null) return Qunit.assert.ok(listbox);
+  if (button === null) return Qunit.assert.ok(button);
+  if (listbox === null) return Qunit.assert.ok(listbox);
 
-    // Ensure link between button & listbox is correct
-    Qunit.assert
-      .dom(button)
-      .hasAttribute('aria-controls', listbox.getAttribute('id'));
-    Qunit.assert
-      .dom(listbox)
-      .hasAttribute('aria-labelledby', button.getAttribute('id'));
-  } catch (err) {
-    Error.captureStackTrace(err, assertListboxButtonLinkedWithListbox);
-    throw err;
-  }
+  // Ensure link between button & listbox is correct
+  Qunit.assert
+    .dom(button)
+    .hasAttribute('aria-controls', listbox.getAttribute('id'));
+  Qunit.assert
+    .dom(listbox)
+    .hasAttribute('aria-labelledby', button.getAttribute('id'));
 }
 
 function assertActiveListboxOption(item, listbox = getListbox()) {
-  try {
-    if (item === null) return Qunit.assert.ok(item);
-    if (listbox === null) return Qunit.assert.ok(listbox);
+  if (item === null) return Qunit.assert.ok(item);
+  if (listbox === null) return Qunit.assert.ok(listbox);
 
-    // Ensure link between listbox & listbox item is correct
-    Qunit.assert
-      .dom(listbox)
-      .hasAttribute('aria-activedescendant', item.getAttribute('id'));
-  } catch (err) {
-    Error.captureStackTrace(err, assertActiveListboxOption);
-    throw err;
-  }
+  // Ensure link between listbox & listbox item is correct
+  Qunit.assert
+    .dom(listbox)
+    .hasAttribute('aria-activedescendant', item.getAttribute('id'));
 }
 
 function assertNoActiveListboxOption(listbox = getListbox()) {
-  try {
-    if (listbox === null) return Qunit.assert.ok(listbox);
+  if (listbox === null) return Qunit.assert.ok(listbox);
 
-    // Ensure we don't have an active listbox
-    Qunit.assert.dom(listbox).doesNotHaveAttribute('aria-activedescendant');
-  } catch (err) {
-    Error.captureStackTrace(err, assertNoActiveListboxOption);
-    throw err;
-  }
+  // Ensure we don't have an active listbox
+  Qunit.assert.dom(listbox).doesNotHaveAttribute('aria-activedescendant');
 }
 
 function assertNoSelectedListboxOption(items = getListboxOptions()) {
-  try {
-    for (let item of items)
-      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
-  } catch (err) {
-    Error.captureStackTrace(err, assertNoSelectedListboxOption);
-    throw err;
-  }
+  for (let item of items)
+    Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
 }
 
 function assertListboxButtonLinkedWithListboxLabel(
   button = getListboxButton(),
   label = getListboxLabel()
 ) {
-  try {
-    if (button === null) return Qunit.assert.ok(button);
-    if (label === null) return Qunit.assert.ok(label);
+  if (button === null) return Qunit.assert.ok(button);
+  if (label === null) return Qunit.assert.ok(label);
 
-    // Ensure link between button & label is correct
-    Qunit.assert
-      .dom(button)
-      .hasAttribute('aria-labelledby', `${label.id} ${button.id}`);
-  } catch (err) {
-    Error.captureStackTrace(err, assertListboxButtonLinkedWithListboxLabel);
-    throw err;
-  }
+  // Ensure link between button & label is correct
+  Qunit.assert
+    .dom(button)
+    .hasAttribute('aria-labelledby', `${label.id} ${button.id}`);
 }
 
 function assertListboxLabel(
   { attributes, tag, textContent },
   label = getListboxLabel()
 ) {
-  try {
-    if (label === null) return Qunit.assert.ok(label);
+  if (label === null) return Qunit.assert.ok(label);
 
-    // Ensure menu button have these properties
-    Qunit.assert.dom(label).hasAttribute('id');
+  // Ensure menu button have these properties
+  Qunit.assert.dom(label).hasAttribute('id');
 
-    if (textContent) {
-      Qunit.assert.dom(label).hasText(textContent);
-    }
+  if (textContent) {
+    Qunit.assert.dom(label).hasText(textContent);
+  }
 
-    if (tag) {
-      Qunit.assert.dom(label).hasTagName(tag);
-    }
+  if (tag) {
+    Qunit.assert.dom(label).hasTagName(tag);
+  }
 
-    // Ensure menu button has the following attributes
-    for (let attributeName in attributes) {
-      Qunit.assert
-        .dom(label)
-        .hasAttribute(attributeName, attributes[attributeName]);
-    }
-  } catch (err) {
-    Error.captureStackTrace(err, assertListboxLabel);
-    throw err;
+  // Ensure menu button has the following attributes
+  for (let attributeName in attributes) {
+    Qunit.assert
+      .dom(label)
+      .hasAttribute(attributeName, attributes[attributeName]);
   }
 }
 
 export function assertListboxOption({ tag, attributes, selected }, item) {
-  try {
-    if (item === null) return Qunit.assert.notOk(item);
+  if (item === null) return Qunit.assert.notOk(item);
 
-    // Check that some attributes exists, doesn't really matter what the values are at this point in
-    // time, we just require them.
-    Qunit.assert.dom(item).hasAttribute('id');
+  // Check that some attributes exists, doesn't really matter what the values are at this point in
+  // time, we just require them.
+  Qunit.assert.dom(item).hasAttribute('id');
 
-    // Check that we have the correct values for certain attributes
-    Qunit.assert.dom(item).hasAttribute('role', 'option');
-    if (!item.getAttribute('aria-disabled'))
-      Qunit.assert.dom(item).hasAttribute('tabindex', '-1');
+  // Check that we have the correct values for certain attributes
+  Qunit.assert.dom(item).hasAttribute('role', 'option');
+  if (!item.getAttribute('aria-disabled'))
+    Qunit.assert.dom(item).hasAttribute('tabindex', '-1');
 
-    // Ensure listbox button has the following attributes
-    if (!tag && !attributes && !selected) return;
+  // Ensure listbox button has the following attributes
+  if (!tag && !attributes && !selected) return;
 
-    for (let attributeName in attributes) {
-      Qunit.assert
-        .dom(item)
-        .hasAttribute(attributeName, attributes[attributeName]);
+  for (let attributeName in attributes) {
+    Qunit.assert
+      .dom(item)
+      .hasAttribute(attributeName, attributes[attributeName]);
+  }
+
+  if (tag) {
+    Qunit.assert.dom(item).hasTagName(tag);
+  }
+
+  if (selected != null) {
+    switch (selected) {
+      case true:
+        return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
+
+      case false:
+        return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+
+      default:
+        Qunit.assert.ok();
     }
-
-    if (tag) {
-      Qunit.assert.dom(item).hasTagName(tag);
-    }
-
-    if (selected != null) {
-      switch (selected) {
-        case true:
-          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
-
-        case false:
-          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
-
-        default:
-          Qunit.assert.ok();
-      }
-    }
-  } catch (err) {
-    Error.captureStackTrace(err, assertListboxOption);
-    throw err;
   }
 }
 
@@ -774,53 +705,48 @@ function assertListbox(
   listbox = getListbox(),
   orientation = 'vertical'
 ) {
-  try {
-    switch (state) {
-      case ListboxState.InvisibleHidden: {
-        if (listbox === null) return Qunit.assert.dom(listbox).exists();
+  switch (state) {
+    case ListboxState.InvisibleHidden: {
+      if (listbox === null) return Qunit.assert.dom(listbox).exists();
 
-        assertHidden(listbox);
+      assertHidden(listbox);
 
-        Qunit.assert.dom(listbox).hasAria('labelledby');
-        Qunit.assert.dom(listbox).hasAria('orientation', orientation);
-        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+      Qunit.assert.dom(listbox).hasAria('labelledby');
+      Qunit.assert.dom(listbox).hasAria('orientation', orientation);
+      Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
 
-        if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
+      if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
 
-        for (let attributeName in attributes) {
-          Qunit.assert
-            .dom(listbox)
-            .hasAttribute(attributeName, attributes[attributeName]);
-        }
-        break;
+      for (let attributeName in attributes) {
+        Qunit.assert
+          .dom(listbox)
+          .hasAttribute(attributeName, attributes[attributeName]);
       }
-      case ListboxState.InvisibleUnmounted: {
-        Qunit.assert.dom(listbox).doesNotExist();
-        break;
-      }
-      case ListboxState.Visible: {
-        // Qunit.assert.dom(listbox).isVisible();
-        Qunit.assert.dom(listbox).exists();
-
-        Qunit.assert.dom(listbox).hasAria('labelledby', { any: true });
-        Qunit.assert.dom(listbox).hasAttribute('aria-orientation', orientation);
-        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
-
-        if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
-
-        for (let attributeName in attributes) {
-          Qunit.assert
-            .dom(listbox)
-            .hasAttribute(attributeName, attributes[attributeName]);
-        }
-        break;
-      }
-      default:
-        Qunit.assert.ok(state, 'you have to provide state to assertListbox');
+      break;
     }
-  } catch (err) {
-    Error.captureStackTrace(err, assertListbox);
-    throw err;
+    case ListboxState.InvisibleUnmounted: {
+      Qunit.assert.dom(listbox).doesNotExist();
+      break;
+    }
+    case ListboxState.Visible: {
+      // Qunit.assert.dom(listbox).isVisible();
+      Qunit.assert.dom(listbox).exists();
+
+      Qunit.assert.dom(listbox).hasAria('labelledby', { any: true });
+      Qunit.assert.dom(listbox).hasAttribute('aria-orientation', orientation);
+      Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+      if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
+
+      for (let attributeName in attributes) {
+        Qunit.assert
+          .dom(listbox)
+          .hasAttribute(attributeName, attributes[attributeName]);
+      }
+      break;
+    }
+    default:
+      Qunit.assert.ok(state, 'you have to provide state to assertListbox');
   }
 }
 
