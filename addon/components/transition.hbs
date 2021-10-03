@@ -4,9 +4,7 @@
       class={{this.transitionClassNames}}
       hidden={{this.componentIsHidden}}
       style={{if this.componentIsHidden 'display: none'}}
-      {{did-insert (set this 'ownDomNode')}}
-      {{did-insert this.trackDomNode}}
-      {{will-destroy this.untrackDomNode}}
+      {{this.modifiers.trackDOM}}
       ...attributes
     >
       {{yield

@@ -9,6 +9,7 @@ import {
   AppliedClassNamesManager,
   TransitionVisibilityManager,
 } from '../helpers/transition';
+import { modifier } from '../utils/function-modifier';
 
 export default class TransitionComponent extends Component {
   constructor() {
@@ -30,6 +31,15 @@ export default class TransitionComponent extends Component {
   get unmount() {
     return this.args.unmount ?? true;
   }
+
+  modifiers = {
+    trackDOM: modifier((element) => {
+      this.ownDomNode = element;
+      this.trackDomNode(element);
+
+      return () => this.untrackDomNode();
+    }),
+  };
 
   /* === Component Visibility Management === */
 
