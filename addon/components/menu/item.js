@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { tracked } from '@glimmer/tracking';
 
 export default class Item extends Component {
   guid = `${guidFor(this)}-tailwindui-menu-item`;

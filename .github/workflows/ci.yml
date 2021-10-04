@@ -32,6 +32,24 @@ jobs:
       - name: lint
         run: yarn lint
 
+  type-check:
+    name: Type Checking
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: install dependencies
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: Type Checking
+        run: yarn prepack
+
   test:
     runs-on: ubuntu-latest
 

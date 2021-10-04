@@ -1,5 +1,7 @@
 import Helper from '@ember/component/helper';
+
 import { all, restartableTask, timeout } from 'ember-concurrency';
+
 import { waitForTransition } from '../../utils/transition';
 
 export class TransitionVisibilityManager extends Helper {

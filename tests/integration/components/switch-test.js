@@ -1,7 +1,7 @@
-import QUnit, { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { click, render, triggerKeyEvent } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import QUnit, { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
 
 function assertSwitchIsOn(selector = '[data-test-headlessui-switch]') {
   QUnit.assert.dom(selector).hasAttribute('data-test-headlessui-switch-is-on');
@@ -164,9 +164,7 @@ module('Integration | Component | <Switch>', function (hooks) {
         assertSwitchState({ state: SwitchState.Off });
       });
     });
-  });
 
-  module('Keyboard interactions', function () {
     test('it should be possible to toggle the Switch with a click', async function () {
       this.set('isEnabled', false);
 

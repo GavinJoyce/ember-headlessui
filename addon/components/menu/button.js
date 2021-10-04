@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
+
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 export default class Button extends Component {

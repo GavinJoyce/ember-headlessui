@@ -1,34 +1,35 @@
-import { module, test, todo, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import Component from '@glimmer/component';
 import {
   click,
-  render,
-  triggerKeyEvent,
-  triggerEvent,
   focus,
+  render,
+  triggerEvent,
+  triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { module, skip, test, todo } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+
 import {
   assertActiveElement,
-  assertListboxButton,
-  assertListboxLabel,
-  assertListboxOption,
-  assertListbox,
-  assertListboxButtonLinkedWithListboxLabel,
-  assertListboxButtonLinkedWithListbox,
-  assertListboxLabelLinkedWithListbox,
   assertActiveListboxOption,
+  assertListbox,
+  assertListboxButton,
+  assertListboxButtonLinkedWithListbox,
+  assertListboxButtonLinkedWithListboxLabel,
+  assertListboxLabel,
+  assertListboxLabelLinkedWithListbox,
+  assertListboxOption,
   assertNoActiveListboxOption,
   assertNoSelectedListboxOption,
-  ListboxState,
+  getListbox,
   getListboxButton,
   getListboxButtons,
+  getListboxes,
   getListboxLabel,
   getListboxOptions,
-  getListbox,
-  getListboxes,
+  ListboxState,
 } from '../../accessibility-assertions';
-import Component from '@glimmer/component';
 
 async function typeWord(word) {
   word.split('').forEach((char) => {
@@ -103,7 +104,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('<listbox.Label>', () => {
-    test('should be possible to render a <listbox.Label> using yielded props', async () => {
+    test('should be possible to render a <listbox.Label> using yielded props', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label data-test="headlessui-listbox-label-1">{{listbox.isOpen}} {{listbox.disabled}}</listbox.Label>
@@ -135,7 +136,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListboxButtonLinkedWithListboxLabel();
     });
 
-    test('should be possible to render a Listbox.Label using a yielded props and tag name', async () => {
+    test('should be possible to render a Listbox.Label using a yielded props and tag name', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label data-test="headlessui-listbox-label-1" @as="p">Label</listbox.Label>
@@ -166,7 +167,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('<listbox.Button>', () => {
-    test('should be possible to render a <listbox.Button> using yielded props', async () => {
+    test('should be possible to render a <listbox.Button> using yielded props', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label>Label</listbox.Label>
@@ -196,7 +197,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.Visible });
     });
 
-    test('should be possible to render a <listbox.Button> using yielded props and tag name', async () => {
+    test('should be possible to render a <listbox.Button> using yielded props and tag name', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label>Label</listbox.Label>
@@ -226,7 +227,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.Visible });
     });
 
-    test('should be possible to render a Listbox.Button and a Listbox.Label and see them linked together', async () => {
+    test('should be possible to render a Listbox.Button and a Listbox.Label and see them linked together', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label>Label</listbox.Label>
@@ -249,7 +250,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('<listbox.Options>', () => {
-    test('should be possible to render a <listbox.Options> using yielded props', async () => {
+    test('should be possible to render a <listbox.Options> using yielded props', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -280,7 +281,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListbox());
     });
 
-    test('should be possible to always render the Listbox.Options if we provide it a `static` prop', async (assert) => {
+    test('should be possible to always render the Listbox.Options if we provide it a `static` prop', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -303,7 +304,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('<listbox.Option>', () => {
-    test('should be possible to render a <listbox.Option> using yielded props', async () => {
+    test('should be possible to render a <listbox.Option> using yielded props', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -338,7 +339,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       async function () {}
     );
 
-    test('should be possible to swap the Listbox option with a button for example', async () => {
+    test('should be possible to swap the Listbox option with a button for example', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -443,7 +444,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox keyboard actions', () => {
-    test('`Enter` key', async (assert) => {
+    test('`Enter` key', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -493,7 +494,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoSelectedListboxOption();
     });
 
-    test('should not be possible to open the listbox with Enter when the button is disabled', async () => {
+    test('should not be possible to open the listbox with Enter when the button is disabled', async function () {
       await render(hbs`
         <Listbox @disabled={{true}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -531,7 +532,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should be possible to open the listbox with Enter, and focus the selected option', async (assert) => {
+    test('should be possible to open the listbox with Enter, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -638,7 +639,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should have no active listbox option when there are no listbox options at all', async () => {
+    test('should have no active listbox option when there are no listbox options at all', async function () {
       await render(hbs`
         <Listbox @value={{this.selectedOption}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -659,7 +660,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should focus the first non disabled listbox option when opening with Enter', async () => {
+    test('should focus the first non disabled listbox option when opening with Enter', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -695,7 +696,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should focus the first non disabled listbox option when opening with Enter (jump over multiple disabled ones)', async () => {
+    test('should focus the first non disabled listbox option when opening with Enter (jump over multiple disabled ones)', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -731,7 +732,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should have no active listbox option upon Enter key press, when there are no non-disabled listbox options', async () => {
+    test('should have no active listbox option upon Enter key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -764,7 +765,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible to close the listbox with Enter when there is no active listboxoption', async () => {
+    test('should be possible to close the listbox with Enter when there is no active listboxoption', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -871,7 +872,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Space` key', () => {
-    test('should be possible to open the listbox with Space', async (assert) => {
+    test('should be possible to open the listbox with Space', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -917,7 +918,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should not be possible to open the listbox with Space when the button is disabled', async () => {
+    test('should not be possible to open the listbox with Space when the button is disabled', async function () {
       await render(hbs`
         <Listbox @disabled={{true}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -954,7 +955,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should be possible to open the listbox with Space, and focus the selected option', async (assert) => {
+    test('should be possible to open the listbox with Space, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1004,7 +1005,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should have no active listbox option when there are no listbox options at all', async () => {
+    test('should have no active listbox option when there are no listbox options at all', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1025,7 +1026,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should focus the first non disabled listbox option when opening with Space', async () => {
+    test('should focus the first non disabled listbox option when opening with Space', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1061,7 +1062,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should focus the first non disabled listbox option when opening with Space (jump over multiple disabled ones)', async () => {
+    test('should focus the first non disabled listbox option when opening with Space (jump over multiple disabled ones)', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1097,7 +1098,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should have no active listbox option upon Space key press, when there are no non-disabled listbox options', async () => {
+    test('should have no active listbox option upon Space key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1190,7 +1191,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Escape` key', () => {
-    test('should be possible to close an open listbox with Escape', async () => {
+    test('should be possible to close an open listbox with Escape', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1236,7 +1237,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Tab` key', () => {
-    test('should focus trap when we use Tab', async (assert) => {
+    test('should focus trap when we use Tab', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1290,7 +1291,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListbox());
     });
 
-    test('should focus trap when we use Shift+Tab', async (assert) => {
+    test('should focus trap when we use Shift+Tab', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1348,7 +1349,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowDown` key', () => {
-    test('should be possible to open the listbox with ArrowDown', async (assert) => {
+    test('should be possible to open the listbox with ArrowDown', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1396,7 +1397,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should be possible to use ArrowDown to navigate the listbox options', async (assert) => {
+    test('should be possible to use ArrowDown to navigate the listbox options', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1445,7 +1446,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use ArrowDown to navigate the listbox options and skip the first disabled one', async (assert) => {
+    test('should be possible to use ArrowDown to navigate the listbox options and skip the first disabled one', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1486,7 +1487,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use ArrowDown to navigate the listbox options and jump to the first non-disabled one', async (assert) => {
+    test('should be possible to use ArrowDown to navigate the listbox options and jump to the first non-disabled one', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1525,7 +1526,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowRight` key', () => {
-    test('should be possible to use ArrowRight to navigate the listbox options', async (assert) => {
+    test('should be possible to use ArrowRight to navigate the listbox options', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1576,7 +1577,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowUp` key', () => {
-    test('should be possible to open the listbox with ArrowUp and the last option should be active', async (assert) => {
+    test('should be possible to open the listbox with ArrowUp and the last option should be active', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1624,7 +1625,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should not be possible to open the listbox with ArrowUp and the last option should be active when the button is disabled', async () => {
+    test('should not be possible to open the listbox with ArrowUp and the last option should be active when the button is disabled', async function () {
       await render(hbs`
         <Listbox @disabled={{true}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1662,7 +1663,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should be possible to open the listbox with ArrowUp, and focus the selected option', async (assert) => {
+    test('should be possible to open the listbox with ArrowUp, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1712,7 +1713,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should have no active listbox option when there are no listbox options at all', async () => {
+    test('should have no active listbox option when there are no listbox options at all', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1733,7 +1734,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible to use ArrowUp to navigate the listbox options and jump to the first non-disabled one', async (assert) => {
+    test('should be possible to use ArrowUp to navigate the listbox options and jump to the first non-disabled one', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1770,7 +1771,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should not be possible to navigate up or down if there is only a single non-disabled option', async (assert) => {
+    test('should not be possible to navigate up or down if there is only a single non-disabled option', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1815,7 +1816,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use ArrowUp to navigate the listbox options', async (assert) => {
+    test('should be possible to use ArrowUp to navigate the listbox options', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1875,7 +1876,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowLeft` key', () => {
-    test('should be possible to use ArrowLeft to navigate the listbox options', async (assert) => {
+    test('should be possible to use ArrowLeft to navigate the listbox options', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1936,7 +1937,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `End` key', () => {
-    test('should be possible to use the End key to go to the last listbox option', async () => {
+    test('should be possible to use the End key to go to the last listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1970,7 +1971,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use the End key to go to the last non disabled listbox option', async () => {
+    test('should be possible to use the End key to go to the last non disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2007,7 +2008,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should be possible to use the End key to go to the first listbox option if that is the only non-disabled listbox option', async () => {
+    test('should be possible to use the End key to go to the first listbox option if that is the only non-disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2041,7 +2042,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should have no active listbox option upon End key press, when there are no non-disabled listbox options', async () => {
+    test('should have no active listbox option upon End key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2076,7 +2077,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `PageDown` key', () => {
-    test('should be possible to use the PageDown key to go to the last listbox option', async () => {
+    test('should be possible to use the PageDown key to go to the last listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2110,7 +2111,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use the PageDown key to go to the last non disabled listbox option', async () => {
+    test('should be possible to use the PageDown key to go to the last non disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2147,7 +2148,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should be possible to use the PageDown key to go to the first listbox option if that is the only non-disabled listbox option', async () => {
+    test('should be possible to use the PageDown key to go to the first listbox option if that is the only non-disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2181,7 +2182,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should have no active listbox option upon PageDown key press, when there are no non-disabled listbox options', async () => {
+    test('should have no active listbox option upon PageDown key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2216,7 +2217,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Home` key', () => {
-    test('should be possible to use the Home key to go to the first listbox option', async () => {
+    test('should be possible to use the Home key to go to the first listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2250,7 +2251,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should be possible to use the Home key to go to the first non disabled listbox option', async () => {
+    test('should be possible to use the Home key to go to the first non disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2286,7 +2287,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use the Home key to go to the last listbox option if that is the only non-disabled listbox option', async () => {
+    test('should be possible to use the Home key to go to the last listbox option if that is the only non-disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2320,7 +2321,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[3]);
     });
 
-    test('should have no active listbox option upon Home key press, when there are no non-disabled listbox options', async () => {
+    test('should have no active listbox option upon Home key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2355,7 +2356,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `PageUp` key', () => {
-    test('should be possible to use the PageUp key to go to the first listbox option', async () => {
+    test('should be possible to use the PageUp key to go to the first listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2389,7 +2390,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[0]);
     });
 
-    test('should be possible to use the PageUp key to go to the first non disabled listbox option', async () => {
+    test('should be possible to use the PageUp key to go to the first non disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2425,7 +2426,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to use the PageUp key to go to the last listbox option if that is the only non-disabled listbox option', async () => {
+    test('should be possible to use the PageUp key to go to the last listbox option if that is the only non-disabled listbox option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2459,7 +2460,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[3]);
     });
 
-    test('should have no active listbox option upon PageUp key press, when there are no non-disabled listbox options', async () => {
+    test('should have no active listbox option upon PageUp key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2494,7 +2495,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Any` key aka search', () => {
-    test('should be possible to type a full word that has a perfect match', async () => {
+    test('should be possible to type a full word that has a perfect match', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2524,7 +2525,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to type a partial of a word', async () => {
+    test('should be possible to type a partial of a word', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2560,7 +2561,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to type words with spaces', async () => {
+    test('should be possible to type words with spaces', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2596,7 +2597,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should not be possible to search for a disabled option', async () => {
+    test('should not be possible to search for a disabled option', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2626,7 +2627,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should be possible to search for a word (case insensitive)', async () => {
+    test('should be possible to search for a word (case insensitive)', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2658,7 +2659,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('listbox mouse interactions', () => {
-    test('should focus the Listbox.Button when we click the Listbox.Label', async () => {
+    test('should focus the Listbox.Button when we click the Listbox.Label', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Label>Label</listbox.Label>
@@ -2681,7 +2682,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListboxButton());
     });
 
-    test('should not focus the Listbox.Button when we right click the Listbox.Label', async () => {
+    test('should not focus the Listbox.Button when we right click the Listbox.Label', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Label>Label</listbox.Label>
@@ -2704,7 +2705,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(document.body);
     });
 
-    test('should be possible to open the listbox on click', async (assert) => {
+    test('should be possible to open the listbox on click', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2740,7 +2741,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       options.forEach((option) => assertListboxOption({}, option));
     });
 
-    test('should not be possible to open the listbox on right click', async () => {
+    test('should not be possible to open the listbox on right click', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2765,7 +2766,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListboxButton({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should not be possible to open the listbox on click when the button is disabled', async () => {
+    test('should not be possible to open the listbox on click when the button is disabled', async function () {
       await render(hbs`
         <Listbox @disabled={{true}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2798,7 +2799,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should be possible to open the listbox on click, and focus the selected option', async (assert) => {
+    test('should be possible to open the listbox on click, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2839,7 +2840,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should be possible to close a listbox on click', async () => {
+    test('should be possible to close a listbox on click', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2865,7 +2866,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should be a no-op when we click outside of a closed listbox', async () => {
+    test('should be a no-op when we click outside of a closed listbox', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2887,7 +2888,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    test('should be possible to click outside of the listbox which should close the listbox', async () => {
+    test('should be possible to click outside of the listbox which should close the listbox', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2914,7 +2915,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListboxButton());
     });
 
-    test('should be possible to click outside of the listbox on another listbox button which should close the current listbox and open the new listbox', async (assert) => {
+    test('should be possible to click outside of the listbox on another listbox button which should close the current listbox and open the new listbox', async function (assert) {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -2954,7 +2955,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListboxButtonLinkedWithListbox(button2, getListbox());
     });
 
-    test('should be possible to click outside of the listbox which should close the listbox (even if we press the listbox button)', async () => {
+    test('should be possible to click outside of the listbox which should close the listbox (even if we press the listbox button)', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -3023,7 +3024,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assert.equal(callCount, 1, 'handleFocus called once exactly');
     });
 
-    test('should be possible to hover an option and make it active', async () => {
+    test('should be possible to hover an option and make it active', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3057,7 +3058,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should make a listbox option active when you move the mouse over it', async () => {
+    test('should make a listbox option active when you move the mouse over it', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3083,7 +3084,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should be a no-op when we move the mouse and the listbox option is already active', async () => {
+    test('should be a no-op when we move the mouse and the listbox option is already active', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3115,7 +3116,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should be a no-op when we move the mouse and the listbox option is disabled', async () => {
+    test('should be a no-op when we move the mouse and the listbox option is disabled', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3141,7 +3142,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should not be possible to hover an option that is disabled', async () => {
+    test('should not be possible to hover an option that is disabled', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3170,7 +3171,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible to mouse leave an option and make it inactive', async () => {
+    test('should be possible to mouse leave an option and make it inactive', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3214,7 +3215,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible to mouse leave a disabled option and be a no-op', async () => {
+    test('should be possible to mouse leave a disabled option and be a no-op', async function () {
       await render(hbs`
         <div>
           <Listbox as |listbox|>
@@ -3330,7 +3331,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    test('should be possible focus a listbox option, so that it becomes active', async () => {
+    test('should be possible focus a listbox option, so that it becomes active', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -3357,7 +3358,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    test('should not be possible to focus a listbox option which is disabled', async () => {
+    test('should not be possible to focus a listbox option which is disabled', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>

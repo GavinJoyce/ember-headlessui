@@ -1,13 +1,14 @@
 import Component from '@glimmer/component';
-import { typeOf } from '@ember/utils';
+import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { getOwnConfig } from '@embroider/macros';
+import { inject as service } from '@ember/service';
+import { typeOf } from '@ember/utils';
 
+import { getOwnConfig } from '@embroider/macros';
+import { Keys } from 'ember-headlessui/utils/keyboard';
 import { modifier } from 'ember-modifier';
 
-import { Keys } from 'ember-headlessui/utils/keyboard';
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import type DialogStackProvider from 'ember-headlessui/services/dialog-stack-provider';
 
 function getPortalRoot() {
   const { rootElement } = getOwnConfig();
@@ -16,34 +17,42 @@ function getPortalRoot() {
   return rootElement ? document.querySelector(rootElement) : document.body;
 }
 
-export default class DialogComponent extends Component {
-  @service
-  dialogStackProvider;
+interface Args {
+  isOpen: boolean;
+  onClose: () => void;
+  as: string | typeof Component;
+}
+
+export default class DialogComponent extends Component<Args> {
+  @service declare dialogStackProvider: DialogStackProvider;
 
   DEFAULT_TAG_NAME = 'div';
 
   guid = `${guidFor(this)}-headlessui-dialog`;
   $portalRoot = getPortalRoot();
 
-  handleEscapeKey = modifier((_element, [isOpen, onClose]) => {
-    let handler = (event) => {
-      if (event.key !== Keys.Escape) return;
-      if (!isOpen) return;
+  handleEscapeKey = modifier(
+    (_element, [isOpen, onClose]: [boolean, () => void]) => {
+      let handler = (event: KeyboardEvent) => {
+        if (event.key !== Keys.Escape) return;
+        if (!isOpen) return;
 
-      event.preventDefault();
-      event.stopPropagation();
+        event.preventDefault();
+        event.stopPropagation();
 
-      onClose();
-    };
+        onClose();
+      };
 
-    window.addEventListener('keyup', handler);
-    return () => {
-      window.removeEventListener('keyup', handler);
-    };
-  });
+      window.addEventListener('keyup', handler);
 
-  constructor() {
-    super(...arguments);
+      return () => {
+        window.removeEventListener('keyup', handler);
+      };
+    }
+  );
+
+  constructor(owner: unknown, args: Args) {
+    super(owner, args);
 
     let { isOpen, onClose } = this.args;
 
