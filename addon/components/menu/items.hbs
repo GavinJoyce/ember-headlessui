@@ -8,7 +8,7 @@
     role='menu'
     ...attributes
     {{on 'keydown' this.onKeydown}}
-    {{focus-trap
+    {{headlessui-focus-trap
       focusTrapOptions=(hash
         allowOutsideClick=this.allowClickOutsideFocusTrap
         clickOutsideDeactivates=this.clickOutsideFocusTrapDeactivates
