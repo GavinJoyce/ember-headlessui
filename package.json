@@ -40,10 +40,11 @@
     "ember-click-outside-modifier": "^2.0.0",
     "ember-concurrency": "^2.1.0",
     "ember-element-helper": "^0.5.5",
-    "ember-focus-trap": "^0.7.0",
     "ember-set-helper": "^2.0.1",
     "ember-truth-helpers": "^3.0.0",
-    "tracked-maps-and-sets": "^3.0.1"
+    "focus-trap": "^6.7.1",
+    "tracked-maps-and-sets": "^3.0.1",
+    "ember-auto-import": "^1.11.2"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -57,7 +58,6 @@
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv-cli": "^4.0.0",
-    "ember-auto-import": "^1.11.2",
     "ember-cli": "~3.27.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-deprecation-workflow": "^2.0.0",
@@ -70,6 +70,7 @@
     "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-modifier": "^2.1.2",
     "ember-on-helper": "^0.1.0",
     "ember-page-title": "^6.2.1",
     "ember-qunit": "^5.1.4",
