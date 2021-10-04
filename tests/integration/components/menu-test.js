@@ -245,6 +245,47 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
+      test('should not be possible to open the menu with Enter when the button is disabled', async function (assert) {
+        assert.expect(9)
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button disabled={{true}}>Trigger</menu.Button>
+            <menu.Button data-test-menu-button >Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        try {
+          await triggerKeyEvent(
+            '[data-test-menu-button]',
+            'keydown',
+            Keys.Enter
+          );
+        } catch (err) {
+          assert.ok(err.message.startsWith('Can not `triggerKeyEvent` on disabled'));
+        }
+
+        assertClosedMenuButton('[data-test-menu-button]');
+      });
+
       test('it should have no active menu item when there are no menu items at all', async function () {
         await render(hbs`
         <Menu as |menu|>
@@ -498,7 +539,47 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
-      // - it should be possible to open the menu with Space
+      test('should not be possible to open the menu with Space when the button is disabled', async function (assert) {
+        assert.expect(9)
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button disabled={{true}}>Trigger</menu.Button>
+            <menu.Button data-test-menu-button >Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        try {
+          await triggerKeyEvent(
+            '[data-test-menu-button]',
+            'keydown',
+            Keys.Space
+          );
+        } catch (err) {
+          assert.ok(err.message.startsWith('Can not `triggerKeyEvent` on disabled'));
+        }
+
+        assertClosedMenuButton('[data-test-menu-button]');
+      });
+
       // - it should have no active menu item when there are no menu items at all
       // - it should focus the first non disabled menu item when opening with Space
       // - it should focus the first non disabled menu item when opening with Space (jump over multiple disabled ones)
@@ -561,52 +642,52 @@ module('Integration | Component | <Menu>', (hooks) => {
         assert.equal(items.length, 3, 'There are three visible menu items');
         assertMenuLinkedWithMenuItem(items[0]);
       });
+      // - it should have no active menu item when there are no menu items at all
+
+      test('should not be possible to open the menu with ArrowDown when the button is disabled', async function (assert) {
+        assert.expect(9)
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button disabled={{true}}>Trigger</menu.Button>
+            <menu.Button data-test-menu-button >Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        try {
+          await triggerKeyEvent(
+            '[data-test-menu-button]',
+            'keydown',
+            Keys.ArrowDown
+          );
+        } catch (err) {
+          assert.ok(err.message.startsWith('Can not `triggerKeyEvent` on disabled'));
+        }
+
+        assertClosedMenuButton('[data-test-menu-button]');
+      });
+      // - it should be possible to use ArrowDown to navigate the menu items
+      // - it should be possible to use ArrowDown to navigate the menu items and skip the first disabled one
+      // - it should be possible to use ArrowDown to navigate the menu items and jump to the first non-disabled one
     });
-    // describe('`ArrowDown` key', () => {
-    //   it('should be possible to open the menu with ArrowDown', async () => {
-    //     renderTemplate(jsx`
-    //       <Menu>
-    //         <MenuButton>Trigger</MenuButton>
-    //         <MenuItems>
-    //           <MenuItem as="a">Item A</MenuItem>
-    //           <MenuItem as="a">Item B</MenuItem>
-    //           <MenuItem as="a">Item C</MenuItem>
-    //         </MenuItems>
-    //       </Menu>
-    //     `)
-
-    //     assertMenuButton({
-    //       state: MenuState.InvisibleUnmounted,
-    //       attributes: { id: 'headlessui-menu-button-1' },
-    //     })
-    //     assertMenu({ state: MenuState.InvisibleUnmounted })
-
-    //     // Focus the button
-    //     getMenuButton()?.focus()
-
-    //     // Open menu
-    //     await press(Keys.ArrowDown)
-
-    //     // Verify it is open
-    //     assertMenuButton({ state: MenuState.Visible })
-    //     assertMenu({
-    //       state: MenuState.Visible,
-    //       attributes: { id: 'headlessui-menu-items-2' },
-    //     })
-    //     assertMenuButtonLinkedWithMenu()
-
-    //     // Verify we have menu items
-    //     let items = getMenuItems()
-    //     expect(items).toHaveLength(3)
-    //     items.forEach(item => assertMenuItem(item))
-
-    //     // Verify that the first menu item is active
-    //     assertMenuLinkedWithMenuItem(items[0])
-    //   })
-    // - it should have no active menu item when there are no menu items at all
-    // - it should be possible to use ArrowDown to navigate the menu items
-    // - it should be possible to use ArrowDown to navigate the menu items and skip the first disabled one
-    // - it should be possible to use ArrowDown to navigate the menu items and jump to the first non-disabled one
 
     // TODO: '`ArrowUp` key'
     // - it should be possible to open the menu with ArrowUp and the last item should be active

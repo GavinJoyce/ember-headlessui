@@ -7,6 +7,7 @@ import { Keys } from 'ember-headlessui/utils/keyboard';
 export default class Button extends Component {
   @action
   onKeydown(event) {
+    if (event.target.disabled) return;
     switch (event.key) {
       case Keys.Space:
       case Keys.Enter:
