@@ -15,8 +15,7 @@
       {{will-destroy @unregisterOptionsElement}}
       {{on 'keypress' @handleKeyPress}}
       {{on 'keyup' @handleKeyUp}}
-      {{focus-trap
-        shouldSelfFocus=true
+      {{headlessui-focus-trap
         focusTrapOptions=(hash
           allowOutsideClick=@handleClickOutside fallbackFocus=(concat '#' @guid)
         )

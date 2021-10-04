@@ -6,7 +6,9 @@
         role='dialog'
         aria-modal='true'
         ...attributes
-        {{focus-trap focusTrapOptions=(hash initialFocus=@initialFocus)}}
+        {{headlessui-focus-trap
+          focusTrapOptions=(hash initialFocus=@initialFocus)
+        }}
         {{click-outside this.onClose event='mouseup'}}
         {{this.handleEscapeKey @isOpen this.onClose}}
         {{did-insert (fn this.dialogStackProvider.push this)}}
