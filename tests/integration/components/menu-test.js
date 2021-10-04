@@ -516,6 +516,93 @@ module('Integration | Component | <Menu>', (hooks) => {
 
     // TODO: '`ArrowDown` key'
     // - it should be possible to open the menu with ArrowDown
+    module('`ArrowDown` key', () => {
+      test('it should be possible to open the menu with ArrowDown', async function (assert) {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        await triggerKeyEvent(
+          '[data-test-menu-button]',
+          'keydown',
+          Keys.ArrowDown
+        );
+
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        assertMenuButtonLinkedWithMenuItems(
+          '[data-test-menu-button]',
+          '[data-test-menu-items]'
+        );
+
+        const items = getMenuItems();
+
+        assert.equal(items.length, 3, 'There are three visible menu items');
+        assertMenuLinkedWithMenuItem(items[0]);
+      });
+    });
+    // describe('`ArrowDown` key', () => {
+    //   it('should be possible to open the menu with ArrowDown', async () => {
+    //     renderTemplate(jsx`
+    //       <Menu>
+    //         <MenuButton>Trigger</MenuButton>
+    //         <MenuItems>
+    //           <MenuItem as="a">Item A</MenuItem>
+    //           <MenuItem as="a">Item B</MenuItem>
+    //           <MenuItem as="a">Item C</MenuItem>
+    //         </MenuItems>
+    //       </Menu>
+    //     `)
+
+    //     assertMenuButton({
+    //       state: MenuState.InvisibleUnmounted,
+    //       attributes: { id: 'headlessui-menu-button-1' },
+    //     })
+    //     assertMenu({ state: MenuState.InvisibleUnmounted })
+
+    //     // Focus the button
+    //     getMenuButton()?.focus()
+
+    //     // Open menu
+    //     await press(Keys.ArrowDown)
+
+    //     // Verify it is open
+    //     assertMenuButton({ state: MenuState.Visible })
+    //     assertMenu({
+    //       state: MenuState.Visible,
+    //       attributes: { id: 'headlessui-menu-items-2' },
+    //     })
+    //     assertMenuButtonLinkedWithMenu()
+
+    //     // Verify we have menu items
+    //     let items = getMenuItems()
+    //     expect(items).toHaveLength(3)
+    //     items.forEach(item => assertMenuItem(item))
+
+    //     // Verify that the first menu item is active
+    //     assertMenuLinkedWithMenuItem(items[0])
+    //   })
     // - it should have no active menu item when there are no menu items at all
     // - it should be possible to use ArrowDown to navigate the menu items
     // - it should be possible to use ArrowDown to navigate the menu items and skip the first disabled one
