@@ -24,7 +24,7 @@ export default class Button extends Component {
           });
         }
         break;
-      case 'ArrowUp':
+      case Keys.ArrowUp:
         event.preventDefault();
         event.stopPropagation();
         this.args.openMenu();

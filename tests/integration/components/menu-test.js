@@ -17,8 +17,14 @@ import { setupRenderingTest } from 'ember-qunit';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
+import { assertActiveElement } from '../../accessibility-assertions';
+
 function getMenu() {
   return find('[role="menu"]');
+}
+
+function getMenuButton() {
+  return find('button,[role="button"],[id^="headlessui-menu-button-"]');
 }
 
 function getMenuItems() {
@@ -62,7 +68,7 @@ function assertMenuLinkedWithMenuItem(item, menu = getMenu()) {
     .hasAria('activedescendant', itemElement.getAttribute('id'));
 }
 
-function assertMenuItemsAreCollaped(selector) {
+function assertMenuItemsAreCollapsed(selector) {
   QUnit.assert.dom(selector).isNotVisible();
 }
 
@@ -103,7 +109,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
     assertClosedMenuButton('[data-test-menu-button]');
 
-    assertMenuItemsAreCollaped('[data-test-menu-items]');
+    assertMenuItemsAreCollapsed('[data-test-menu-items]');
   });
 
   test('controlling open/close programmatically', async function (assert) {
@@ -120,12 +126,16 @@ module('Integration | Component | <Menu>', (hooks) => {
       </Menu>
     `);
 
+    // Open menu
     await click('[data-test-open]');
 
+    // Verify it is open
     assert.dom('[data-test-menu-items]').exists();
 
+    // Close menu
     await click('[data-test-close]');
 
+    // Verify it is closed
     assert.dom('[data-test-menu-items]').doesNotExist();
   });
 
@@ -143,14 +153,19 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify button has "hidden"
         assert.dom('[data-test-menu-button]').hasText('Trigger hidden');
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await click('[data-test-menu-button]');
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
+        // Verify button has "visible"
         assert.dom('[data-test-menu-button]').hasText('Trigger visible');
         assert.dom('[data-test-menu-items]').isVisible();
       });
@@ -171,8 +186,10 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Open menu
         await click('[data-test-menu-button]');
 
+        // Verify object properties are passed to DOM
         assert
           .dom('[data-test-menu-item]')
           .hasText('Item A [isActive:false] [isDisabled:false]');
@@ -195,8 +212,10 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+      // Open menu
       await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+      // Verify custom component attributes exist
       assert.dom('[data-test-item-a]').hasTagName('a');
       assert.dom('[data-test-item-a]').hasAttribute('href', '/menu');
     });
@@ -228,10 +247,13 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertMenuButtonLinkedWithMenuItems(
@@ -241,12 +263,14 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
           'There are three visible menu items'
         );
 
+        // Verify that the first menu item is active
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
@@ -255,7 +279,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button disabled={{true}}>Trigger</menu.Button>
-            <menu.Button data-test-menu-button >Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
                 <item.Element>
@@ -276,8 +299,10 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         try {
           await triggerKeyEvent(
             '[data-test-menu-button]',
@@ -290,6 +315,7 @@ module('Integration | Component | <Menu>', (hooks) => {
           );
         }
 
+        // Verify it is still closed
         assertClosedMenuButton('[data-test-menu-button]');
       });
 
@@ -301,10 +327,13 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertNoActiveMenuItem();
@@ -334,12 +363,15 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify that the first non-disabled menu item is active
         assertMenuLinkedWithMenuItem(items[1]);
       });
 
@@ -367,12 +399,15 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify that the first non-disabled menu item is active
         assertMenuLinkedWithMenuItem(items[2]);
       });
 
@@ -395,8 +430,10 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertNoActiveMenuItem();
@@ -421,13 +458,20 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await click('[data-test-menu-button]');
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
+        // Close menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
+
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
       });
 
       test('it should be possible to close the menu with Enter and invoke the active menu item', async function (assert) {
@@ -452,17 +496,26 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await click('[data-test-menu-button]');
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
+        // Activate menu item
         await triggerEvent('[data-test-item-b]', 'mouseover');
 
+        // Close menu and invoke item
         await triggerKeyEvent('[data-test-item-b]', 'keydown', Keys.Enter);
 
-        assert.dom(itemClicked).hasText('Item B');
-
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
+
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
+
+        // Verify the "click" went through on the `a` tag
+        assert.dom(itemClicked).hasText('Item B');
       });
 
       test('it should be possible to use a button as a menu item and invoke it upon Enter', async function (assert) {
@@ -487,20 +540,47 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Focus the button
+        getMenuButton()?.focus();
+
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assert.dom('[data-test-item-a]').hasTagName('a');
         assert.dom('[data-test-item-b]').hasTagName('button');
 
+        // Activate first menu item
+        await triggerEvent('[data-test-item-a]', 'mouseover');
+
+        // Close menu, and invoke item
+        await triggerKeyEvent('[data-test-item-a]', 'keydown', Keys.Enter);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Verify the item got "clicked"
+        assert.dom(itemClicked).hasText('Item A');
+
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
+
+        // Click the menu button again
+        await click('[data-test-menu-button]');
+
+        // Active the last menu item
         await triggerEvent('[data-test-item-b]', 'mouseover');
 
-        await triggerKeyEvent('[data-test-item-b]', 'keydown', Keys.Enter);
+        // Close menu, and invoke the item
+        await click('[data-test-item-b]', 'keydown', Keys.Enter);
 
+        // Verify the button got "clicked"
         assert.dom(itemClicked).hasText('Item B');
 
-        assertClosedMenuButton('[data-test-menu-button]');
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
       });
     });
 
@@ -529,10 +609,13 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertMenuButtonLinkedWithMenuItems(
@@ -542,6 +625,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
@@ -555,7 +639,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button disabled={{true}}>Trigger</menu.Button>
-            <menu.Button data-test-menu-button >Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
                 <item.Element>
@@ -576,8 +659,10 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Try to open the menu
         try {
           await triggerKeyEvent(
             '[data-test-menu-button]',
@@ -590,39 +675,384 @@ module('Integration | Component | <Menu>', (hooks) => {
           );
         }
 
+        // Verify that it is still closed
         assertClosedMenuButton('[data-test-menu-button]');
       });
 
       test('it should have no active menu item when there are no menu items at all', async function () {
         await render(hbs`
-        <Menu as |menu|>
-          <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Items />
-        </Menu>
-      `);
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items />
+          </Menu>
+        `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertNoActiveMenuItem();
       });
 
-      // - it should focus the first non disabled menu item when opening with Space
-      // - it should focus the first non disabled menu item when opening with Space (jump over multiple disabled ones)
-      // - it should have no active menu item upon Space key press, when there are no non-disabled menu items
-      // - it should be possible to close the menu with Space when there is no active menuitem
-      // - it should be possible to close the menu with Space and invoke the active menu item
+      test('it should focus the first non disabled menu item when opening with Space', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
+
+        const items = getMenuItems();
+
+        // Verify that the first non-disabled menu item is active
+        assertMenuLinkedWithMenuItem(items[1]);
+      });
+
+      test('it should focus the first non disabled menu item when opening with Space (jump over multiple disabled ones)', async function () {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
+
+        const items = getMenuItems();
+
+        // Verify that the first non-disabled menu item is active
+        assertMenuLinkedWithMenuItem(items[2]);
+      });
+
+      test('it should have no active menu item upon Space key press, when there are no non-disabled menu items', async function () {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
+
+        // Verify is has menu items
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
+
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        assertNoActiveMenuItem();
+      });
+
+      test('it should be possible to close the menu with Space when there is no active menuitem', async function () {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify it is open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // Close menu
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Space);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
+      });
+
+      test('it should be possible to close the menu with Space and invoke the active menu item', async function (assert) {
+        let itemClicked = 0;
+        this.set('onClick', (item) => (itemClicked = item.target));
+
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element data-test-item-a {{on "click" this.onClick}}>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify it is open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // Activate first menu item
+        await triggerEvent('[data-test-item-a]', 'mouseover');
+
+        // Close menu and invoke the item
+        await triggerKeyEvent('[data-test-item-a]', 'keydown', Keys.Space);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Verify the "click" ent through on the `a` tag
+        assert.dom(itemClicked).hasText('Item A');
+
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
+      });
     });
 
-    // TODO: '`Escape` key'
-    // - it should be possible to open the menu with Escape
+    module('`Escape` key', () => {
+      test('it should be possible to close the menu with Escape', async function () {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
 
-    // TODO: '`Tab` key'
-    // - it should focus trap when we use Tab
-    // - it should focus trap when we use Shift+Tab
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Focus the button
+        getMenuButton()?.focus();
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
+
+        // Verify it is open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // Close menu
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Escape);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Verify the button is focused again
+        await assertActiveElement(getMenuButton());
+      });
+    });
+
+    module('`Tab` key', () => {
+      test('it should focus trap when we use Tab', async function (assert) {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
+
+        // Verify it is open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // Verify we have menu items
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        // Try to Tab
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Tab);
+
+        // Verify it is still open
+        assertOpenMenuButton('[data-test-menu-button]');
+      });
+
+      test('it should focus trap when we use Shift+Tab', async function (assert) {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Verify it is closed
+        assertClosedMenuButton('[data-test-menu-button]');
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
+
+        // Verify it is open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // Verify we have menu items
+        assert.equal(items.length, 3, 'There are three visible menu items');
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        // Try to Shit+Tab
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Tab, {
+          shiftKey: true,
+        });
+
+        // Verify it is still open
+        assertOpenMenuButton('[data-test-menu-button]');
+      });
+    });
 
     module('`ArrowDown` key', () => {
       test('it should be possible to open the menu with ArrowDown', async function (assert) {
@@ -649,16 +1079,20 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowDown
         );
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
+        // Verify it is open
         assertMenuButtonLinkedWithMenuItems(
           '[data-test-menu-button]',
           '[data-test-menu-items]'
@@ -666,11 +1100,10 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.strictEqual(
-          items.length,
-          3,
-          'There are three visible menu items'
-        );
+        // Verify we have menu items
+        assert.equal(items.length, 3, 'There are three visible menu items');
+
+        // Verify that the first menu item is active
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
@@ -682,14 +1115,17 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowDown
         );
 
+        // Verify it is open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertNoActiveMenuItem();
@@ -700,7 +1136,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button disabled={{true}}>Trigger</menu.Button>
-            <menu.Button data-test-menu-button >Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
               <items.Item as |item|>
                 <item.Element>
@@ -721,8 +1156,10 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Try to open the menu
         try {
           await triggerKeyEvent(
             '[data-test-menu-button]',
@@ -735,6 +1172,7 @@ module('Integration | Component | <Menu>', (hooks) => {
           );
         }
 
+        // Verify it is still closed
         assertClosedMenuButton('[data-test-menu-button]');
       });
 
@@ -742,7 +1180,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Button data-test-menu-button >Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item as |item|>
               <item.Element>
@@ -763,21 +1200,20 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowDown
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
-        assert.strictEqual(
-          items.length,
-          3,
-          'There are three visible menu items'
-        );
+        // Verify we have menu items
+        assert.equal(items.length, 3, 'There are three visible menu items');
         assertMenuLinkedWithMenuItem(items[0]);
 
         // We should be able to go down once
@@ -809,7 +1245,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Button data-test-menu-button >Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
               <item.Element>
@@ -830,16 +1265,19 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowDown
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
@@ -860,7 +1298,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Button data-test-menu-button >Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
               <item.Element>
@@ -881,16 +1318,19 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowDown
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
@@ -925,16 +1365,20 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Menu open
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowUp
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
+        // Verify it is open
         assertMenuButtonLinkedWithMenuItems(
           '[data-test-menu-button]',
           '[data-test-menu-items]'
@@ -942,6 +1386,7 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
+        // ! ALERT: The LAST item should now be active
         assert.strictEqual(
           items.length,
           3,
@@ -958,14 +1403,17 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Verify it is closed
         assertClosedMenuButton('[data-test-menu-button]');
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowUp
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         assertNoActiveMenuItem();
@@ -975,7 +1423,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Button data-test-menu-button >Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
               <item.Element>
@@ -996,16 +1443,19 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowUp
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
@@ -1018,7 +1468,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Button data-test-menu-button >Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item @isDisabled={{true}} as |item|>
               <item.Element>
@@ -1039,16 +1488,19 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowUp
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
@@ -1077,7 +1529,6 @@ module('Integration | Component | <Menu>', (hooks) => {
         await render(hbs`
         <Menu as |menu|>
           <menu.Button data-test-menu-button>Trigger</menu.Button>
-          <menu.Button data-test-menu-button >Trigger</menu.Button>
           <menu.Items data-test-menu-items as |items|>
             <items.Item as |item|>
               <item.Element>
@@ -1098,16 +1549,19 @@ module('Integration | Component | <Menu>', (hooks) => {
         </Menu>
       `);
 
+        // Open menu
         await triggerKeyEvent(
           '[data-test-menu-button]',
           'keydown',
           Keys.ArrowUp
         );
 
+        // Verify is it open
         assertOpenMenuButton('[data-test-menu-button]');
 
         const items = getMenuItems();
 
+        // Verify we have menu items
         assert.strictEqual(
           items.length,
           3,
@@ -1141,29 +1595,737 @@ module('Integration | Component | <Menu>', (hooks) => {
       });
     });
 
-    // TODO: '`End` key'
-    // - it should be possible to use the End key to go to the last menu item
-    // - it should be possible to use the End key to go to the last non disabled menu item
-    // - it should be possible to use the End key to go to the first menu item if that is the only non-disabled menu item
-    // - it should have no active menu item upon End key press, when there are no non-disabled menu items
+    module('`End` key', () => {
+      test('it should be possible to use the End key to go to the last menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
 
-    // TODO: '`PageDown` key'
-    // - it should be possible to use the PageDown key to go to the last menu item
-    // - it should be possible to use the PageDown key to go to the last non disabled menu item
-    // - it should be possible to use the PageDown key to go to the first menu item if that is the only non-disabled menu item
-    // - it should have no active menu item upon PageDown key press, when there are no non-disabled menu items
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
 
-    // TODO: '`Home` key'
-    // - it should be possible to use the Home key to go to the first menu item
-    // - it should be possible to use the Home key to go to the first non disabled menu item
-    // - it should be possible to use the Home key to go to the last menu item if that is the only non-disabled menu item
-    // - it should have no active menu item upon Home key press, when there are no non-disabled menu items
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
 
-    // TODO: '`PageUp` key'
-    // - it should be possible to use the PageUp key to go to the first menu item
-    // - it should be possible to use the PageUp key to go to the first non disabled menu item
-    // - it should be possible to use the PageUp key to go to the last menu item if that is the only non-disabled menu item
-    // - it should have no active menu item upon PageUp key press, when there are no non-disabled menu items
+        const items = getMenuItems();
+
+        // we should be on the first item
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        // We should be able to go to the last item
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.End);
+        assertMenuLinkedWithMenuItem(items[2]);
+      });
+
+      test('it should be possible to use the End key to go to the last non disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // we should be on the first item
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        // We should be able to go to the last non-disabled item
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.End);
+        assertMenuLinkedWithMenuItem(items[1]);
+      });
+
+      test('it should be possible to use the End key to go to the first menu item if that is the only non-disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.End);
+
+        const items = getMenuItems();
+        assertMenuLinkedWithMenuItem(items[0]);
+      });
+
+      test('it should have no active menu item upon End key press, when there are no non-disabled menu items', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.End);
+
+        assertNoActiveMenuItem();
+      });
+    });
+
+    module('`PageDown` key', () => {
+      test('it should be possible to use the PageDown key to go to the last menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // we should be on the first item
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        // We should be able to go to the last item
+        await triggerKeyEvent(
+          '[data-test-menu-items]',
+          'keydown',
+          Keys.PageDown
+        );
+        assertMenuLinkedWithMenuItem(items[2]);
+      });
+
+      test('it should be possible to use the PageDown key to go to the last non disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Enter);
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // we should be on the first item
+        assertMenuLinkedWithMenuItem(items[0]);
+
+        // We should be able to go to the last non-disabled item
+        await triggerKeyEvent(
+          '[data-test-menu-items]',
+          'keydown',
+          Keys.PageDown
+        );
+        assertMenuLinkedWithMenuItem(items[1]);
+      });
+
+      test('it should be possible to use the PageDown key to go to the first menu item if that is the only non-disabled menu item', async function () {
+        await render(hbs`
+          <Menu as |menu|>
+            <menu.Button data-test-menu-button>Trigger</menu.Button>
+            <menu.Items data-test-menu-items as |items|>
+              <items.Item as |item|>
+                <item.Element>
+                  Item A
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item B
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item C
+                </item.Element>
+              </items.Item>
+              <items.Item @isDisabled={{true}} as |item|>
+                <item.Element>
+                  Item D
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Menu>
+        `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent(
+          '[data-test-menu-items]',
+          'keydown',
+          Keys.PageDown
+        );
+
+        const items = getMenuItems();
+        assertMenuLinkedWithMenuItem(items[0]);
+      });
+
+      test('it should have no active menu item upon PageDown key press, when there are no non-disabled menu items', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent(
+          '[data-test-menu-items]',
+          'keydown',
+          Keys.PageDown
+        );
+
+        assertNoActiveMenuItem();
+      });
+    });
+
+    module('`Home` key', () => {
+      test('it should be possible to use the Home key to go to the first menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await triggerKeyEvent(
+          '[data-test-menu-button]',
+          'keydown',
+          Keys.ArrowUp
+        );
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // We should be on the last item
+        assertMenuLinkedWithMenuItem(items[2]);
+
+        // We should be able to go to the first item
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Home);
+        assertMenuLinkedWithMenuItem(items[0]);
+      });
+
+      test('it should be possible to use the Home key to go to the first non disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Home);
+
+        const items = getMenuItems();
+
+        // We should be on the first non-disabled item
+        assertMenuLinkedWithMenuItem(items[2]);
+      });
+
+      test('it should be possible to use the Home key to go to the last menu item if that is the only non-disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Home);
+
+        const items = getMenuItems();
+        assertMenuLinkedWithMenuItem(items[3]);
+      });
+
+      test('it should have no active menu item upon Home key press, when there are no non-disabled menu items', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.Home);
+
+        assertNoActiveMenuItem();
+      });
+    });
+
+    module('`PageUp` key', () => {
+      test('it should be possible to use the PageUp key to go to the first menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await triggerKeyEvent(
+          '[data-test-menu-button]',
+          'keydown',
+          Keys.ArrowUp
+        );
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        const items = getMenuItems();
+
+        // we should be on the last item
+        assertMenuLinkedWithMenuItem(items[2]);
+
+        // We should be able to go to the first item
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.PageUp);
+        assertMenuLinkedWithMenuItem(items[0]);
+      });
+
+      test('it should be possible to use the PageUp key to go to the first non disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.PageUp);
+
+        const items = getMenuItems();
+
+        // We should be on the first non-disabled item
+        assertMenuLinkedWithMenuItem(items[2]);
+      });
+
+      test('it should be possible to use the PageUp key to go to the last menu item if that is the only non-disabled menu item', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.PageUp);
+
+        const items = getMenuItems();
+        assertMenuLinkedWithMenuItem(items[3]);
+      });
+
+      test('it should have no active menu item upon PageUp key press, when there are no non-disabled menu items', async function () {
+        await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items as |items|>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item A
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item B
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item C
+              </item.Element>
+            </items.Item>
+            <items.Item @isDisabled={{true}} as |item|>
+              <item.Element>
+                Item D
+              </item.Element>
+            </items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+        // Open menu
+        await click('[data-test-menu-button]');
+
+        // Verify is it open
+        assertOpenMenuButton('[data-test-menu-button]');
+
+        // We opened via click, we don't have an active item
+        assertNoActiveMenuItem();
+
+        // We should not be able to go to the end
+        await triggerKeyEvent('[data-test-menu-items]', 'keydown', Keys.PageUp);
+
+        assertNoActiveMenuItem();
+      });
+    });
 
     module('`Any` key aka search', function () {
       test('it should be possible to type a full word that has a perfect match', async function () {
@@ -1239,20 +2401,37 @@ module('Integration | Component | <Menu>', (hooks) => {
                   value b
                 </item.Element>
               </items.Item>
+              <items.Item as |item|>
+                <item.Element>
+                  value c
+                </item.Element>
+              </items.Item>
             </menu.Items>
           </Menu>
         `);
 
-        await click('[data-test-menu-button]');
-        await type('[data-test-menu-items]', 'value b');
+        await triggerKeyEvent(
+          '[data-test-menu-button]',
+          'keydown',
+          Keys.ArrowUp
+        );
 
         const items = getMenuItems();
 
+        // We should be on the last item
+        assertMenuLinkedWithMenuItem(items[2]);
+
+        // We should be able to go to the second item
+        await type('[data-test-menu-items]', 'value b');
         assertMenuLinkedWithMenuItem(items[1]);
 
+        // We should be able to go to the first item
         await type('[data-test-menu-items]', 'value a');
-
         assertMenuLinkedWithMenuItem(items[0]);
+
+        // We should be able to go to the last item
+        await type('[data-test-menu-items]', 'value c');
+        assertMenuLinkedWithMenuItem(items[2]);
       });
 
       test('it should not be possible to search for a disabled item', async function () {
@@ -1280,10 +2459,11 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertNoActiveMenuItem('[data-test-menu-items]');
       });
     });
+  });
 
-    module('Mouse interactions', function () {
-      test('it should be possible to open and close a menu on click', async function (assert) {
-        await render(hbs`
+  module('Mouse interactions', function () {
+    test('it should be possible to open and close a menu on click', async function (assert) {
+      await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
@@ -1300,34 +2480,36 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
-        assertClosedMenuButton('[data-test-menu-button]');
+      // Verify it is closed
+      assertClosedMenuButton('[data-test-menu-button]');
 
-        await click('[data-test-menu-button]');
+      // Open menu
+      await click('[data-test-menu-button]');
 
-        assertOpenMenuButton('[data-test-menu-button]');
+      // Verify is it open
+      assertOpenMenuButton('[data-test-menu-button]');
 
-        assertMenuButtonLinkedWithMenuItems(
-          '[data-test-menu-button]',
-          '[data-test-menu-items]'
-        );
+      assertMenuButtonLinkedWithMenuItems(
+        '[data-test-menu-button]',
+        '[data-test-menu-items]'
+      );
 
-        const items = getMenuItems();
+      const items = getMenuItems();
 
-        assert.strictEqual(
-          items.length,
-          3,
-          'There are three visible menu items'
-        );
+      // Verify we have menu items
+      assert.strictEqual(items.length, 3, 'There are three visible menu items');
 
-        await click('[data-test-menu-button]');
+      // Close menu
+      await click('[data-test-menu-button]');
 
-        assertClosedMenuButton('[data-test-menu-button]');
-      });
+      // Verify is it closed
+      assertClosedMenuButton('[data-test-menu-button]');
+    });
 
-      // - it should focus the menu when you try to focus the button again (when the menu is already open)
-      // - it should be a no-op when we click outside of a closed menu
-      test('it should be possible to click outside of the menu which should close the menu', async function (assert) {
-        await render(hbs`
+    // - it should focus the menu when you try to focus the button again (when the menu is already open)
+    // - it should be a no-op when we click outside of a closed menu
+    test('it should be possible to click outside of the menu which should close the menu', async function (assert) {
+      await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
             <menu.Items data-test-menu-items as |items|>
@@ -1344,20 +2526,25 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
-        await click('[data-test-menu-button]');
+      // Open menu
+      await click('[data-test-menu-button]');
 
-        assertOpenMenuButton('[data-test-menu-button]');
+      // Verify is it open
+      assertOpenMenuButton('[data-test-menu-button]');
 
-        await click(document.body);
+      // Click something that is not related to the menu
+      await click(document.body);
 
-        assertClosedMenuButton('[data-test-menu-button]');
+      // Should be closed now
+      assertClosedMenuButton('[data-test-menu-button]');
 
-        assert.dom('[data-test-menu-button]').isFocused();
-      });
+      // Verify the button is focused again
+      assert.dom('[data-test-menu-button]').isFocused();
+    });
 
-      test('it should not focus button when does not exist', async function (assert) {
-        this.set('isShowButton', true);
-        await render(hbs`
+    test('it should not focus button when does not exist', async function (assert) {
+      this.set('isShowButton', true);
+      await render(hbs`
           <Menu as |menu|>
             {{#if this.isShowButton}}
               <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -1370,30 +2557,36 @@ module('Integration | Component | <Menu>', (hooks) => {
           </Menu>
         `);
 
-        await click('[data-test-menu-button]');
+      // Open menu
+      await click('[data-test-menu-button]');
 
-        assertOpenMenuButton('[data-test-menu-button]');
+      // Verify it is open
+      assertOpenMenuButton('[data-test-menu-button]');
 
-        this.set('isShowButton', false);
-        await click(document.body);
-        assert.dom('[data-test-menu-button]').doesNotExist();
-      });
-      // - it should be possible to click outside of the menu which should close the menu (even if we press the menu button)
-      // - it should be possible to click outside of the menu on another menu button which should close the current menu and open the new menu
-      // - it should be possible to hover an item and make it active
-      // - it should make a menu item active when you move the mouse over it
-      // - it should be a no-op when we move the mouse and the menu item is already active
-      // - it should be a no-op when we move the mouse and the menu item is disabled
-      // - it should not be possible to hover an item that is disabled
-      // - it should be possible to mouse leave an item and make it inactive
-      // - it should be possible to mouse leave a disabled item and be a no-op
-      // - it should be possible to click a menu item, which closes the menu
-      // - it should be possible to click a menu item, which closes the menu and invokes the @click handler
-      // - it should be possible to click a disabled menu item, which is a no-op
-      // - it should be possible focus a menu item, so that it becomes active
-      // - it should not be possible to focus a menu item which is disabled
-      // - it should not be possible to activate a disabled item
+      // Hide button
+      this.set('isShowButton', false);
+
+      // Click something that is not related to the menu
+      await click(document.body);
+
+      // Verify the button does not exist
+      assert.dom('[data-test-menu-button]').doesNotExist();
     });
+    // - it should be possible to click outside of the menu which should close the menu (even if we press the menu button)
+    // - it should be possible to click outside of the menu on another menu button which should close the current menu and open the new menu
+    // - it should be possible to hover an item and make it active
+    // - it should make a menu item active when you move the mouse over it
+    // - it should be a no-op when we move the mouse and the menu item is already active
+    // - it should be a no-op when we move the mouse and the menu item is disabled
+    // - it should not be possible to hover an item that is disabled
+    // - it should be possible to mouse leave an item and make it inactive
+    // - it should be possible to mouse leave a disabled item and be a no-op
+    // - it should be possible to click a menu item, which closes the menu
+    // - it should be possible to click a menu item, which closes the menu and invokes the @click handler
+    // - it should be possible to click a disabled menu item, which is a no-op
+    // - it should be possible focus a menu item, so that it becomes active
+    // - it should not be possible to focus a menu item which is disabled
+    // - it should not be possible to activate a disabled item
   });
 
   let getDebugOrder = function () {
