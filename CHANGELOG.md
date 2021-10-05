@@ -1,3 +1,33 @@
+## v0.10.0 (2021-10-05)
+
+#### :rocket: Enhancement
+
+- [#91](https://github.com/GavinJoyce/ember-headlessui/pull/91) Use `tag-name-is-component` helper to remove need for `Menu::ItemElement` backing class ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### :bug: Bug Fix
+
+- [#85](https://github.com/GavinJoyce/ember-headlessui/pull/85) Menu: preventing default key event behaviours + adding menu tests ([@roomman](https://github.com/roomman))
+- [#98](https://github.com/GavinJoyce/ember-headlessui/pull/98) ➖ Remove ember focus trap addon ([@far-fetched](https://github.com/far-fetched))
+- [#79](https://github.com/GavinJoyce/ember-headlessui/pull/79) Fix build error for consuming apps, caused by (set) helper ([@roomman](https://github.com/roomman))
+- [#84](https://github.com/GavinJoyce/ember-headlessui/pull/84) 🐛 <Transition> pass appear param to child transition ([@far-fetched](https://github.com/far-fetched))
+
+#### :memo: Documentation
+
+- [#83](https://github.com/GavinJoyce/ember-headlessui/pull/83) ✨ Feature: listbox transitions ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+
+#### :house: Internal
+
+- [#89](https://github.com/GavinJoyce/ember-headlessui/pull/89) Add typescript ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+- [#90](https://github.com/GavinJoyce/ember-headlessui/pull/90) Prepare for typescript ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 5
+
+- David McNamara ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+- Piotr ([@far-fetched](https://github.com/far-fetched))
+- Simon Zimmerman ([@roomman](https://github.com/roomman))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v0.9.0 (2021-09-03)
 
 #### :rocket: Enhancement
