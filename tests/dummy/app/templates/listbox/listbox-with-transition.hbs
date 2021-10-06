@@ -47,7 +47,6 @@
       >
         {{#each this.people as |person|}}
           <options.Option
-            @key={{person.id}}
             @value={{person}}
             @disabled={{person.unavailable}}
             class='outline-none'
