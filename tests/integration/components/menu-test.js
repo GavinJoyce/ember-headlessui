@@ -2,6 +2,7 @@
 //      We should endevour to have a similar test suite to it:
 //      https://github.com/tailwindlabs/headlessui/blob/412cc950aa7545c1d78ac0791ae136fa9c15294a/packages/%40headlessui-vue/src/components/menu/menu.test.tsx
 
+import Component from '@glimmer/component';
 import {
   click,
   find,
@@ -1348,6 +1349,69 @@ module('Integration | Component | <Menu>', (hooks) => {
       // - it should be possible focus a menu item, so that it becomes active
       // - it should not be possible to focus a menu item which is disabled
       // - it should not be possible to activate a disabled item
+    });
+  });
+
+  let getDebugOrder = function () {
+    let order = [];
+
+    this.owner.register(
+      'component:debug',
+      class DebugComponent extends Component {
+        constructor() {
+          super(...arguments);
+          order.push('Mounting - ' + this.args.name);
+        }
+
+        willDestroy() {
+          order.push('Unmounting - ' + this.args.name);
+        }
+      }
+    );
+
+    return order;
+  };
+
+  module('Menu composition', () => {
+    test('should be possible to wrap the Menu.Items with a Transition component', async function (assert) {
+      let order = getDebugOrder.call(this);
+      await render(hbs`
+        <Menu as |menu|>
+          <menu.Button data-test-menu-button>Trigger</menu.Button>
+          <Debug @name="Menu"/>
+          <Transition @show={{menu.isOpen}}>
+            <Debug @name="Transition"/>
+            <menu.Items
+              data-test-menu-items
+              @isOpen={{true}}
+              as |items|
+            >
+              <items.Item as |item|>
+                <Debug @name="Menu.Item"/>
+                <item.Element>
+                  my menu item
+                </item.Element>
+              </items.Item>
+            </menu.Items>
+          </Transition>
+        </Menu>
+      `);
+      assertClosedMenuButton('[data-test-menu-button]');
+      assert.dom('[data-test-menu-items]').doesNotExist();
+
+      await click('[data-test-menu-button]');
+      assertOpenMenuButton('[data-test-menu-button]');
+      assert.dom('[data-test-menu-items]').isVisible();
+
+      await click('[data-test-menu-button]');
+
+      assert.deepEqual(order, [
+        'Mounting - Menu',
+        'Mounting - Transition',
+        'Mounting - Menu.Item',
+        'Unmounting - Transition',
+        'Unmounting - Menu.Item',
+      ]);
     });
   });
 });
