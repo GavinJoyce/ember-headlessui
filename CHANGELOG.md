@@ -1,3 +1,19 @@
+## v0.10.2 (2021-10-11)
+
+#### :bug: Bug Fix
+
+- [#104](https://github.com/GavinJoyce/ember-headlessui/pull/104) ✅ transition with menu composition ([@far-fetched](https://github.com/far-fetched))
+
+#### :memo: Documentation
+
+- [#102](https://github.com/GavinJoyce/ember-headlessui/pull/102) remove unused `@key` argument ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### Committers: 3
+
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+- Mateus Alexandre ([@mateusalexandre](https://github.com/mateusalexandre))
+- Piotr ([@far-fetched](https://github.com/far-fetched))
+
 ## v0.10.0 (2021-10-05)
 
 #### :rocket: Enhancement
