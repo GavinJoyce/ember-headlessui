@@ -129,7 +129,7 @@ export default class Menu extends Component {
   }
 
   get itemsGuid() {
-    return this.isOpen ? `${this.guid}-items` : undefined;
+    return `${this.guid}-items`;
   }
 
   get itemsElement() {

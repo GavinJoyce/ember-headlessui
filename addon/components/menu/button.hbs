@@ -2,7 +2,7 @@
 <button
   type='button'
   aria-haspopup={{true}}
-  aria-controls={{@itemsGuid}}
+  aria-controls={{if @isOpen @itemsGuid}}
   aria-expanded={{@isOpen}}
   id={{@buttonGuid}}
   ...attributes
