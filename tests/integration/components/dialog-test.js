@@ -405,13 +405,33 @@ module('Integration | Component | <Dialog>', function (hooks) {
 
       assertDialog({ state: DialogState.InvisibleUnmounted });
 
-      assertActiveElement(getByText('Trigger'));
+      await assertActiveElement(getByText('Trigger'));
     });
 
-    todo(
-      'it should be possible to close the dialog, and keep focus on the focusable element',
-      async function () {}
-    );
+    test('it should be possible to close the dialog, and keep focus on the focusable element', async function () {
+      this.set('isOpen', false);
+
+      await render(hbs`
+        <button>Hello</button>
+        <button type="button" {{on "click" (set this "isOpen" true)}}>
+          Trigger
+        </button>
+        <Dialog @isOpen={{this.isOpen}} @onClose={{set this "isOpen" false}}>
+          Contents
+          <div tabindex="0"></div>
+        </Dialog>
+      `);
+
+      await click(getByText('Trigger'));
+
+      assertDialog({ state: DialogState.Visible });
+
+      await click(getByText('Hello'));
+
+      assertDialog({ state: DialogState.InvisibleUnmounted });
+
+      await assertActiveElement(getByText('Hello'));
+    });
 
     test('it should stop propagating click events when clicking on the Dialog.Overlay', async function (assert) {
       this.set('isOpen', true);
@@ -768,11 +788,15 @@ module('Integration | Component | <Dialog>', function (hooks) {
         //close the top most dialog with ${strategy}
         await action();
 
-        assert.equal(getDialogs(), 0, 'Verify that we have 0 open dialogs');
+        assert.equal(
+          getDialogs().length,
+          0,
+          'Verify that we have 0 open dialogs'
+        );
 
         await assertActiveElement(
           getByText('Open 1'),
-          'Verify that we have 1 open dialog'
+          'Verify that the `Open 1` got focused again'
         );
       }
     );

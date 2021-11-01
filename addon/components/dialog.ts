@@ -112,11 +112,14 @@ export default class DialogComponent extends Component<Args> {
   @action
   allowOutsideClick(e: MouseEvent) {
     let target = e.target as HTMLElement;
+
     if (target && target.tagName !== 'BODY') {
       this.outsideClickedElement = target;
     }
+
     this.onClose();
-    return true
+
+    return true;
   }
 
   @action
