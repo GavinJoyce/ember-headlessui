@@ -7,9 +7,12 @@
         aria-modal='true'
         ...attributes
         {{headlessui-focus-trap
-          focusTrapOptions=(hash initialFocus=@initialFocus)
+          focusTrapOptions=(hash
+            initialFocus=@initialFocus
+            allowOutsideClick=this.allowOutsideClick
+            setReturnFocus=this.setReturnFocus
+          )
         }}
-        {{click-outside this.onClose event='mouseup'}}
         {{this.handleEscapeKey @isOpen this.onClose}}
         {{did-insert (fn this.dialogStackProvider.push this)}}
         {{will-destroy (fn this.dialogStackProvider.remove this)}}
@@ -17,13 +20,13 @@
         {{yield
           (hash
             isOpen=@isOpen
-            onClose=@onClose
+            onClose=this.onClose
             Overlay=(component
               'dialog/-overlay'
               guid=this.overlayGuid
               dialogGuid=this.guid
               isOpen=@isOpen
-              onClose=@onClose
+              onClose=this.onClose
             )
             Title=(component
               'dialog/-title'

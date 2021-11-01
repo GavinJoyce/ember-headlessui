@@ -30,6 +30,7 @@ export default class DialogComponent extends Component<Args> {
 
   guid = `${guidFor(this)}-headlessui-dialog`;
   $portalRoot = getPortalRoot();
+  outsideClickedElement: HTMLElement | null = null;
 
   handleEscapeKey = modifier(
     (_element, [isOpen, onClose]: [boolean, () => void]) => {
@@ -101,6 +102,21 @@ export default class DialogComponent extends Component<Args> {
 
   get descriptionGuid() {
     return `${this.guid}-description`;
+  }
+
+  @action
+  setReturnFocus(trigger: HTMLElement) {
+    return this.outsideClickedElement ? this.outsideClickedElement : trigger;
+  }
+
+  @action
+  allowOutsideClick(e: MouseEvent) {
+    let target = e.target as HTMLElement;
+    if (target && target.tagName !== 'BODY') {
+      this.outsideClickedElement = target;
+    }
+    this.onClose();
+    return true
   }
 
   @action
