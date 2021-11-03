@@ -315,15 +315,39 @@ module('Integration | Component | <Dialog>', function (hooks) {
   });
 
   module('Composition', function () {
-    todo(
-      'it should be possible to open the Dialog via a Transition component',
-      async function () {}
-    );
+    test('it should be possible to open the Dialog via a Transition component', async function () {
+      this.set('noop', function () {});
 
-    todo(
-      'it should be possible to close the Dialog via a Transition component',
-      async function () {}
-    );
+      await render(hbs`
+        <Transition @show={{true}}>
+          <Dialog @isOpen={{true}} @onClose={{this.noop}} as |d|>
+            <d.Description>Hello</d.Description>
+            <div tabindex="0"></div>
+          </Dialog>
+        </Transition>
+      `);
+
+      assertDialog({ state: DialogState.Visible });
+      assertDialogDescription({
+        state: DialogState.Visible,
+        textContent: 'Hello',
+      });
+    });
+
+    test('it should be possible to close the Dialog via a Transition component', async function () {
+      this.set('noop', function () {});
+
+      await render(hbs`
+        <Transition @show={{false}}>
+          <Dialog @isOpen={{true}} @onClose={{this.noop}} as |d|>
+            <d.Description>Hello</d.Description>
+            <div tabindex="0"></div>
+          </Dialog>
+        </Transition>
+      `);
+
+      assertDialog({ state: DialogState.InvisibleUnmounted });
+    });
   });
 
   module('Keyboard interactions', function () {
