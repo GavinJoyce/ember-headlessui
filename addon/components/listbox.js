@@ -313,13 +313,14 @@ export default class ListboxComponent extends Component {
     this.search += key.toLowerCase();
 
     for (let i = 0; i < this.optionElements.length; i++) {
+      let optionElement = this.optionElements[i];
+
       if (
-        !this.optionElements[i].hasAttribute('disabled') &&
-        this.optionElements[i].textContent
-          .trim()
-          .toLowerCase()
-          .startsWith(this.search)
+        !optionElement.hasAttribute('disabled') &&
+        optionElement.textContent.trim().toLowerCase().startsWith(this.search)
       ) {
+        this.scrollIntoView(optionElement);
+
         this.activeOptionIndex = i;
         break;
       }
