@@ -75,6 +75,22 @@ export default class ListboxComponent extends Component {
   }
 
   @action
+  handleKeyDown(event) {
+    if (
+      [
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+        'Home',
+        'End',
+      ].indexOf(event.key) > -1
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  @action
   handleKeyUp(event) {
     if (event.key === 'ArrowDown') {
       if (!this.isOpen) {
@@ -140,6 +156,11 @@ export default class ListboxComponent extends Component {
   @action
   registerButtonElement(buttonElement) {
     this.buttonElement = buttonElement;
+  }
+
+  @action
+  unregisterButtonElement() {
+    this.buttonElement = undefined;
   }
 
   @action
