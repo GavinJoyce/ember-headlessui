@@ -182,6 +182,8 @@ export default class ListboxComponent extends Component {
       if (this.args.value === optionComponent.args.value) {
         this.selectedOptionIndex = this.activeOptionIndex =
           this.optionElements.length - 1;
+
+        this.scrollIntoView(optionElement);
       }
     }
 
@@ -242,6 +244,13 @@ export default class ListboxComponent extends Component {
     } else {
       this.optionsElement.focus();
     }
+  }
+
+  scrollIntoView(optionElement) {
+    optionElement.parentElement.scroll(
+      0,
+      optionElement.offsetTop - optionElement.parentElement.offsetTop
+    );
   }
 
   @action
