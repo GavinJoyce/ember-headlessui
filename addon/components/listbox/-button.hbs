@@ -1,6 +1,7 @@
 {{#let (element (or @as 'button')) as |Tag|}}
   <Tag
     role={{if @role @role 'button'}}
+    type={{if @type @type 'button'}}
     id='{{@guid}}-button'
     aria-haspopup='listbox'
     aria-controls={{@guid}}

@@ -3382,4 +3382,33 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
   });
+
+  test('should be possible to open a listbox without submitting the form', async function (assert) {
+    let callCount = 0;
+
+    this.set('onSubmit', () => {
+      callCount++;
+    });
+
+    await render(hbs`
+      <form {{on 'submit' this.onSubmit}}>
+        <Listbox as |listbox|>
+          <listbox.Button>Trigger</listbox.Button>
+          <listbox.Options as |options|>
+            <options.Option>option</options.Option>
+          </listbox.Options>
+        </Listbox>
+      </form>
+    `);
+    assertListboxButton({
+      state: ListboxState.InvisibleUnmounted,
+    });
+    assertListbox({
+      state: ListboxState.InvisibleUnmounted,
+    });
+    await click(getListboxButton());
+    assertListbox({ state: ListboxState.Visible });
+
+    assert.equal(callCount, 0, 'onSubmit not called');
+  });
 });
