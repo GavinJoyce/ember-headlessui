@@ -8,6 +8,17 @@ const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
 const ACTIVATE_LAST = 2;
 
+const PREVENTED_KEYDOWN_EVENTS = new Set([
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'PageUp',
+  'PageDown',
+  'Home',
+  'End',
+]);
+
 export default class ListboxComponent extends Component {
   @tracked activeOptionIndex;
   activateBehaviour = ACTIVATE_NONE;
@@ -76,16 +87,7 @@ export default class ListboxComponent extends Component {
 
   @action
   handleKeyDown(event) {
-    if (
-      [
-        'ArrowUp',
-        'ArrowDown',
-        'ArrowLeft',
-        'ArrowRight',
-        'Home',
-        'End',
-      ].indexOf(event.key) > -1
-    ) {
+    if (PREVENTED_KEYDOWN_EVENTS.has(event.key)) {
       event.preventDefault();
     }
   }
@@ -247,6 +249,11 @@ export default class ListboxComponent extends Component {
   }
 
   scrollIntoView(optionElement) {
+    // Cannot use optionElement.scrollIntoView() here because that function
+    // also scrolls the *window* by some amount. Here, we don't want to
+    // jerk the window, we just want to make the the option element visible
+    // inside its container.
+
     optionElement.parentElement.scroll(
       0,
       optionElement.offsetTop - optionElement.parentElement.offsetTop
