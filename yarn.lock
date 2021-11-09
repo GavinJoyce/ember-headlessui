@@ -6218,15 +6218,6 @@ ember-cli@~3.27.0:
     workerpool "^6.0.3"
     yam "^1.0.0"
 
-ember-click-outside-modifier@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-click-outside-modifier/-/ember-click-outside-modifier-2.0.0.tgz#8417a44db8bafef87e08f3614ad809ad1a6020e1"
-  integrity sha512-5FkTsSiSoDh4wL0mqJ2niOZH3ykevcRdLxA2pgZ9JqCMpvMqAQon5valAA4mvW6HiP9lnwm+GR/WijtL0dsdcg==
-  dependencies:
-    ember-cli-babel "^7.26.6"
-    ember-cli-htmlbars "^5.7.1"
-    ember-modifier "^2.1.2"
-
 ember-compatibility-helpers@^1.1.2, ember-compatibility-helpers@^1.2.0, ember-compatibility-helpers@^1.2.1, ember-compatibility-helpers@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/ember-compatibility-helpers/-/ember-compatibility-helpers-1.2.4.tgz#70e0fef7048969141626eed6006f3880df612cd1"
