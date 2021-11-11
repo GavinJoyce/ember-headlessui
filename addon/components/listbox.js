@@ -8,6 +8,17 @@ const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
 const ACTIVATE_LAST = 2;
 
+const PREVENTED_KEYDOWN_EVENTS = new Set([
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'PageUp',
+  'PageDown',
+  'Home',
+  'End',
+]);
+
 export default class ListboxComponent extends Component {
   @tracked activeOptionIndex;
   activateBehaviour = ACTIVATE_NONE;
@@ -72,6 +83,13 @@ export default class ListboxComponent extends Component {
     this.closeListbox();
 
     return true;
+  }
+
+  @action
+  handleKeyDown(event) {
+    if (PREVENTED_KEYDOWN_EVENTS.has(event.key)) {
+      event.preventDefault();
+    }
   }
 
   @action
@@ -143,6 +161,11 @@ export default class ListboxComponent extends Component {
   }
 
   @action
+  unregisterButtonElement() {
+    this.buttonElement = undefined;
+  }
+
+  @action
   registerLabelElement(labelElement) {
     this.labelElement = labelElement;
   }
@@ -161,6 +184,8 @@ export default class ListboxComponent extends Component {
       if (this.args.value === optionComponent.args.value) {
         this.selectedOptionIndex = this.activeOptionIndex =
           this.optionElements.length - 1;
+
+        this.scrollIntoView(optionElement);
       }
     }
 
@@ -223,6 +248,18 @@ export default class ListboxComponent extends Component {
     }
   }
 
+  scrollIntoView(optionElement) {
+    // Cannot use optionElement.scrollIntoView() here because that function
+    // also scrolls the *window* by some amount. Here, we don't want to
+    // jerk the window, we just want to make the the option element visible
+    // inside its container.
+
+    optionElement.parentElement.scroll(
+      0,
+      optionElement.offsetTop - optionElement.parentElement.offsetTop
+    );
+  }
+
   @action
   unregisterOptionsElement() {
     this.optionsElement = undefined;
@@ -283,13 +320,14 @@ export default class ListboxComponent extends Component {
     this.search += key.toLowerCase();
 
     for (let i = 0; i < this.optionElements.length; i++) {
+      let optionElement = this.optionElements[i];
+
       if (
-        !this.optionElements[i].hasAttribute('disabled') &&
-        this.optionElements[i].textContent
-          .trim()
-          .toLowerCase()
-          .startsWith(this.search)
+        !optionElement.hasAttribute('disabled') &&
+        optionElement.textContent.trim().toLowerCase().startsWith(this.search)
       ) {
+        this.scrollIntoView(optionElement);
+
         this.activeOptionIndex = i;
         break;
       }
