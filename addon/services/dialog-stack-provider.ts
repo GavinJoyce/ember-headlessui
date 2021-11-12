@@ -8,6 +8,10 @@ interface WithGuid {
 export default class DialogStackProvider extends Service {
   stack: string[] = [];
 
+  get dialogIsOpen() {
+    return this.stack.length !== 0;
+  }
+
   @action
   hasOpenChild(dialog: WithGuid) {
     return this.stack[this.stack.length - 1] !== dialog.guid;

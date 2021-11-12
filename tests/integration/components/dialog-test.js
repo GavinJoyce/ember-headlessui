@@ -9,6 +9,7 @@ import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import userEvent from '@testing-library/user-event';
+import { getPortalRoot } from 'ember-headlessui/components/dialog';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 import {
@@ -233,7 +234,50 @@ module('Integration | Component | <Dialog>', function (hooks) {
         async function () {}
       );
 
-      todo('it should add a scroll lock to the html tag', async function () {});
+      test('it should add a scroll lock to the html tag', async function (assert) {
+        const portalRoot = getPortalRoot();
+        this.set('isOpen', false);
+
+        await render(hbs`
+          <button id="trigger" type="button" {{on "click" (set this "isOpen" true)}}>
+            Trigger
+          </button>
+          <Dialog
+            class="relative bg-blue-500"
+            @isOpen={{this.isOpen}}
+            @onClose={{set this "isOpen" false}}
+            as |d|
+          >
+            <d.Overlay data-test-overlay>Hello</d.Overlay>
+            <div tabindex="0"></div>
+          </Dialog>
+        `);
+
+        assert
+          .dom(portalRoot)
+          .doesNotHaveStyle(
+            { overflow: 'hidden' },
+            'The page is not initially "locked"'
+          );
+
+        await click(document.getElementById('trigger'));
+
+        assert
+          .dom(portalRoot)
+          .hasStyle(
+            { overflow: 'hidden' },
+            'The page becomes "locked" when the dialog is open'
+          );
+
+        await click('[data-test-overlay]');
+
+        assert
+          .dom(portalRoot)
+          .doesNotHaveStyle(
+            { overflow: 'hidden' },
+            'The page is "unlocked" when the dialog closes'
+          );
+      });
     });
 
     module('Dialog.Overlay', function () {
