@@ -10,7 +10,14 @@ import { modifier } from 'ember-modifier';
 
 import type DialogStackProvider from 'ember-headlessui/services/dialog-stack-provider';
 
-function getPortalRoot() {
+/**
+ * Expose the element that the `Dialog` should be "slotted" into
+ *
+ * This is exported _only_ for testing purposes; do not consider this API to be public
+ *
+ * @private
+ */
+export function getPortalRoot() {
   const { rootElement } = getOwnConfig();
 
   // If we looked up a `rootElement` config at build-time, use that; otherwise use the body
@@ -51,6 +58,29 @@ export default class DialogComponent extends Component<Args> {
       };
     }
   );
+
+  lockWindowScroll = modifier(() => {
+    // Opt-out of some other dialog already locked scrolling
+    if (this.dialogStackProvider.dialogIsOpen) {
+      return;
+    }
+
+    let overflow = this.$portalRoot.style.overflow;
+    let paddingRight = this.$portalRoot.style.paddingRight;
+
+    // Setting `overflow: hidden` will suddenly hide the scroll bar on the window, which can cause horizontal
+    // layout shifting when the `Dialog` becomes open
+    // By applying the width of the scroll bar as padding, we can avoid that layout shift from happening
+    let scrollbarWidth = window.innerWidth - this.$portalRoot.clientWidth;
+
+    this.$portalRoot.style.overflow = 'hidden';
+    this.$portalRoot.style.paddingRight = `${scrollbarWidth}px`;
+
+    return () => {
+      this.$portalRoot.style.overflow = overflow;
+      this.$portalRoot.style.paddingRight = paddingRight;
+    };
+  });
 
   constructor(owner: unknown, args: Args) {
     super(owner, args);
