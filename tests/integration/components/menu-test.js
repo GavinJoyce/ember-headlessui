@@ -241,7 +241,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
 
         assertMenuLinkedWithMenuItem(items[0]);
       });
@@ -538,7 +542,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
@@ -658,7 +666,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[0]);
       });
 
@@ -761,7 +773,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[0]);
 
         // We should be able to go down once
@@ -824,7 +840,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[1]);
 
         // We should be able to go down once
@@ -871,7 +891,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[2]);
       });
     });
@@ -918,7 +942,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[2]);
       });
 
@@ -978,7 +1006,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[2]);
       });
 
@@ -1017,7 +1049,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[2]);
 
         // We should not be able to go up (because those are disabled)
@@ -1072,7 +1108,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[2]);
 
         // We should be able to go up once
@@ -1273,7 +1313,11 @@ module('Integration | Component | <Menu>', (hooks) => {
 
         const items = getMenuItems();
 
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
 
         await click('[data-test-menu-button]');
 

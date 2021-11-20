@@ -37,7 +37,7 @@
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
     "@embroider/macros": "^0.43.5",
-    "ember-auto-import": "^1.11.2",
+    "ember-auto-import": "^2.2.0",
     "ember-cli-babel": "^7.26.3",
     "ember-cli-htmlbars": "^5.7.1",
     "ember-cli-typescript": "^4.2.1",
@@ -126,7 +126,8 @@
     "tailwindcss": "^2.2.16",
     "testdouble": "^3.16.1",
     "testdouble-qunit": "^3.0.0",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "webpack": "^5.64.1"
   },
   "resolutions": {
     "@embroider/core": "^0.43.5",

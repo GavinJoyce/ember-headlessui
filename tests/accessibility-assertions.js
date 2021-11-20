@@ -78,7 +78,7 @@ function assertActiveElement(element, comment) {
       return;
     }
     return Qunit.assert.waitFor(() => {
-      Qunit.assert.equal(document.activeElement, element, comment);
+      Qunit.assert.strictEqual(document.activeElement, element, comment);
     });
   } catch (err) {
     Error.captureStackTrace(err, assertActiveElement);
@@ -198,7 +198,7 @@ function assertDialog(options, dialog = getDialog()) {
       }
 
       case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(dialog, null);
+        Qunit.assert.strictEqual(dialog, null);
         break;
       }
 
@@ -288,7 +288,7 @@ function assertDialogOverlay(options, overlay = getDialogOverlay()) {
       }
 
       case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(overlay, null);
+        Qunit.assert.strictEqual(overlay, null);
 
         break;
       }
@@ -401,7 +401,7 @@ function assertDialogTitle(
       }
 
       case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(title, null);
+        Qunit.assert.strictEqual(title, null);
 
         break;
       }
@@ -522,7 +522,7 @@ function assertDialogDescription(
       }
 
       case DialogState.InvisibleUnmounted: {
-        Qunit.assert.equal(description, null);
+        Qunit.assert.strictEqual(description, null);
 
         break;
       }
