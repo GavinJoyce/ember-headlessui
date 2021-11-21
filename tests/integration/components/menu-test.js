@@ -24,7 +24,7 @@ function getMenu() {
 }
 
 function getMenuButton() {
-  return find('button,[role="button"],[id^="headlessui-menu-button-"]');
+  return find('button,[role="button"],[data-test-menu-button]');
 }
 
 function getMenuItems() {
@@ -771,7 +771,7 @@ module('Integration | Component | <Menu>', (hooks) => {
         assertMenuLinkedWithMenuItem(items[2]);
       });
 
-      test('it should have no active menu item upon Space key press, when there are no non-disabled menu items', async function () {
+      test('it should have no active menu item upon Space key press, when there are no non-disabled menu items', async function (assert) {
         await render(hbs`
           <Menu as |menu|>
             <menu.Button data-test-menu-button>Trigger</menu.Button>
@@ -802,13 +802,13 @@ module('Integration | Component | <Menu>', (hooks) => {
         await triggerKeyEvent('[data-test-menu-button]', 'keydown', Keys.Space);
 
         // Verify is has menu items
+        const items = getMenuItems();
+
         assert.strictEqual(
           items.length,
           3,
           'There are three visible menu items'
         );
-
-        assertMenuLinkedWithMenuItem(items[0]);
 
         assertNoActiveMenuItem();
       });
@@ -1041,7 +1041,11 @@ module('Integration | Component | <Menu>', (hooks) => {
         const items = getMenuItems();
 
         // Verify we have menu items
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[0]);
 
         // Try to Shit+Tab
@@ -1101,7 +1105,11 @@ module('Integration | Component | <Menu>', (hooks) => {
         const items = getMenuItems();
 
         // Verify we have menu items
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
 
         // Verify that the first menu item is active
         assertMenuLinkedWithMenuItem(items[0]);
@@ -1213,7 +1221,11 @@ module('Integration | Component | <Menu>', (hooks) => {
         const items = getMenuItems();
 
         // Verify we have menu items
-        assert.equal(items.length, 3, 'There are three visible menu items');
+        assert.strictEqual(
+          items.length,
+          3,
+          'There are three visible menu items'
+        );
         assertMenuLinkedWithMenuItem(items[0]);
 
         // We should be able to go down once
