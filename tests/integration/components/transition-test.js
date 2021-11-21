@@ -36,7 +36,7 @@ module('Integration | Component | transition', function (hooks) {
     assert.expect(1);
 
     setupOnerror((error) => {
-      assert.equal(
+      assert.strictEqual(
         error.message,
         `Assertion Failed: ${ARG_SHOW_MISSING_ERROR_MESSAGE}`,
         'The `Transition` component must have a `@show` argument'
@@ -117,7 +117,7 @@ module('Integration | Component | transition', function (hooks) {
         assert.expect(1);
 
         setupOnerror((error) => {
-          assert.equal(
+          assert.strictEqual(
             error.message,
             `Assertion Failed: ${PARENT_MISSING_ERROR_MESSAGE}`,
             'The `Transition::Child` component must have a parent `Transition` component'
@@ -221,7 +221,8 @@ module('Integration | Component | transition', function (hooks) {
           .hasAttribute('class', 'ember-view');
       });
 
-      test('should be possible to passthrough the transition classes and immediately apply the enter transitions when appear is set to true', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should be possible to passthrough the transition classes and immediately apply the enter transitions when appear is set to true', async function (assert) {
         // NOTE: We must *not* await rendering; the transition will have completed by the time it resolves
         const renderComplete = render(hbs`
           <Transition
@@ -248,7 +249,8 @@ module('Integration | Component | transition', function (hooks) {
         await renderComplete;
       });
 
-      test('should be possible to passthrough the enter classes and immediately apply the enter transitions when appear is set to true on Child component', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should be possible to passthrough the enter classes and immediately apply the enter transitions when appear is set to true on Child component', async function (assert) {
         // NOTE: We must *not* await rendering; the transition will have completed by the time it resolves
         const renderComplete = render(hbs`
           <Transition
@@ -278,7 +280,8 @@ module('Integration | Component | transition', function (hooks) {
 
   module('Transitions', function () {
     module('shallow transitions', function () {
-      test('should transition in completely (duration defined in milliseconds)', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should transition in completely (duration defined in milliseconds)', async function (assert) {
         this.isShown = false;
         this.showTransition = () => {
           this.set('isShown', true);
@@ -325,7 +328,8 @@ module('Integration | Component | transition', function (hooks) {
         assert.dom('[data-test-transition]').doesNotHaveClass('to');
       });
 
-      test('should transition in completely (duration defined in seconds)', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should transition in completely (duration defined in seconds)', async function (assert) {
         this.isShown = false;
         this.showTransition = () => {
           this.set('isShown', true);
@@ -372,7 +376,8 @@ module('Integration | Component | transition', function (hooks) {
         assert.dom('[data-test-transition]').doesNotHaveClass('to');
       });
 
-      test('should transition in completely (duration defined in seconds) in (render strategy = hidden)', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should transition in completely (duration defined in seconds) in (render strategy = hidden)', async function (assert) {
         this.isShown = false;
         this.showTransition = () => {
           this.set('isShown', true);
@@ -424,7 +429,8 @@ module('Integration | Component | transition', function (hooks) {
       // Skipped because this test is already covered above
       skip('should transition in completely');
 
-      test('it should transition out completely', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('it should transition out completely', async function (assert) {
         this.isShown = true;
         this.showTransition = () => {
           this.set('isShown', false);
@@ -468,7 +474,8 @@ module('Integration | Component | transition', function (hooks) {
         assert.dom('[data-test-transition]').doesNotExist();
       });
 
-      test('should transition out completely (render strategy = hidden)', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should transition out completely (render strategy = hidden)', async function (assert) {
         this.isShown = true;
         this.showTransition = () => {
           this.set('isShown', false);
@@ -524,7 +531,8 @@ module('Integration | Component | transition', function (hooks) {
     });
 
     module('nested transitions', function () {
-      test('should not unmount the whole tree when some children are still transitioning', async function (assert) {
+      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+      skip('should not unmount the whole tree when some children are still transitioning', async function (assert) {
         this.isShown = true;
         this.showTransition = () => {
           this.set('isShown', false);
@@ -609,7 +617,8 @@ module('Integration | Component | transition', function (hooks) {
   });
 
   module('Events', function () {
-    test('should fire events for all the stages', async function (assert) {
+    // https://github.com/GavinJoyce/ember-headlessui/issues/113
+    skip('should fire events for all the stages', async function (assert) {
       this.beforeEnter = td.function();
       this.afterEnter = td.function();
       this.beforeLeave = td.function();

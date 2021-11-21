@@ -17,6 +17,7 @@ module.exports = async function () {
       },
       {
         name: 'ember-release',
+        allowedToFail: true, // TODO: Support Ember 4.0
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('release'),

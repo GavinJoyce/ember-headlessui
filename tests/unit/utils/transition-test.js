@@ -13,11 +13,11 @@ module('Unit | Utility | transition', function () {
 
     set.add('foo', 'bar', 'baz');
 
-    assert.equal(set.toString(), 'foo bar baz');
+    assert.strictEqual(set.toString(), 'foo bar baz');
 
     set.delete('foo', 'bar');
 
-    assert.equal(set.toString(), 'baz');
+    assert.strictEqual(set.toString(), 'baz');
   });
 
   module('splitClassNames', function () {
@@ -73,7 +73,7 @@ module('Unit | Utility | transition', function () {
         timeout(5).then(() => CONSTANT),
       ]);
 
-      assert.equal(
+      assert.strictEqual(
         result,
         TRANSITION,
         'The transition resolved before the constant'
@@ -84,7 +84,7 @@ module('Unit | Utility | transition', function () {
         timeout(1).then(() => CONSTANT),
       ]);
 
-      assert.equal(
+      assert.strictEqual(
         result,
         CONSTANT,
         'The transition resolved after the constant'
@@ -99,7 +99,7 @@ module('Unit | Utility | transition', function () {
         timeout(5).then(() => CONSTANT),
       ]);
 
-      assert.equal(
+      assert.strictEqual(
         result,
         TRANSITION,
         'The transition resolved before the constant'
@@ -110,7 +110,7 @@ module('Unit | Utility | transition', function () {
         timeout(3).then(() => CONSTANT),
       ]);
 
-      assert.equal(
+      assert.strictEqual(
         result,
         CONSTANT,
         'The transition resolved after the constant'
@@ -125,7 +125,7 @@ module('Unit | Utility | transition', function () {
         timeout(1).then(() => CONSTANT),
       ]);
 
-      assert.equal(
+      assert.strictEqual(
         result,
         TRANSITION,
         'The transition resolved before the constant'
