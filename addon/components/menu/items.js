@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
+import { Keys } from 'ember-headlessui/utils/keyboard';
+
 export default class Items extends Component {
   get menuItemsElementSelector() {
     return `#${this.args.itemsGuid}`;
@@ -10,20 +12,38 @@ export default class Items extends Component {
   onKeydown(event) {
     switch (event.key) {
       // Ref: https://www.w3.org/TR/wai-aria-practices-1.2/#keyboard-interaction-12
-      case 'Enter':
+      // `Escape` key is handled by focus-trap
+      case Keys.Space:
+        if (this.args.searchTaskIsRunning) {
+          event.preventDefault();
+          event.stopPropagation();
+          return this.args.search(event.key);
+        }
+      // eslint-disable-next-line no-fallthrough
+      case Keys.Enter:
         if (this.args.activeItem) {
           this.args.activeItem.element.click();
         }
         this.args.closeMenu();
         break;
-      case 'ArrowDown':
+      case Keys.ArrowDown:
         event.preventDefault();
         event.stopPropagation();
         return this.args.goToNextItem();
-      case 'ArrowUp':
+      case Keys.ArrowUp:
         event.preventDefault();
         event.stopPropagation();
         return this.args.goToPreviousItem();
+      case Keys.Home:
+      case Keys.PageUp:
+        event.preventDefault();
+        event.stopPropagation();
+        return this.args.goToFirstItem();
+      case Keys.End:
+      case Keys.PageDown:
+        event.preventDefault();
+        event.stopPropagation();
+        return this.args.goToLastItem();
       default:
         if (event.key.length === 1) {
           return this.args.search(event.key);
