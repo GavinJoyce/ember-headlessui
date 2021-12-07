@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { debounce } from '@ember/runloop';
 
+import { modifier } from 'ember-modifier';
+
 const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
 const ACTIVATE_LAST = 2;
@@ -155,15 +157,13 @@ export default class ListboxComponent extends Component {
     this.isOpen = true;
   }
 
-  @action
-  registerButtonElement(buttonElement) {
+  registerButtonElement = modifier((buttonElement) => {
     this.buttonElement = buttonElement;
-  }
 
-  @action
-  unregisterButtonElement() {
-    this.buttonElement = undefined;
-  }
+    return () => {
+      this.buttonElement = undefined;
+    };
+  });
 
   @action
   registerLabelElement(labelElement) {
