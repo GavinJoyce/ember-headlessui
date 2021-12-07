@@ -2,8 +2,9 @@ import Component from '@glimmer/component';
 import { getValue } from '@glimmer/tracking/primitives/cache';
 import { assert } from '@ember/debug';
 import { invokeHelper } from '@ember/helper';
-import { action } from '@ember/object';
 import { schedule } from '@ember/runloop';
+
+import { modifier } from 'ember-modifier';
 
 import {
   AppliedClassNamesManager,
@@ -31,6 +32,12 @@ export default class TransitionComponent extends Component {
     return this.args.unmount ?? true;
   }
 
+  track = modifier((element) => {
+    this.allTransitionDomNodes.add(element);
+
+    return () => this.allTransitionDomNodes.delete(element);
+  });
+
   /* === Component Visibility Management === */
 
   allTransitionDomNodes = new Set();
@@ -55,22 +62,9 @@ export default class TransitionComponent extends Component {
     return this.unmount ? false : !this.componentIsVisible;
   }
 
-  @action
-  trackDomNode(element) {
-    this.allTransitionDomNodes.add(element);
-  }
-
-  @action
-  untrackDomNode(element) {
-    this.allTransitionDomNodes.delete(element);
-  }
-
   /* === Transition Class Name Management === */
 
   initialRender = true;
-
-  /** @type {HTMLElement} */
-  ownDomNode;
 
   appliedClassNamesManager = invokeHelper(
     this,
