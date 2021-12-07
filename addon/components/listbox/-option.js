@@ -14,6 +14,10 @@ export default class ListboxOptionComponent extends Component {
     return () => this.args.unregisterOptionsElement(element);
   });
 
+  optionRegistration = modifier((element) => {
+    this.args.registerOptionElement(element, this);
+  });
+
   @action
   handleClick(e) {
     e.stopPropagation();
