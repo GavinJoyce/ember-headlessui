@@ -125,7 +125,7 @@
     "testdouble": "^3.16.1",
     "testdouble-qunit": "^3.0.0",
     "typescript": "^4.4.3",
-    "webpack": "^5.64.1"
+    "webpack": "^5.65.0"
   },
   "resolutions": {
     "@embroider/core": "^0.43.5",
