@@ -1,3 +1,21 @@
+## v0.11.0 (2021-12-18)
+
+#### :rocket: Enhancement
+
+- [#118](https://github.com/GavinJoyce/ember-headlessui/pull/118) Support Ember 4 ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+- [#100](https://github.com/GavinJoyce/ember-headlessui/pull/100) Menu: add additional keydown events and tests ([@roomman](https://github.com/roomman))
+
+#### :house: Internal
+
+- [#112](https://github.com/GavinJoyce/ember-headlessui/pull/112) drop ie11 from dummy app targets ([@GavinJoyce](https://github.com/GavinJoyce))
+- [#111](https://github.com/GavinJoyce/ember-headlessui/pull/111) upgrade ember-auto-import ([@GavinJoyce](https://github.com/GavinJoyce))
+
+#### Committers: 3
+
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+- Simon Zimmerman ([@roomman](https://github.com/roomman))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v0.10.3 (2021-11-12)
 
 ## v0.10.2 (2021-10-11)
