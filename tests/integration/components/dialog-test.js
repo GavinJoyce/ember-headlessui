@@ -248,7 +248,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
             @onClose={{set this "isOpen" false}}
             as |d|
           >
-            <d.Overlay data-test-overlay>Hello</d.Overlay>
+            <d.Overlay>Hello</d.Overlay>
             <div tabindex="0"></div>
           </Dialog>
         `);
@@ -269,7 +269,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
             'The page becomes "locked" when the dialog is open'
           );
 
-        await click('[data-test-overlay]');
+        await click(getDialogOverlay());
 
         assert
           .dom(portalRoot)
