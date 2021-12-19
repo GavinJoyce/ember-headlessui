@@ -221,8 +221,7 @@ module('Integration | Component | transition', function (hooks) {
           .hasAttribute('class', 'ember-view');
       });
 
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should be possible to passthrough the transition classes and immediately apply the enter transitions when appear is set to true', async function (assert) {
+      test('should be possible to passthrough the transition classes and immediately apply the enter transitions when appear is set to true', async function (assert) {
         // NOTE: We must *not* await rendering; the transition will have completed by the time it resolves
         const renderComplete = render(hbs`
           <Transition
@@ -249,8 +248,7 @@ module('Integration | Component | transition', function (hooks) {
         await renderComplete;
       });
 
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should be possible to passthrough the enter classes and immediately apply the enter transitions when appear is set to true on Child component', async function (assert) {
+      test('should be possible to passthrough the enter classes and immediately apply the enter transitions when appear is set to true on Child component', async function (assert) {
         // NOTE: We must *not* await rendering; the transition will have completed by the time it resolves
         const renderComplete = render(hbs`
           <Transition
@@ -280,8 +278,7 @@ module('Integration | Component | transition', function (hooks) {
 
   module('Transitions', function () {
     module('shallow transitions', function () {
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should transition in completely (duration defined in milliseconds)', async function (assert) {
+      test('should transition in completely (duration defined in milliseconds)', async function (assert) {
         this.isShown = false;
         this.showTransition = () => {
           this.set('isShown', true);
@@ -328,8 +325,7 @@ module('Integration | Component | transition', function (hooks) {
         assert.dom('[data-test-transition]').doesNotHaveClass('to');
       });
 
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should transition in completely (duration defined in seconds)', async function (assert) {
+      test('should transition in completely (duration defined in seconds)', async function (assert) {
         this.isShown = false;
         this.showTransition = () => {
           this.set('isShown', true);
@@ -376,8 +372,7 @@ module('Integration | Component | transition', function (hooks) {
         assert.dom('[data-test-transition]').doesNotHaveClass('to');
       });
 
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should transition in completely (duration defined in seconds) in (render strategy = hidden)', async function (assert) {
+      test('should transition in completely (duration defined in seconds) in (render strategy = hidden)', async function (assert) {
         this.isShown = false;
         this.showTransition = () => {
           this.set('isShown', true);
@@ -429,8 +424,7 @@ module('Integration | Component | transition', function (hooks) {
       // Skipped because this test is already covered above
       skip('should transition in completely');
 
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('it should transition out completely', async function (assert) {
+      test('it should transition out completely', async function (assert) {
         this.isShown = true;
         this.showTransition = () => {
           this.set('isShown', false);
@@ -474,8 +468,7 @@ module('Integration | Component | transition', function (hooks) {
         assert.dom('[data-test-transition]').doesNotExist();
       });
 
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should transition out completely (render strategy = hidden)', async function (assert) {
+      test('should transition out completely (render strategy = hidden)', async function (assert) {
         this.isShown = true;
         this.showTransition = () => {
           this.set('isShown', false);
@@ -531,8 +524,7 @@ module('Integration | Component | transition', function (hooks) {
     });
 
     module('nested transitions', function () {
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
-      skip('should not unmount the whole tree when some children are still transitioning', async function (assert) {
+      test('should not unmount the whole tree when some children are still transitioning', async function (assert) {
         this.isShown = true;
         this.showTransition = () => {
           this.set('isShown', false);
@@ -617,8 +609,7 @@ module('Integration | Component | transition', function (hooks) {
   });
 
   module('Events', function () {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should fire events for all the stages', async function (assert) {
+    test('should fire events for all the stages', async function (assert) {
       this.beforeEnter = td.function();
       this.afterEnter = td.function();
       this.beforeLeave = td.function();
