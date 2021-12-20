@@ -5,7 +5,7 @@ import {
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { module, skip, test, todo } from 'qunit';
+import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import userEvent from '@testing-library/user-event';
@@ -451,8 +451,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
       assertDialog({ state: DialogState.InvisibleUnmounted });
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('it should be possible to close the dialog, and re-focus the button when we click outside on the body element', async function () {
+    test('it should be possible to close the dialog, and re-focus the button when we click outside on the body element', async function () {
       this.set('isOpen', false);
 
       await render(hbs`
@@ -477,8 +476,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
       await assertActiveElement(getByText('Trigger'));
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('it should be possible to close the dialog, and keep focus on the focusable element', async function () {
+    test('it should be possible to close the dialog, and keep focus on the focusable element', async function () {
       this.set('isOpen', false);
 
       await render(hbs`
@@ -605,8 +603,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
   });
 
   module('Nesting', function () {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip.each(
+    test.each(
       'it should be possible to open nested Dialog components and close them with `${strategy}`',
       [
         {
@@ -639,7 +636,11 @@ module('Integration | Component | <Dialog>', function (hooks) {
           />
         `);
 
-        assert.strictEqual(getDialogs(), 0, 'Verify we have no open dialogs');
+        assert.strictEqual(
+          getDialogs().length,
+          0,
+          'Verify we have no open dialogs'
+        );
 
         await click(getByText('Open 1'), 'Open Dialog 1');
 
@@ -882,8 +883,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
   });
 
   module('InitialFocus', function () {
-    skip('it should focus requested element', async function (assert) {
-      // https://github.com/GavinJoyce/ember-headlessui/issues/113
+    test('it should focus requested element', async function (assert) {
       this.set('isOpen', false);
 
       await render(hbs`
