@@ -104,8 +104,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('<listbox.Label>', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to render a <listbox.Label> using yielded props', async function () {
+    test('should be possible to render a <listbox.Label> using yielded props', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Label data-test="headlessui-listbox-label-1">{{listbox.isOpen}} {{listbox.disabled}}</listbox.Label>
@@ -251,8 +250,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('<listbox.Options>', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to render a <listbox.Options> using yielded props', async function () {
+    test('should be possible to render a <listbox.Options> using yielded props', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -446,8 +444,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox keyboard actions', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('`Enter` key', async function (assert) {
+    test('`Enter` key', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -497,8 +494,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoSelectedListboxOption();
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should not be possible to open the listbox with Enter when the button is disabled', async function () {
+    test('should not be possible to open the listbox with Enter when the button is disabled', async function () {
       await render(hbs`
         <Listbox @disabled={{true}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -536,8 +532,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with Enter, and focus the selected option', async function (assert) {
+    test('should be possible to open the listbox with Enter, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -592,8 +587,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       async () => {}
     );
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with Enter, and focus the selected option (with a list of objects)', async function (assert) {
+    test('should be possible to open the listbox with Enter, and focus the selected option (with a list of objects)', async function (assert) {
       this.set('myOptions', [
         { id: 'a', name: 'Option A' },
         { id: 'b', name: 'Option B' },
@@ -645,8 +639,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should have no active listbox option when there are no listbox options at all', async function () {
+    test('should have no active listbox option when there are no listbox options at all', async function () {
       await render(hbs`
         <Listbox @value={{this.selectedOption}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -739,8 +732,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should have no active listbox option upon Enter key press, when there are no non-disabled listbox options', async function () {
+    test('should have no active listbox option upon Enter key press, when there are no non-disabled listbox options', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -773,8 +765,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to close the listbox with Enter when there is no active listboxoption', async function () {
+    test('should be possible to close the listbox with Enter when there is no active listboxoption', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -815,8 +806,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListboxButton());
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to close the listbox with Enter and choose the active listbox option', async function (assert) {
+    test('should be possible to close the listbox with Enter and choose the active listbox option', async function (assert) {
       let callValue = '',
         callCount = 0;
 
@@ -882,8 +872,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Space` key', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with Space', async function (assert) {
+    test('should be possible to open the listbox with Space', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -966,8 +955,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with Space, and focus the selected option', async function (assert) {
+    test('should be possible to open the listbox with Space, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1017,8 +1005,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should have no active listbox option when there are no listbox options at all', async function () {
+    test('should have no active listbox option when there are no listbox options at all', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1144,8 +1131,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to close the listbox with Space and choose the active listbox option', async function (assert) {
+    test('should be possible to close the listbox with Space and choose the active listbox option', async function (assert) {
       let callValue = '',
         callCount = 0;
 
@@ -1205,8 +1191,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Escape` key', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to close an open listbox with Escape', async function () {
+    test('should be possible to close an open listbox with Escape', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1252,8 +1237,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `Tab` key', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should focus trap when we use Tab', async function (assert) {
+    test('should focus trap when we use Tab', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1307,8 +1291,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListbox());
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should focus trap when we use Shift+Tab', async function (assert) {
+    test('should focus trap when we use Shift+Tab', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1366,8 +1349,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowDown` key', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with ArrowDown', async function (assert) {
+    test('should be possible to open the listbox with ArrowDown', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1595,8 +1577,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowUp` key', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with ArrowUp and the last option should be active', async function (assert) {
+    test('should be possible to open the listbox with ArrowUp and the last option should be active', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1682,8 +1663,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox with ArrowUp, and focus the selected option', async function (assert) {
+    test('should be possible to open the listbox with ArrowUp, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1733,8 +1713,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should have no active listbox option when there are no listbox options at all', async function () {
+    test('should have no active listbox option when there are no listbox options at all', async function () {
       await render(hbs`
         <Listbox as |listbox|>
           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1755,8 +1734,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to use ArrowUp to navigate the listbox options and jump to the first non-disabled one', async function (assert) {
+    test('should be possible to use ArrowUp to navigate the listbox options and jump to the first non-disabled one', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1838,8 +1816,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to use ArrowUp to navigate the listbox options', async function (assert) {
+    test('should be possible to use ArrowUp to navigate the listbox options', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -1899,8 +1876,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('Listbox `ArrowLeft` key', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to use ArrowLeft to navigate the listbox options', async function (assert) {
+    test('should be possible to use ArrowLeft to navigate the listbox options', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2683,8 +2659,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
   });
 
   module('listbox mouse interactions', () => {
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should focus the Listbox.Button when we click the Listbox.Label', async function () {
+    test('should focus the Listbox.Button when we click the Listbox.Label', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Label>Label</listbox.Label>
@@ -2707,8 +2682,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(getListboxButton());
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should not focus the Listbox.Button when we right click the Listbox.Label', async function () {
+    test('should not focus the Listbox.Button when we right click the Listbox.Label', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Label>Label</listbox.Label>
@@ -2731,8 +2705,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await assertActiveElement(document.body);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox on click', async function (assert) {
+    test('should be possible to open the listbox on click', async function (assert) {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2826,8 +2799,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to open the listbox on click, and focus the selected option', async function (assert) {
+    test('should be possible to open the listbox on click, and focus the selected option', async function (assert) {
       await render(hbs`
         <Listbox @value="b" as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2916,8 +2888,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListbox({ state: ListboxState.InvisibleUnmounted });
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to click outside of the listbox which should close the listbox', async function () {
+    test('should be possible to click outside of the listbox which should close the listbox', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -2984,8 +2955,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertListboxButtonLinkedWithListbox(button2, getListbox());
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to click outside of the listbox which should close the listbox (even if we press the listbox button)', async function () {
+    test('should be possible to click outside of the listbox which should close the listbox (even if we press the listbox button)', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -3275,8 +3245,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to click a listbox option, which closes the listbox', async function (assert) {
+    test('should be possible to click a listbox option, which closes the listbox', async function (assert) {
       let callValue = '',
         callCount = 0;
 
@@ -3320,8 +3289,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(getListboxOptions()[1]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible to click a disabled listbox option, which is a no-op', async function (assert) {
+    test('should be possible to click a disabled listbox option, which is a no-op', async function (assert) {
       let callCount = 0;
 
       this.set('onChange', (value) => {
@@ -3363,8 +3331,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertNoActiveListboxOption();
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should be possible focus a listbox option, so that it becomes active', async function () {
+    test('should be possible focus a listbox option, so that it becomes active', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
@@ -3391,8 +3358,7 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[1]);
     });
 
-    // https://github.com/GavinJoyce/ember-headlessui/issues/113
-    skip('should not be possible to focus a listbox option which is disabled', async function () {
+    test('should not be possible to focus a listbox option which is disabled', async function () {
       await render(hbs`
         <Listbox as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
