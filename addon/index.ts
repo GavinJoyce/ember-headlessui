@@ -13,13 +13,8 @@
 // As we move this library to be more typescript, these
 // expect-error flags will throw errors during type-checking
 // and can be removed
-// @ts-expect-error
-export { default as Dialog } from './dialog';
-// @ts-expect-error
-export { default as ListBox } from './list-box';
-// @ts-expect-error
-export { default as Menu } from './menu';
-// @ts-expect-error
-export { default as Switch } from './switch';
-// @ts-expect-error
-export { default as Transition } from './transition';
+export { default as Dialog } from './components/dialog';
+export { default as ListBox } from './components/listbox';
+export { default as Menu } from './components/menu';
+export { default as Switch } from './components/switch';
+export { default as Transition } from './components/transition';
