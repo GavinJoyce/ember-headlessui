@@ -5,7 +5,7 @@ import { tracked } from 'ember-deep-tracked';
 import { on } from '@ember/modifier';
 import { fn } from '@ember/helper';
 
-import { Dialog } from 'ember-headlessui';
+import { Dialog, ListBox, Menu, Swift, Transition } from 'ember-headlessui';
 
 import { DialogState, assertDialog } from './accessibility-assertions';
 
