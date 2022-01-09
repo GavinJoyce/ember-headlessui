@@ -1,3 +1,19 @@
+## v0.11.1 (2022-01-09)
+
+#### :bug: Bug Fix
+
+- [#127](https://github.com/GavinJoyce/ember-headlessui/pull/127) Move ember-modifier to dependencies ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+- [#121](https://github.com/GavinJoyce/ember-headlessui/pull/121) Fix `it should add a scroll lock to the html tag` test ([@bertdeblock](https://github.com/bertdeblock))
+
+#### :house: Internal
+
+- [#122](https://github.com/GavinJoyce/ember-headlessui/pull/122), [#123](https://github.com/GavinJoyce/ember-headlessui/pull/123), [#124](https://github.com/GavinJoyce/ember-headlessui/pull/124) Enable skipped transition tests again ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 2
+
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
 ## v0.11.0 (2021-12-18)
 
 #### :rocket: Enhancement
