@@ -9,10 +9,6 @@
 //    - unified import, `import { Menu } from 'ember-headlessui';`
 //    - Public API is clearly declared
 //      any other components / modifiers / etc, are considered Private API
-
-// As we move this library to be more typescript, these
-// expect-error flags will throw errors during type-checking
-// and can be removed
 export { default as Dialog } from './components/dialog';
 export { default as ListBox } from './components/listbox';
 export { default as Menu } from './components/menu';
