@@ -1,5 +1,5 @@
 {{! template-lint-disable no-down-event-binding }}
-{{#if @isOpen}}
+{{#if (or @isOpen @static)}}
   <div
     id={{@itemsGuid}}
     aria-labelledby={{@buttonGuid}}
