@@ -219,6 +219,21 @@ module('Integration | Component | <Menu>', (hooks) => {
       assert.dom('[data-test-item-a]').hasTagName('a');
       assert.dom('[data-test-item-a]').hasAttribute('href', '/menu');
     });
+
+    test('should be possible to always render the Menu.Items if we provide it a `static` prop', async function (assert) {
+      await render(hbs`
+        <Menu as |menu|>
+          <menu.Button>Trigger</menu.Button>
+          <menu.Items data-test-menu-items @static={{true}} as |items|>
+              <items.Item>Item A</items.Item>
+              <items.Item>Item B</items.Item>
+              <items.Item>Item C</items.Item>
+          </menu.Items>
+        </Menu>
+      `);
+
+      assert.dom('[data-test-menu-items]').isVisible();
+    });
   });
 
   module('Keyboard interactions', function () {
