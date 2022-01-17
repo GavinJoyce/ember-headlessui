@@ -1,3 +1,13 @@
+## v0.12.0 (2022-01-17)
+
+#### :rocket: Enhancement
+
+- [#128](https://github.com/GavinJoyce/ember-headlessui/pull/128) ✨ <Menu /> support static option for Items ([@aoifehannigan](https://github.com/aoifehannigan))
+
+#### Committers: 1
+
+- Aoife Hannigan ([@aoifehannigan](https://github.com/aoifehannigan))
+
 ## v0.11.1 (2022-01-09)
 
 #### :bug: Bug Fix
