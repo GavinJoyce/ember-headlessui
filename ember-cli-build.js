@@ -4,13 +4,8 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
-    autoImport: {
-      webpack: {
-        node: {
-          // Required to import `testdouble` in tests
-          global: true,
-        },
-      },
+    'ember-test-selectors': {
+      patchClassicComponent: false,
     },
 
     postcssOptions: {
@@ -31,5 +26,15 @@ module.exports = function (defaults) {
 
   const { maybeEmbroider } = require('@embroider/test-setup');
 
-  return maybeEmbroider(app);
+  return maybeEmbroider(app, {
+    packageRules: [
+      {
+        package: 'dummy',
+        components: {
+          '{{debug}}': { safeToIgnore: true },
+          '{{link-to}}': { safeToIgnore: true },
+        },
+      },
+    ],
+  });
 };

@@ -6,6 +6,8 @@ on:
     branches:
       - main
       - master
+  schedule:
+    - cron: '0 3 * * 0' # every Sunday at 3am
 
 jobs:
   lint:
@@ -51,6 +53,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v2
@@ -75,6 +78,7 @@ jobs:
   ember-try:
     runs-on: ubuntu-latest
     needs: ['lint', 'test']
+    timeout-minutes: 10
     strategy:
       matrix:
         ember-try-scenario:
@@ -83,6 +87,8 @@ jobs:
           - ember-release
           - ember-beta
           - ember-canary
+          - embroider-safe
+          - embroider-optimized
 
     steps:
       - uses: actions/checkout@v2
