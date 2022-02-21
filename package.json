@@ -42,7 +42,7 @@
     "ember-cli-htmlbars": "^6.0.1",
     "ember-cli-typescript": "^4.2.1",
     "ember-concurrency": "^2.1.2",
-    "ember-element-helper": "^0.5.5",
+    "ember-element-helper": "^0.6.0",
     "ember-modifier": "^3.0.0",
     "ember-set-helper": "^2.0.1",
     "ember-truth-helpers": "^3.0.0",
