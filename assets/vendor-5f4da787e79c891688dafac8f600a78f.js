@@ -3883,25 +3883,26 @@ function i(){let e=[]
 return n.forEach((t=>{e.push(t)})),e}function a(){let e={pending:0,waiters:{}}
 return n.forEach((t=>{if(!t.waitUntil()){e.pending++
 let r=t.debugInfo()
-e.waiters[t.name]=r||!0}})),e}function s(){return a().pending>0}t.default.Test&&(0,r.registerWaiter)((()=>!s()))})),define("@embroider/macros/runtime",["exports"],(function(e){"use strict"
+e.waiters[t.name]=r||!0}})),e}function s(){return a().pending>0}t.default.Test&&(0,r.registerWaiter)((()=>!s()))})),define("@embroider/macros/es-compat",["exports"],(function(e){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e){return e?.__esModule?e:{default:e}}})),define("@embroider/macros/runtime",["exports"],(function(e){"use strict"
 function t(e){return n.packages[e]}function r(){return n.global}Object.defineProperty(e,"__esModule",{value:!0}),e.config=t,e.each=function(e){if(!Array.isArray(e))throw new Error("the argument to the each() macro must be an array")
 return e},e.getGlobalConfig=r,e.isTesting=function(){let e=n.global,t=e&&e["@embroider/macros"]
 return Boolean(t&&t.isTesting)},e.macroCondition=function(e){return e}
 const n={packages:{"/home/runner/work/ember-headlessui/ember-headlessui":{}},global:{"@embroider/macros":{isTesting:!1}}}
 let i="undefined"!=typeof window?window._embroider_macros_runtime_config:void 0
 if(i){let e={config:t,getGlobalConfig:r,setConfig(e,t){n.packages[e]=t},setGlobalConfig(e,t){n.global[e]=t}}
-for(let t of i)t(e)}})),define("@embroider/util/ember-private-api",["exports"],(function(e){"use strict"
-let t
+for(let t of i)t(e)}})),define("@embroider/util/ember-private-api",["exports","@embroider/macros/es-compat"],(function(e,t){"use strict"
+let r
 Object.defineProperty(e,"__esModule",{value:!0}),e.isCurriedComponentDefinition=void 0,e.lookupCurriedComponentDefinition=function(e,t){let r=function(e){let t=e.lookup("renderer:-dom")._runtimeResolver
 if(t)return t
 let r=Object.entries(e.__container__.cache).find((e=>e[0].startsWith("template-compiler:main-")))
 if(r)return r[1].resolver.resolver
 throw new Error("@embroider/util couldn't locate the runtime resolver on this ember version")}(t)
-if("function"==typeof r.lookupComponentHandle){let i=r.lookupComponentHandle(e,t)
-if(null!=i)return new n(r.resolve(i),null)}if(!r.lookupComponent(e,t))throw new Error(`Attempted to resolve \`${e}\` via ensureSafeComponent, but nothing was found.`)
-return i(0,e,t,{named:{},positional:[]})},t=require("@glimmer/runtime")
-let{isCurriedComponentDefinition:r,CurriedComponentDefinition:n,curry:i,CurriedValue:a}=t
-e.isCurriedComponentDefinition=r,r||(e.isCurriedComponentDefinition=r=function(e){return e instanceof a})})),define("@embroider/util/index",["exports","@ember/debug","@ember/application","@embroider/util/ember-private-api","@ember/component/helper"],(function(e,t,r,n,i){"use strict"
+if("function"==typeof r.lookupComponentHandle){let n=r.lookupComponentHandle(e,t)
+if(null!=n)return new i(r.resolve(n),null)}if(!r.lookupComponent(e,t))throw new Error(`Attempted to resolve \`${e}\` via ensureSafeComponent, but nothing was found.`)
+return a(0,e,t,{named:{},positional:[]})},r=(0,t.default)(require("@glimmer/runtime"))
+let{isCurriedComponentDefinition:n,CurriedComponentDefinition:i,curry:a,CurriedValue:s}=r
+e.isCurriedComponentDefinition=n,n||(e.isCurriedComponentDefinition=n=function(e){return e instanceof s})})),define("@embroider/util/index",["exports","@ember/debug","@ember/application","@embroider/util/ember-private-api","@ember/component/helper"],(function(e,t,r,n,i){"use strict"
 function a(e,t){return"string"==typeof e?function(e,t){let i=(0,r.getOwner)(t)
 return(0,n.lookupCurriedComponentDefinition)(e,i)}(e,t):(0,n.isCurriedComponentDefinition)(e)||null==e?e:function(e,t){let i=(0,r.getOwner)(t),a=function(e,t){let r=t.lookup("service:-ensure-registered")
 return r.register(e,t)}(e,i)
@@ -3966,11 +3967,11 @@ e.default=t})),define("ember-concurrency/-private/external/scheduler/policies/dr
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 const n=(0,r.makeCancelState)("it belongs to a 'drop' Task that was already running")
 class i{constructor(e){this.remainingSlots=e}step(){return this.remainingSlots>0?(this.remainingSlots--,r.STARTED):n}}class a extends t.default{makeReducer(){return new i(this.maxConcurrency)}}var s=a
-e.default=s})),define("ember-concurrency/-private/external/scheduler/policies/enqueued-policy",["exports","ember-concurrency/-private/external/scheduler/policies/bounded-policy","ember-concurrency/-private/external/scheduler/policies/execution-states"],(function(e,t,r){"use strict"
+e.default=s}))
+define("ember-concurrency/-private/external/scheduler/policies/enqueued-policy",["exports","ember-concurrency/-private/external/scheduler/policies/bounded-policy","ember-concurrency/-private/external/scheduler/policies/execution-states"],(function(e,t,r){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 class n{constructor(e){this.remainingSlots=e}step(){return this.remainingSlots>0?(this.remainingSlots--,r.STARTED):r.QUEUED}}class i extends t.default{makeReducer(){return new n(this.maxConcurrency)}}var a=i
-e.default=a}))
-define("ember-concurrency/-private/external/scheduler/policies/execution-states",["exports"],(function(e){"use strict"
+e.default=a})),define("ember-concurrency/-private/external/scheduler/policies/execution-states",["exports"],(function(e){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.makeCancelState=e.TYPE_STARTED=e.TYPE_QUEUED=e.TYPE_CANCELLED=e.STARTED=e.QUEUED=void 0
 const t="CANCELLED"
 e.TYPE_CANCELLED=t
@@ -4230,12 +4231,12 @@ return l.__ec__encap_current_ti=u,this._encapsulatedTaskStates.set(u,l),n=this._
 let t=this._encapsulatedTaskInstanceProxies,n=t.get(e)
 if(!n){let i=this._encapsulatedTaskStates.get(e)
 n=new Proxy(e,{get:(e,t)=>t in e?e[t]:(0,r.get)(i,t.toString()),set:(e,t,n)=>(t in e?e[t]=n:(0,r.set)(i,t.toString(),n),!0),has:(e,t)=>t in e||t in i,ownKeys:e=>Reflect.ownKeys(e).concat(Reflect.ownKeys(i)),defineProperty(r,n,a){let s=t.get(e)
-return s&&(a.get?a.get=a.get.bind(s):s&&a.set&&(a.set=a.set.bind(s))),Reflect.defineProperty(i,n,a)},getOwnPropertyDescriptor:(e,t)=>t in e?Reflect.getOwnPropertyDescriptor(e,t):Reflect.getOwnPropertyDescriptor(i,t)}),t.set(e,n)}return n}}})),define("ember-concurrency/-private/taskable-mixin",["exports","ember-concurrency/-private/utils"],(function(e,t){"use strict"
+return s&&(a.get?a.get=a.get.bind(s):s&&a.set&&(a.set=a.set.bind(s))),Reflect.defineProperty(i,n,a)},getOwnPropertyDescriptor:(e,t)=>t in e?Reflect.getOwnPropertyDescriptor(e,t):Reflect.getOwnPropertyDescriptor(i,t)}),t.set(e,n)}return n}}}))
+define("ember-concurrency/-private/taskable-mixin",["exports","ember-concurrency/-private/utils"],(function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.TASKABLE_MIXIN=void 0
 const r={_performCount:0,setState(e){this._performCount=this._performCount+(e.numPerformedInc||0)
 let r=e.numRunning>0,n=e.numQueued>0,i=Object.assign({},e,{performCount:this._performCount,isRunning:r,isQueued:n,isIdle:!r&&!n,state:r?"running":"idle"});(0,t.assignProperties)(this,i)},onState(e,t){t.onStateCallback&&t.onStateCallback(e,t)}}
-e.TASKABLE_MIXIN=r}))
-define("ember-concurrency/-private/tracked-state",["exports","@glimmer/tracking","ember-concurrency/-private/external/task/default-state","ember-concurrency/-private/external/task-instance/initial-state","ember-concurrency/-private/utils"],(function(e,t,r,n,i){"use strict"
+e.TASKABLE_MIXIN=r})),define("ember-concurrency/-private/tracked-state",["exports","@glimmer/tracking","ember-concurrency/-private/external/task/default-state","ember-concurrency/-private/external/task-instance/initial-state","ember-concurrency/-private/utils"],(function(e,t,r,n,i){"use strict"
 function a(e,r){return Object.keys(e).reduce(((r,n)=>function(e,r,n){const i=Object.getOwnPropertyDescriptor(e,n)
 i.initializer=i.initializer||(()=>e[n]),delete i.value
 const a=(0,t.tracked)(r,n,i)
@@ -4284,12 +4285,10 @@ for(;!a&&this.el;){let{value:e,done:t}=i.next()
 a=t,await e}}}e.default=i})),define("ember-css-transitions/utils/transition-utils",["exports","@ember/runloop","rsvp"],(function(e,t,r){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.computeTimeout=function(e){let{transitionDuration:t,transitionDelay:r,animationDuration:n,animationDelay:i,animationIterationCount:a}=window.getComputedStyle(e),s=Math.max(parseFloat(i),parseFloat(r)),o=Math.max(parseFloat(n)*parseFloat(a),parseFloat(t))
 return 1e3*(s+o)},e.nextTick=function(){return new r.Promise((e=>{window.requestAnimationFrame((()=>e()))}))},e.sleep=function(e){return new r.Promise((r=>{(0,t.later)((()=>r()),e)}))}})),define("ember-element-helper/helpers/-element",["exports","@ember/component/helper","@ember/debug","@ember/component"],(function(e,t,r,n){"use strict"
-function i(){}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
-const a=n.default.extend(),s=n.default.extend()
-var o=t.default.extend({init(){this._super(...arguments),this.tagName=i,this.componentClass=null},compute(e,t){let n=e[0]
-return n!==this.tagName&&(this.tagName=n,"string"==typeof n?this.componentClass===a?this.componentClass=s:this.componentClass=a:(this.componentClass=null,(0,r.runInDebug)((()=>{let e="The argument passed to the `element` helper must be a string"
-try{e+=` (you passed \`${n}\`)`}catch(t){}})))),this.componentClass}})
-e.default=o})),define("ember-element-helper/helpers/element",["exports","@ember/component/helper","@ember/debug"],(function(e,t,r){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
+class i extends n.default{}class a extends n.default{}function s(){}class o extends t.default{constructor(){super(...arguments),this.tagName=s,this.componentClass=null}compute(e,t){let n=e[0]
+return n!==this.tagName&&(this.tagName=n,"string"==typeof n?this.componentClass===i?this.componentClass=a:this.componentClass=i:(this.componentClass=null,(0,r.runInDebug)((()=>{let e="The argument passed to the `element` helper must be a string"
+try{e+=` (you passed \`${n}\`)`}catch(t){}})))),this.componentClass}}e.default=o})),define("ember-element-helper/helpers/element",["exports","@ember/component/helper","@ember/debug"],(function(e,t,r){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 var n=(0,t.helper)((function(){return null}))
 e.default=n})),define("ember-headlessui/components/dialog",["exports","@ember/component","@ember/template-factory","@glimmer/component","@ember/object","@ember/object/internals","@ember/service","@ember/utils","ember-headlessui/utils/keyboard","ember-modifier"],(function(e,t,r,n,i,a,s,o,l,u){"use strict"
@@ -4431,12 +4430,12 @@ e.default=c,(0,t.setComponentTemplate)(u,c)})),define("ember-headlessui/componen
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 const i=(0,r.createTemplateFactory)({id:"iWNnm5j7",block:'[[[44,[[50,[28,[37,2],[[28,[37,3],[[28,[37,4],[[30,1],"button"],null]],null]],null],0,null,[["tagName"],[[28,[37,4],[[30,1],"button"],null]]]]],[[[1,"  "],[8,[30,2],[[16,1,[30,3]],[24,"role","switch"],[24,"tabindex","0"],[16,"aria-checked",[29,[[30,4]]]],[16,"aria-labelledby",[30,5]],[17,6],[24,"data-test-headlessui-switch-button",""],[4,[38,5],["click",[30,7]],null],[4,[38,5],["keyup",[30,8]],null]],null,[["default"],[[[[1,"\\n    "],[18,9,null],[1,"\\n  "]],[]]]]],[1,"\\n"]],[2]]]],["@tagName","Tag","@guid","@isOn","@labelGuid","&attrs","@onClick","@onKeyUp","&default"],false,["let","component","ensure-safe-component","-element","or","on","yield"]]',moduleName:"ember-headlessui/components/switch/button.hbs",isStrictMode:!1})
 var a=(0,t.setComponentTemplate)(i,(0,n.default)())
-e.default=a})),define("ember-headlessui/components/switch/label",["exports","@ember/component","@ember/template-factory","@ember/component/template-only"],(function(e,t,r,n){"use strict"
+e.default=a}))
+define("ember-headlessui/components/switch/label",["exports","@ember/component","@ember/template-factory","@ember/component/template-only"],(function(e,t,r,n){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 const i=(0,r.createTemplateFactory)({id:"Xrb3BjwQ",block:'[[[11,"label"],[16,1,[30,1]],[17,2],[24,"data-test-headlessui-switch-label",""],[4,[38,0],["click",[30,3]],null],[12],[1,"\\n  "],[18,4,null],[1,"\\n"],[13]],["@guid","&attrs","@onClick","&default"],false,["on","yield"]]',moduleName:"ember-headlessui/components/switch/label.hbs",isStrictMode:!1})
 var a=(0,t.setComponentTemplate)(i,(0,n.default)())
-e.default=a}))
-define("ember-headlessui/components/transition",["exports","@ember/component","@ember/template-factory","@glimmer/component","@glimmer/tracking/primitives/cache","@ember/debug","@ember/helper","@ember/object","@ember/runloop","ember-headlessui/helpers/transition"],(function(e,t,r,n,i,a,s,o,l,u){"use strict"
+e.default=a})),define("ember-headlessui/components/transition",["exports","@ember/component","@ember/template-factory","@glimmer/component","@glimmer/tracking/primitives/cache","@ember/debug","@ember/helper","@ember/object","@ember/runloop","ember-headlessui/helpers/transition"],(function(e,t,r,n,i,a,s,o,l,u){"use strict"
 var c
 function d(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function p(e,t,r,n,i){var a={}
 return Object.keys(n).forEach((function(e){a[e]=n[e]})),a.enumerable=!!a.enumerable,a.configurable=!!a.configurable,("value"in a||a.initializer)&&(a.writable=!0),a=r.slice().reverse().reduce((function(r,n){return n(e,t,r)||r}),a),i&&void 0!==a.initializer&&(a.value=a.initializer?a.initializer.call(i):void 0,a.initializer=void 0),void 0===a.initializer&&(Object.defineProperty(e,t,a),a=null),a}Object.defineProperty(e,"__esModule",{value:!0}),e.default=e.ARG_SHOW_MISSING_ERROR_MESSAGE=void 0
@@ -4584,7 +4583,8 @@ var s=r.default.extend({_moduleRegistry:null,init(){this._super(...arguments),th
 for(let t=0,s=r.length;t<s;t++){let s=r[t]
 if(-1!==s.indexOf(e)){let t=a(e,s,this.namespace.podModulePrefix||i)
 t||(t=s.split(e+"s/").pop()),n.addObject(t)}}return n}})
-e.default=s})),define("ember-resolver/resolvers/classic/index",["exports","ember","@ember/debug","@ember/object","@ember/string","ember-resolver/utils/class-factory"],(function(e,t,r,n,i,a){"use strict"
+e.default=s}))
+define("ember-resolver/resolvers/classic/index",["exports","ember","@ember/debug","@ember/object","@ember/string","ember-resolver/utils/class-factory"],(function(e,t,r,n,i,a){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=e.ModuleRegistry=void 0,void 0===requirejs.entries&&(requirejs.entries=requirejs._eak_seen)
 class s{constructor(e){this._entries=e||requirejs.entries}moduleNames(){return Object.keys(this._entries)}has(e){return e in this._entries}get(){return require(...arguments)}}e.ModuleRegistry=s
 const o=n.default.extend({resolveOther:function(e){let t=this.findModuleName(e)
@@ -4630,8 +4630,7 @@ return 0===t.indexOf(o)&&t.length>o.length?e+":"+t.slice(o.length):void 0},_extr
 return t&&t.default&&(t=t.default),t}})
 o.reopenClass({moduleBasedResolver:!0})
 var l=o
-e.default=l}))
-define("ember-resolver/utils/class-factory",["exports"],(function(e){"use strict"
+e.default=l})),define("ember-resolver/utils/class-factory",["exports"],(function(e){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e){return{create:t=>"function"==typeof e.extend?e.extend(t):e}}})),define("ember-set-helper/helpers/set",["exports","@ember/component/helper","@ember/debug","@ember/object"],(function(e,t,r,n){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 var i=(0,t.helper)((function(e){let[t,r,i]=e
