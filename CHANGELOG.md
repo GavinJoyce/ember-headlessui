@@ -1,3 +1,13 @@
+## v0.12.1 (2022-03-02)
+
+#### :house: Internal
+
+- [#135](https://github.com/GavinJoyce/ember-headlessui/pull/135) Update embroider packages ([@bertdeblock](https://github.com/bertdeblock))
+
+#### Committers: 1
+
+- Bert De Block ([@bertdeblock](https://github.com/bertdeblock))
+
 ## v0.12.0 (2022-01-17)
 
 #### :rocket: Enhancement
