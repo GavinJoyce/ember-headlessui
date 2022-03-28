@@ -904,5 +904,28 @@ module('Integration | Component | <Dialog>', function (hooks) {
         assertActiveElement(getByText('focused'));
       });
     });
+
+    test('it should fallback to focus the dialog if there are no focusable elements', async function (assert) {
+      this.set('isOpen', false);
+
+      await render(hbs`
+        <button id='trigger' type="button" {{on "click" (set this "isOpen" true)}}>
+          Trigger
+        </button>
+        <Dialog
+          @isOpen={{this.isOpen}}
+          @onClose={{set this "isOpen" false}}
+        >
+          <h2>focused the whole dialog</h2>
+        </Dialog>
+      `);
+
+      await click('#trigger');
+
+      await assert.waitFor(() => {
+        // focus is on the actual dialog as a fallback
+        return assertActiveElement(getDialog());
+      });
+    });
   });
 });
