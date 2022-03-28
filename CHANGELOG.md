@@ -1,3 +1,13 @@
+## v0.12.2 (2022-03-28)
+
+#### :bug: Bug Fix
+
+- [#136](https://github.com/GavinJoyce/ember-headlessui/pull/136) Add Fallback Focus to Dialog ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## v0.12.1 (2022-03-02)
 
 #### :house: Internal
