@@ -122,6 +122,10 @@ export default class DialogComponent extends Component<Args> {
     return this.args.as || this.DEFAULT_TAG_NAME;
   }
 
+  get dialogElementSelector() {
+    return `#${this.guid}`;
+  }
+
   get overlayGuid() {
     return `${this.guid}-overlay`;
   }

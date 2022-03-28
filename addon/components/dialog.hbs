@@ -5,12 +5,14 @@
         id={{this.guid}}
         role='dialog'
         aria-modal='true'
+        tabindex='-1'
         ...attributes
         {{headlessui-focus-trap
           focusTrapOptions=(hash
             initialFocus=@initialFocus
             allowOutsideClick=this.allowOutsideClick
             setReturnFocus=this.setReturnFocus
+            fallbackFocus=this.dialogElementSelector
           )
         }}
         {{this.handleEscapeKey @isOpen this.onClose}}
