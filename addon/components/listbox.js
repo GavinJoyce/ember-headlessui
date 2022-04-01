@@ -254,7 +254,9 @@ export default class ListboxComponent extends Component {
     // jerk the window, we just want to make the the option element visible
     // inside its container.
 
-    optionElement.parentElement.scroll(
+    if (this.args.preventScrollToOption) return;
+
+    optionElement.parentElement?.scroll(
       0,
       optionElement.offsetTop - optionElement.parentElement.offsetTop
     );
