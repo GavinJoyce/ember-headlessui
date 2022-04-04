@@ -3411,4 +3411,34 @@ module('Integration | Component | <Listbox>', function (hooks) {
 
     assert.strictEqual(callCount, 0, 'onSubmit not called');
   });
+
+  test('should be possible to prevent automatically scrolling to selected option', async function (assert) {
+    await render(hbs`
+      <Listbox @value="hulu" @preventScrollToOption={{true}} as |listbox|>
+         <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+         <listbox.Options style="height: 50px; overflow:scroll;" data-test="headlessui-listbox-options-1" as |options|>
+           <options.Option @value="alice">alice</options.Option>
+           <options.Option @value="bob">bob</options.Option>
+           <options.Option @value="charlie">charlie</options.Option>
+           <options.Option @value="delta">delta</options.Option>
+           <options.Option @value="foxtrot">foxtrot</options.Option>
+           <options.Option @value="gamma">gamma</options.Option>
+           <options.Option @value="hulu">hulu</options.Option>
+         </listbox.Options>
+       </Listbox>
+    `);
+
+    // Open listbox
+    await click(getListboxButton());
+    assertListbox({ state: ListboxState.Visible });
+    await assertActiveElement(getListbox());
+
+    let options = getListboxOptions();
+
+    assert.strictEqual(
+      options[0].parentElement.scrollTop,
+      0,
+      'option is not scrolled into view'
+    );
+  });
 });
