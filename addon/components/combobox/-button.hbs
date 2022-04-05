@@ -1,0 +1,22 @@
+{{#let (element (or @as 'button')) as |Tag|}}
+  <Tag
+    tabindex='-1'
+    role={{if @role @role 'button'}}
+    type={{unless @as (if @type @type 'button')}}
+    id='{{@guid}}-button'
+    aria-haspopup='listbox'
+    aria-controls={{if @isOpen @guid}}
+    aria-labelledby='{{@guid}}-label {{@guid}}-button'
+    {{on 'click' @handleButtonClick}}
+    {{on 'keydown' @handleKeyDown}}
+    {{on 'keyup' @handleKeyUp}}
+    {{on 'keypress' @handleKeyPress}}
+    aria-expanded={{unless @isDisabled (if @isOpen 'true' 'false')}}
+    disabled={{@isDisabled}}
+    {{did-insert @registerButtonElement}}
+    {{will-destroy @unregisterButtonElement}}
+    ...attributes
+  >
+    {{yield}}
+  </Tag>
+{{/let}}

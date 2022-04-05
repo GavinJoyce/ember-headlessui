@@ -20,6 +20,11 @@ Router.map(function () {
     this.route('listbox-with-transition');
   });
 
+  this.route('combobox', function () {
+    this.route('combobox-basic');
+    this.route('combobox-multiple');
+  });
+
   this.route('switch', function () {
     this.route('switch-basic');
     this.route('switch-checkbox');

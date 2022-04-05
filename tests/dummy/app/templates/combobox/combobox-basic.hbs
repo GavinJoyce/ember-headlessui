@@ -1,0 +1,96 @@
+<div class='flex justify-center w-screen h-full p-12 bg-gray-50'>
+  <div class='relative inline-block text-left'>
+
+    <p class='mb-5'>Selected person: <em>{{this.selectedPerson.name}}</em></p>
+
+    <Combobox
+      @value={{this.selectedPerson}}
+      @onChange={{this.setSelectedPerson}}
+      as |combobox|
+    >
+      <combobox.Label>Type or select something from the list: </combobox.Label>
+      <div class='flex flex-cols items-center mt-5'>
+        <combobox.Input
+          @onChange={{this.applyFilter}}
+          @displayValue={{this.displayValue}}
+          class='inline-flex h-9 border border-gray-300 rounded-md rounded-r-none border-r-0 outline-none pl-3 w-full'
+        />
+        <combobox.Button
+          class='h-9 rounded-l-none border-l-0 inline-flex justify-center w-22 px-2 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            class='inline h-5 w-5 text-gray-400'
+            aria-hidden='true'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M8 9l4-4 4 4m0 6l-4 4-4-4'
+            ></path>
+          </svg>
+        </combobox.Button>
+      </div>
+      <combobox.Options
+        class='z-30 max-w-md w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'
+        as |options|
+      >
+        {{#if (eq this.filteredPeople.length 0)}}
+          <span
+            class='block truncate cursor-default select-none relative py-2 pl-10 pr-4'
+          >Nothing found.</span>
+        {{/if}}
+        {{#each this.filteredPeople as |person|}}
+          <options.Option
+            @value={{person}}
+            @disabled={{person.unavailable}}
+            class='outline-none'
+            as |option|
+          >
+            <span
+              class='block truncate cursor-default select-none relative py-2 pl-10 pr-4
+                {{if option.selected 'font-medium' 'font-normal'}}
+                {{if
+                  option.active
+                  'text-yellow-900 bg-yellow-100'
+                  'text-gray-900'
+                }}
+                '
+            >
+              <span class='{{if option.disabled 'text-gray-500'}}'>
+                {{person.name}}
+              </span>
+              {{#if option.selected}}
+                <span
+                  class='absolute inset-y-0 left-0 flex items-center pl-3
+                    {{if option.active 'text-yellow-600' 'text-yellow-600'}}
+                    '
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    class='inline h-6 w-6'
+                    aria-hidden='true'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                </span>
+              {{/if}}
+            </span>
+          </options.Option>
+        {{/each}}
+      </combobox.Options>
+    </Combobox>
+  </div>
+</div>

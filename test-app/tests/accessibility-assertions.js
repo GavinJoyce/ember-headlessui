@@ -52,6 +52,38 @@ function getListboxes() {
   return Array.from(document.querySelectorAll('[role="listbox"]'));
 }
 
+function getCombobox() {
+  return document.querySelector('[role="listbox"]');
+}
+
+function getComboboxes() {
+  return Array.from(document.querySelectorAll('[role="listbox"]'));
+}
+
+function getComboboxButton() {
+  return document.querySelector('[role="button"]');
+}
+
+function getComboboxButtons() {
+  return Array.from(document.querySelectorAll('[role="button"]'));
+}
+
+function getComboboxOptions() {
+  return Array.from(document.querySelectorAll('[role="option"]'));
+}
+
+function getComboboxInput() {
+  return document.querySelector('[role="combobox"]');
+}
+
+function getComboboxInputs() {
+  return Array.from(document.querySelectorAll('[role="combobox"]'));
+}
+
+function getComboboxLabel() {
+  return document.querySelector('[id$="-headlessui-combobox-label"]');
+}
+
 const DialogState = {
   /** The dialog is visible to the user. */
   Visible: 'Visible',
@@ -67,6 +99,19 @@ const ListboxState = {
   Visible: 'Visible',
   InvisibleHidden: 'InvisibleHidden',
   InvisibleUnmounted: 'InvisibleUnmounted',
+};
+
+const ComboboxState = {
+  Visible: 'Visible',
+  InvisibleHidden: 'InvisibleHidden',
+  InvisibleUnmounted: 'InvisibleUnmounted',
+};
+
+const ComboboxMode = {
+  /** The combobox is in the `single` mode. */
+  Single: 'Single',
+  /** The combobox is in the `multiple` mode. */
+  Multiple: 'Multiple',
 };
 
 function assertNever(x) {
@@ -733,6 +778,21 @@ function assertActiveListboxOption(item, listbox = getListbox()) {
   }
 }
 
+function assertActiveComboboxOption(item, combobox = getCombobox()) {
+  try {
+    if (item === null) return Qunit.assert.ok(item);
+    if (combobox === null) return Qunit.assert.ok(combobox);
+
+    // Ensure link between combobox & combobox item is correct
+    Qunit.assert
+      .dom(combobox)
+      .hasAttribute('aria-activedescendant', item.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertActiveComboboxOption);
+    throw err;
+  }
+}
+
 function assertNoActiveListboxOption(listbox = getListbox()) {
   try {
     if (listbox === null) return Qunit.assert.ok(listbox);
@@ -902,9 +962,366 @@ function assertListbox(
   }
 }
 
+function assertComboboxOption({ tag, attributes, selected }, item) {
+  try {
+    if (item === null) return Qunit.assert.dom(item).exists();
+
+    // Check that some attributes exists, doesn't really matter what the values are at this point in
+    // time, we just require them.
+    Qunit.assert.dom(item).hasAttribute('id');
+
+    // Check that we have the correct values for certain attributes
+    Qunit.assert.dom(item).hasAttribute('role', 'option');
+
+    if (!item.getAttribute('aria-disabled')) {
+      Qunit.assert.dom(item).hasAttribute('tabindex', '-1');
+    }
+
+    // Ensure combobox button has the following attributes
+    for (let attributeName in attributes) {
+      Qunit.assert
+        .dom(item)
+        .hasAttribute(attributeName, attributes[attributeName]);
+    }
+
+    if (tag) {
+      Qunit.assert.dom(item).hasTagName(tag.toLowerCase());
+    }
+
+    if (selected != null) {
+      switch (selected) {
+        case true:
+          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
+
+        case false:
+          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+
+        default:
+          Qunit.assert.ok();
+      }
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxOption);
+    throw err;
+  }
+}
+
+function assertNoSelectedComboboxOption(items = getComboboxOptions()) {
+  try {
+    for (let item of items)
+      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+  } catch (err) {
+    Error.captureStackTrace(err, assertNoSelectedComboboxOption);
+    throw err;
+  }
+}
+
+function assertNoActiveComboboxOption(combobox = getComboboxInput()) {
+  try {
+    if (combobox === null) return Qunit.assert.dom(combobox).exists();
+
+    // Ensure we don't have an active combobox
+    Qunit.assert.dom(combobox).doesNotHaveAttribute('aria-activedescendant');
+  } catch (err) {
+    Error.captureStackTrace(err, assertNoActiveComboboxOption);
+    throw err;
+  }
+}
+
+function assertNotActiveComboboxOption(item, combobox = getComboboxInput()) {
+  try {
+    if (combobox === null) return Qunit.assert.dom(combobox).exists();
+    if (item === null) return Qunit.assert.dom(item).exists();
+
+    // Ensure link between combobox & combobox item does not exist
+    Qunit.assert
+      .dom(combobox)
+      .doesNotHaveAttribute('aria-activedescebdabt', item.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertNotActiveComboboxOption);
+    throw err;
+  }
+}
+
+function assertComboboxButton(
+  { state, attributes, textContent },
+  button = getComboboxButton()
+) {
+  try {
+    if (button === null) return Qunit.assert.ok(button);
+    Qunit.assert.dom(button).hasAttribute('id');
+    Qunit.assert.dom(button).hasAria('haspopup', 'listbox');
+    if (textContent) {
+      Qunit.assert.dom(button).hasText(textContent);
+    }
+    switch (state) {
+      case ComboboxState.InvisibleHidden: {
+        Qunit.assert.dom(button).hasAria('controls', { any: true });
+        if (button.hasAttribute('disabled')) {
+          Qunit.assert.dom(button).doesNotHaveAria('expanded');
+        } else {
+          Qunit.assert.dom(button).hasAria('expanded', 'false');
+        }
+        break;
+      }
+      case ComboboxState.InvisibleUnmounted: {
+        Qunit.assert.dom(button).doesNotHaveAria('controls');
+        if (button.hasAttribute('disabled')) {
+          Qunit.assert.dom(button).doesNotHaveAria('expanded');
+          Qunit.assert.dom(button).isDisabled();
+        } else {
+          Qunit.assert.dom(button).hasAria('expanded', 'false');
+        }
+        break;
+      }
+      case ComboboxState.Visible: {
+        Qunit.assert.dom(button).hasAria('controls', { any: true });
+        Qunit.assert.dom(button).hasAria('expanded', 'true');
+        break;
+      }
+      default:
+        Qunit.assert.ok(
+          state,
+          'you have to provide state to assertComboboxButton'
+        );
+    }
+
+    if (textContent) {
+      Qunit.assert.dom(button).hasText(textContent);
+    }
+
+    for (let attributeName in attributes) {
+      Qunit.assert
+        .dom(button)
+        .hasAttribute(attributeName, attributes[attributeName]);
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxButton);
+    throw err;
+  }
+}
+
+function assertComboboxList(
+  { state, attributes, textContent },
+  listbox = getCombobox()
+) {
+  try {
+    switch (state) {
+      case ComboboxState.InvisibleHidden: {
+        if (listbox === null) return Qunit.assert.ok(listbox);
+
+        assertHidden(listbox);
+
+        Qunit.assert.dom(listbox).hasAria('labelledby');
+        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (textContent) {
+          Qunit.assert.dom(listbox).hasText(textContent);
+        }
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+
+        break;
+      }
+
+      case ComboboxState.Visible: {
+        if (listbox === null) return Qunit.assert.ok(listbox);
+
+        assertVisible(listbox);
+
+        Qunit.assert.dom(listbox).hasAttribute('aria-labelledby');
+        Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (textContent) {
+          Qunit.assert.dom(listbox).hasText(textContent);
+        }
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+
+        break;
+      }
+
+      case ComboboxState.InvisibleUnmounted: {
+        Qunit.assert.strictEqual(listbox, null);
+        break;
+      }
+
+      default: {
+        assertNever(state);
+      }
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxButton);
+    throw err;
+  }
+}
+
+function assertComboboxLabel(
+  { tag, attributes, textContent },
+  label = getComboboxLabel()
+) {
+  try {
+    if (label === null) return Qunit.assert.ok(label);
+
+    // Ensure menu button have these properties
+    Qunit.assert.dom(label).hasAttribute('id');
+
+    if (textContent) {
+      Qunit.assert.dom(label).hasText(textContent);
+    }
+
+    if (tag) {
+      Qunit.assert.dom(label).hasTagName(tag.toLowerCase());
+    }
+
+    // Ensure menu button has the following attributes
+    for (let attributeName in attributes) {
+      Qunit.assert
+        .dom(label)
+        .hasAttribute(attributeName, attributes[attributeName]);
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxLabel);
+    throw err;
+  }
+}
+
+function assertComboboxLabelLinkedWithCombobox(
+  label = getComboboxLabel(),
+  combobox = getCombobox()
+) {
+  try {
+    if (label === null) return Qunit.assert.ok(label);
+    if (combobox === null) return Qunit.assert.ok(combobox);
+
+    // Ensure link between button & combobox is correct
+    Qunit.assert.dom(combobox).hasAria('labelledby', label.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxLabelLinkedWithCombobox);
+    throw err;
+  }
+}
+
+function assertComboboxButtonLinkedWithCombobox(
+  button = getComboboxButton(),
+  combobox = getCombobox()
+) {
+  try {
+    if (button === null) return Qunit.assert.ok(button);
+    if (combobox === null) return Qunit.assert.ok(combobox);
+
+    Qunit.assert.dom(button).hasAria('controls', combobox.getAttribute('id'));
+    Qunit.assert.dom(combobox).hasAria('labelledby', button.getAttribute('id'));
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxButtonLinkedWithCombobox);
+    throw err;
+  }
+}
+
+function assertComboboxButtonLinkedWithComboboxLabel(
+  button = getComboboxButton(),
+  label = getComboboxLabel()
+) {
+  try {
+    if (button === null) return Qunit.assert.ok(button);
+    if (label === null) return Qunit.assert.ok(label);
+
+    // Ensure link between button & label is correct
+    Qunit.assert
+      .dom(button)
+      .hasAria(
+        'labelledby',
+        label.getAttribute('id') + ' ' + button.getAttribute('id')
+      );
+  } catch (err) {
+    Error.captureStackTrace(err, assertComboboxButtonLinkedWithComboboxLabel);
+    throw err;
+  }
+}
+
+function assertCombobox(
+  { attributes, textContent, state, mode },
+  combobox = getComboboxInput()
+) {
+  try {
+    switch (state) {
+      case ComboboxState.InvisibleHidden: {
+        if (combobox === null) return Qunit.assert.ok(combobox);
+
+        assertHidden(combobox);
+
+        Qunit.assert.dom(combobox).hasAttribute('role', 'combobox');
+
+        if (textContent) {
+          Qunit.assert.dom(combobox).hasText(textContent);
+        }
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(combobox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+
+        break;
+      }
+      case ComboboxState.Visible: {
+        if (combobox === null) return Qunit.assert.ok(combobox);
+
+        assertVisible(combobox);
+
+        Qunit.assert.dom(combobox).hasAttribute('role', 'combobox');
+
+        if (mode && mode === ComboboxMode.Multiple) {
+          Qunit.assert.dom(combobox).hasAria('multiselectable', 'true');
+        }
+
+        if (textContent) {
+          Qunit.assert.dom(combobox).hasText(textContent);
+        }
+
+        for (let attributeName in attributes) {
+          Qunit.assert
+            .dom(combobox)
+            .hasAttribute(attributeName, attributes[attributeName]);
+        }
+
+        break;
+      }
+      case ComboboxState.InvisibleUnmounted: {
+        Qunit.assert.strictEqual(combobox, null);
+
+        break;
+      }
+      default: {
+        assertNever(state);
+      }
+    }
+  } catch (err) {
+    Error.captureStackTrace(err, assertCombobox);
+    throw err;
+  }
+}
+
 export {
+  assertActiveComboboxOption,
   assertActiveElement,
   assertActiveListboxOption,
+  assertCombobox,
+  assertComboboxButton,
+  assertComboboxButtonLinkedWithCombobox,
+  assertComboboxButtonLinkedWithComboboxLabel,
+  assertComboboxLabel,
+  assertComboboxLabelLinkedWithCombobox,
+  assertComboboxList,
+  assertComboboxOption,
   assertDialog,
   assertDialogDescription,
   assertDialogOverlay,
@@ -916,12 +1333,25 @@ export {
   assertListboxButtonLinkedWithListboxLabel,
   assertListboxLabel,
   assertListboxLabelLinkedWithListbox,
+  assertNoActiveComboboxOption,
   assertNoActiveListboxOption,
+  assertNoSelectedComboboxOption,
   assertNoSelectedListboxOption,
   assertNotFocusable,
   assertRadioGroupLabel,
+  assertNotActiveComboboxOption,
+  ComboboxMode,
+  ComboboxState,
   DialogState,
   getByText,
+  getCombobox,
+  getComboboxButton,
+  getComboboxButtons,
+  getComboboxes,
+  getComboboxInput,
+  getComboboxInputs,
+  getComboboxLabel,
+  getComboboxOptions,
   getDialog,
   getDialogOverlay,
   getDialogOverlays,
