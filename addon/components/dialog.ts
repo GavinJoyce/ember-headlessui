@@ -1,28 +1,14 @@
 import Component from '@glimmer/component';
+import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { typeOf } from '@ember/utils';
 
-import { getOwnConfig } from '@embroider/macros';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 import { modifier } from 'ember-modifier';
 
 import type DialogStackProvider from 'ember-headlessui/services/dialog-stack-provider';
-
-/**
- * Expose the element that the `Dialog` should be "slotted" into
- *
- * This is exported _only_ for testing purposes; do not consider this API to be public
- *
- * @private
- */
-export function getPortalRoot() {
-  const { rootElement } = getOwnConfig();
-
-  // If we looked up a `rootElement` config at build-time, use that; otherwise use the body
-  return rootElement ? document.querySelector(rootElement) : document.body;
-}
 
 interface Args {
   isOpen: boolean;
@@ -36,7 +22,7 @@ export default class DialogComponent extends Component<Args> {
   DEFAULT_TAG_NAME = 'div';
 
   guid = `${guidFor(this)}-headlessui-dialog`;
-  $portalRoot = getPortalRoot();
+  $portalRoot: HTMLElement;
   outsideClickedElement: HTMLElement | null = null;
 
   handleEscapeKey = modifier(
@@ -84,6 +70,14 @@ export default class DialogComponent extends Component<Args> {
 
   constructor(owner: unknown, args: Args) {
     super(owner, args);
+
+    const {
+      APP: { rootElement },
+    } = getOwner(this).resolveRegistration('config:environment');
+
+    this.$portalRoot = rootElement
+      ? document.querySelector(rootElement)
+      : document.body;
 
     let { isOpen, onClose } = this.args;
 
