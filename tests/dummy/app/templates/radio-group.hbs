@@ -1,0 +1,97 @@
+{{#let
+  'mt-2 bg-white text-sm relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex'
+  'mt-2 bg-indigo-500 text-white text-sm relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50 focus:ring-offset-2'
+  as |defaultClasses activeClasses|
+}}
+  <div class='w-full px-4 py-16'>
+    <div class='w-full max-w-md mx-auto'>
+      <RadioGroup @value='small' @disabled={{false}} as |RadioGroup|>
+        <RadioGroup.Label class='sr-only'>Storage Size</RadioGroup.Label>
+        <RadioGroup.Option
+          class={{if
+            (eq RadioGroup.activeValue 'small')
+            activeClasses
+            defaultClasses
+          }}
+          @value='small'
+        >
+          <div class='flex w-full items-center justify-between'>
+            <div>
+              <label class='font-medium'>Small</label>
+              <p>4 GB RAM / 2 CPUS / 80 GB SSD Storage</p>
+            </div>
+            <svg viewBox='0 0 24 24' fill='none' class='w-6 h-6'><circle
+                cx='12'
+                cy='12'
+                r='12'
+                fill='#fff'
+                opacity='0.2'
+              ></circle><path
+                d='M7 13l3 3 7-7'
+                stroke='#fff'
+                stroke-width='1.5'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              ></path></svg>
+          </div>
+        </RadioGroup.Option>
+        <RadioGroup.Option
+          class={{if
+            (eq RadioGroup.activeValue 'medium')
+            activeClasses
+            defaultClasses
+          }}
+          @value='medium'
+        >
+          <div class='flex w-full items-center justify-between'>
+            <div>
+              <label class='font-medium'>Medium</label>
+              <p>8 GB RAM / 4 CPUS / 160 GB SSD Storage</p>
+            </div>
+            <svg viewBox='0 0 24 24' fill='none' class='w-6 h-6'><circle
+                cx='12'
+                cy='12'
+                r='12'
+                fill='#fff'
+                opacity='0.2'
+              ></circle><path
+                d='M7 13l3 3 7-7'
+                stroke='#fff'
+                stroke-width='1.5'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              ></path></svg>
+          </div>
+        </RadioGroup.Option>
+        <RadioGroup.Option
+          class={{if
+            (eq RadioGroup.activeValue 'large')
+            activeClasses
+            defaultClasses
+          }}
+          @value='large'
+        >
+          <div class='flex w-full items-center justify-between'>
+            <div>
+              <label class='font-medium'>Large</label>
+              <p>16 GB RAM / 8 CPUS / 320 GB SSD Storage</p>
+            </div>
+            <svg viewBox='0 0 24 24' fill='none' class='w-6 h-6'><circle
+                cx='12'
+                cy='12'
+                r='12'
+                fill='#fff'
+                opacity='0.2'
+              ></circle><path
+                d='M7 13l3 3 7-7'
+                stroke='#fff'
+                stroke-width='1.5'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+              ></path></svg>
+          </div>
+        </RadioGroup.Option>
+      </RadioGroup>
+    </div>
+  </div>
+{{/let}}
