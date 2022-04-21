@@ -1,5 +1,7 @@
 import Qunit from 'qunit';
 
+import { isFocusableElement } from './utils/focus-management';
+
 function getDialog() {
   return document.querySelector('[role="dialog"]');
 }
@@ -208,6 +210,81 @@ function assertDialog(options, dialog = getDialog()) {
     }
   } catch (err) {
     Error.captureStackTrace(err, assertDialog);
+    throw err;
+  }
+}
+
+function assertFocusable(element) {
+  try {
+    if (element === null) {
+      Qunit.assert.notEqual(element, null);
+      return;
+    }
+
+    Qunit.assert.equal(isFocusableElement(element, 'Strict'), true);
+  } catch (err) {
+    if (err instanceof Error) Error.captureStackTrace(err, assertFocusable);
+    throw err;
+  }
+}
+
+function assertNotFocusable(element) {
+  try {
+    if (element === null) {
+      Qunit.assert.notEqual(element, null);
+      return;
+    }
+
+    Qunit.assert.equal(isFocusableElement(element, 'Strict'), false);
+  } catch (err) {
+    if (err instanceof Error) Error.captureStackTrace(err, assertNotFocusable);
+    throw err;
+  }
+}
+
+function getRadioGroupLabel() {
+  return document.querySelector('[id^="headlessui-label-"]');
+}
+
+function getRadioGroup() {
+  return document.querySelector('[role="radiogroup"]');
+}
+
+function getRadioGroupOptions() {
+  return document.querySelectorAll('[id^="headlessui-radiogroup-option-"]');
+}
+
+function assertRadioGroupLabel(
+  options,
+  label = getRadioGroupLabel(),
+  radioGroup = getRadioGroup()
+) {
+  try {
+    if (label === null) {
+      Qunit.assert.notEqual(label, null);
+      return;
+    }
+    if (radioGroup === null) {
+      Qunit.assert.notEqual(radioGroup, null);
+      return;
+    }
+
+    Qunit.assert.dom(label).hasAttribute('id');
+    Qunit.assert.dom(radioGroup).hasAttribute('aria-labelledby', label.id);
+
+    if (options.textContent) {
+      Qunit.assert.dom(label).hasText(options.textContent);
+      return;
+    }
+
+    for (let attributeName in options.attributes) {
+      Qunit.assert
+        .dom(label)
+        .hasAttribute(attributeName, options.attributes[attributeName]);
+    }
+  } catch (err) {
+    if (err instanceof Error)
+      Error.captureStackTrace(err, assertRadioGroupLabel);
     throw err;
   }
 }
@@ -550,8 +627,9 @@ function getByText(text) {
   );
 
   while (walker.nextNode()) {
-    if (walker.currentNode.textContent.trim() === text)
+    if (walker.currentNode.textContent.trim() === text) {
       return walker.currentNode;
+    }
   }
 
   return null;
@@ -831,6 +909,7 @@ export {
   assertDialogDescription,
   assertDialogOverlay,
   assertDialogTitle,
+  assertFocusable,
   assertListbox,
   assertListboxButton,
   assertListboxButtonLinkedWithListbox,
@@ -839,6 +918,8 @@ export {
   assertListboxLabelLinkedWithListbox,
   assertNoActiveListboxOption,
   assertNoSelectedListboxOption,
+  assertNotFocusable,
+  assertRadioGroupLabel,
   DialogState,
   getByText,
   getDialog,
@@ -851,5 +932,6 @@ export {
   getListboxes,
   getListboxLabel,
   getListboxOptions,
+  getRadioGroupOptions,
   ListboxState,
 };
