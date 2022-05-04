@@ -1,3 +1,13 @@
+## v0.12.3 (2022-05-04)
+
+#### :bug: Bug Fix
+
+- [#139](https://github.com/GavinJoyce/ember-headlessui/pull/139) fix rootElement when running in /tests ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## v0.12.2 (2022-03-28)
 
 #### :bug: Bug Fix
