@@ -9,7 +9,6 @@ import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import userEvent from '@testing-library/user-event';
-import { getPortalRoot } from 'ember-headlessui/components/dialog';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 import {
@@ -235,7 +234,7 @@ module('Integration | Component | <Dialog>', function (hooks) {
       );
 
       test('it should add a scroll lock to the html tag', async function (assert) {
-        const portalRoot = getPortalRoot();
+        const portalRoot = document.querySelector('#ember-testing');
         this.set('isOpen', false);
 
         await render(hbs`
