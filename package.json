@@ -129,6 +129,7 @@
     "webpack": "^5.64.1"
   },
   "resolutions": {
+    "@ember/test-helpers": "~2.6.0",
     "@embroider/core": "^1.2.0",
     "@embroider/macros": "^1.2.0",
     "@embroider/util": "^1.2.0"
