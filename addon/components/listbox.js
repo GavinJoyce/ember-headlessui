@@ -138,6 +138,8 @@ export default class ListboxComponent extends Component {
       } else {
         this.isOpen = true;
       }
+      event.preventDefault();
+      event.stopPropagation();
     } else if (event.key.length === 1) {
       this.addSearchCharacter(event.key);
     }
