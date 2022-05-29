@@ -147,7 +147,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "volta": {
-    "node": "14.17.3"
+    "node": "16.15.0"
   },
   "pnpm": {
     "overrides-notes": {
