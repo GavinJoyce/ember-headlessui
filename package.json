@@ -49,6 +49,7 @@
     "tracked-maps-and-sets": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.4.2",
     "@embroider/test-setup": "^1.2.0",
@@ -80,6 +81,7 @@
     "@types/htmlbars-inline-precompile": "^1.0.1",
     "@types/qunit": "^2.11.2",
     "@types/rsvp": "^4.0.4",
+    "autoprefixer": "^10.0.2",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv-cli": "^4.0.0",
@@ -112,6 +114,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.2.14",
     "postcss-import": "^14.0.2",
     "prettier": "^2.3.2",
     "qunit": "^2.14.1",
@@ -139,11 +142,26 @@
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },
+  "packageManager": "pnpm@7.1.2",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "volta": {
-    "node": "14.17.3",
-    "yarn": "1.22.10"
+    "node": "14.17.3"
+  },
+  "pnpm": {
+    "overrides-notes": {
+      "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking",
+      "everything else": "results of audit --fix"
+    },
+    "overrides": {
+      "@types/eslint": "7.29.0",
+      "glob-parent@<5.1.2": ">=5.1.2",
+      "minimist@<1.2.6": ">=1.2.6",
+      "ansi-html@<0.0.8": ">=0.0.8",
+      "markdown-it@<12.3.2": ">=12.3.2",
+      "clean-css@<4.1.11": ">=4.1.11",
+      "async@<2.6.4": ">=2.6.4"
+    }
   }
 }
