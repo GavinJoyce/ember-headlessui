@@ -602,24 +602,22 @@ module('Integration | Component | <Dialog>', function (hooks) {
   });
 
   module('Nesting', function () {
-    test.each(
-      'it should be possible to open nested Dialog components and close them with `${strategy}`',
-      [
-        {
-          strategy: 'outside click',
-          action: () => click(document.body),
-        },
-        {
-          strategy: 'ESCAPE click',
-          action: () =>
-            triggerKeyEvent(document.activeElement, 'keyup', Keys.Escape),
-        },
-        {
-          strategy: 'click on Dialog.Overlay',
-          action: () => click(getDialogOverlays().pop()),
-        },
-      ],
-      async function (assert, { action }) {
+    for (let { strategy, action } of [
+      {
+        strategy: 'outside click',
+        action: () => click(document.body),
+      },
+      {
+        strategy: 'ESCAPE click',
+        action: () =>
+          triggerKeyEvent(document.activeElement, 'keyup', Keys.Escape),
+      },
+      {
+        strategy: 'click on Dialog.Overlay',
+        action: () => click(getDialogOverlays().pop()),
+      },
+    ]) {
+      test(`it should be possible to open nested Dialog components and close them with '${strategy}'`, async function (assert) {
         this.isOpen = false;
 
         await render(hbs`
@@ -877,8 +875,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
           getByText('Open 1'),
           'Verify that the `Open 1` got focused again'
         );
-      }
-    );
+      });
+    }
   });
 
   module('InitialFocus', function () {
