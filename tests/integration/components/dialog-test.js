@@ -602,17 +602,20 @@ module('Integration | Component | <Dialog>', function (hooks) {
   });
 
   module('Nesting', function () {
-    for (let { strategy, action } of [
+    for (let { strategy, action, test } of [
       {
+        test: todo,
         strategy: 'outside click',
         action: () => click(document.body),
       },
       {
+        test,
         strategy: 'ESCAPE click',
         action: () =>
           triggerKeyEvent(document.activeElement, 'keyup', Keys.Escape),
       },
       {
+        test,
         strategy: 'click on Dialog.Overlay',
         action: () => click(getDialogOverlays().pop()),
       },
