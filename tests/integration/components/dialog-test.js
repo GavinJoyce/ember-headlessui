@@ -5,7 +5,7 @@ import {
   triggerKeyEvent,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { module, test, todo } from 'qunit';
+import { module, skip, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
 import userEvent from '@testing-library/user-event';
@@ -604,7 +604,8 @@ module('Integration | Component | <Dialog>', function (hooks) {
   module('Nesting', function () {
     for (let { strategy, action, doTest } of [
       {
-        doTest: todo,
+        // Flaky -- passes sometimes, sometimes not
+        doTest: skip,
         strategy: 'outside click',
         action: () => click(document.body),
       },
