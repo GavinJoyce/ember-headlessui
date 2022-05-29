@@ -20,28 +20,29 @@ specifiers:
   '@nullvoxpopuli/eslint-configs': ^1.5.1
   '@testing-library/dom': ^8.1.0
   '@testing-library/user-event': ^13.1.9
-  '@types/ember-qunit': ^3.4.14
-  '@types/ember-resolver': ^5.0.10
-  '@types/ember__application': ^3.16.3
-  '@types/ember__array': ^3.16.4
-  '@types/ember__component': ^3.16.6
-  '@types/ember__controller': ^3.16.6
-  '@types/ember__debug': ^3.16.5
-  '@types/ember__destroyable': ^3.22.0
-  '@types/ember__engine': ^3.16.3
-  '@types/ember__error': ^3.16.1
-  '@types/ember__object': ^3.12.6
-  '@types/ember__polyfills': ^3.12.1
-  '@types/ember__routing': ^3.16.15
-  '@types/ember__runloop': ^3.16.3
-  '@types/ember__service': ^3.16.1
-  '@types/ember__string': ^3.16.3
-  '@types/ember__template': ^3.16.1
-  '@types/ember__test': ^3.16.1
-  '@types/ember__test-helpers': ^2.0.2
-  '@types/ember__utils': ^3.16.2
-  '@types/htmlbars-inline-precompile': ^1.0.1
-  '@types/qunit': ^2.11.2
+  '@types/ember': ^4.0.0
+  '@types/ember-qunit': ^5.0.0
+  '@types/ember-resolver': ^5.0.11
+  '@types/ember__application': ^4.0.0
+  '@types/ember__array': ^4.0.1
+  '@types/ember__component': ^4.0.8
+  '@types/ember__controller': ^4.0.0
+  '@types/ember__debug': ^4.0.1
+  '@types/ember__destroyable': ^4.0.0
+  '@types/ember__engine': ^4.0.0
+  '@types/ember__error': ^4.0.0
+  '@types/ember__object': ^4.0.2
+  '@types/ember__polyfills': ^4.0.0
+  '@types/ember__routing': ^4.0.7
+  '@types/ember__runloop': ^4.0.1
+  '@types/ember__service': ^4.0.0
+  '@types/ember__string': ^3.0.9
+  '@types/ember__template': ^4.0.0
+  '@types/ember__test': ^4.0.0
+  '@types/ember__test-helpers': ^2.6.1
+  '@types/ember__utils': ^4.0.0
+  '@types/htmlbars-inline-precompile': ^3.0.0
+  '@types/qunit': ^2.11.3
   '@types/rsvp': ^4.0.4
   autoprefixer: ^10.0.2
   babel-eslint: ^10.1.0
@@ -57,7 +58,7 @@ specifiers:
   ember-cli-postcss: ^7.0.2
   ember-cli-sri: ^2.1.1
   ember-cli-terser: ^4.0.1
-  ember-cli-typescript: ^4.2.1
+  ember-cli-typescript: ^5.1.0
   ember-concurrency: ^2.1.2
   ember-css-transitions: ^2.1.0
   ember-disable-prototype-extensions: ^1.1.3
@@ -108,7 +109,7 @@ dependencies:
   ember-auto-import: 2.4.2_webpack@5.72.1
   ember-cli-babel: 7.26.11
   ember-cli-htmlbars: 6.0.1
-  ember-cli-typescript: 4.2.1
+  ember-cli-typescript: 5.1.0
   ember-concurrency: 2.2.1_@babel+core@7.18.2
   ember-element-helper: 0.6.1_ember-source@3.28.9
   ember-modifier: 3.2.7_@babel+core@7.18.2
@@ -127,27 +128,28 @@ devDependencies:
   '@nullvoxpopuli/eslint-configs': 1.5.8_typescript@4.7.2
   '@testing-library/dom': 8.13.0
   '@testing-library/user-event': 13.5.0_tlwynutqiyp5mns3woioasuxnq
-  '@types/ember-qunit': 3.4.15
+  '@types/ember': 4.0.0
+  '@types/ember-qunit': 5.0.0
   '@types/ember-resolver': 5.0.11
-  '@types/ember__application': 3.16.4
-  '@types/ember__array': 3.16.5
-  '@types/ember__component': 3.16.7
-  '@types/ember__controller': 3.16.7
-  '@types/ember__debug': 3.16.7
-  '@types/ember__destroyable': 3.22.1
-  '@types/ember__engine': 3.16.4
-  '@types/ember__error': 3.16.2
-  '@types/ember__object': 3.12.8
-  '@types/ember__polyfills': 3.12.2
-  '@types/ember__routing': 3.16.17
-  '@types/ember__runloop': 3.16.4
-  '@types/ember__service': 3.16.2
-  '@types/ember__string': 3.16.3
-  '@types/ember__template': 3.16.2
-  '@types/ember__test': 3.16.2
+  '@types/ember__application': 4.0.0
+  '@types/ember__array': 4.0.1
+  '@types/ember__component': 4.0.8
+  '@types/ember__controller': 4.0.0
+  '@types/ember__debug': 4.0.1
+  '@types/ember__destroyable': 4.0.0
+  '@types/ember__engine': 4.0.0
+  '@types/ember__error': 4.0.0
+  '@types/ember__object': 4.0.2
+  '@types/ember__polyfills': 4.0.0
+  '@types/ember__routing': 4.0.7
+  '@types/ember__runloop': 4.0.1
+  '@types/ember__service': 4.0.0
+  '@types/ember__string': 3.0.9
+  '@types/ember__template': 4.0.0
+  '@types/ember__test': 4.0.0
   '@types/ember__test-helpers': 2.6.1
-  '@types/ember__utils': 3.16.3
-  '@types/htmlbars-inline-precompile': 1.0.1
+  '@types/ember__utils': 4.0.0
+  '@types/htmlbars-inline-precompile': 3.0.0
   '@types/qunit': 2.11.3
   '@types/rsvp': 4.0.4
   autoprefixer: 10.4.7_postcss@8.4.14
@@ -1912,185 +1914,155 @@ packages:
     resolution: {integrity: sha512-vt+kDhq/M2ayberEtJcIN/hxXy1Pk+59g2FV/ZQceeaTyCtCucjL2Q7FXlFjtWn4n15KCr1NE2lNNFhp0lEThw==}
     dev: true
 
-  /@types/ember-qunit/3.4.15:
-    resolution: {integrity: sha512-ZWQcnLCsQfNq0MK9o0dt+reFn9Sk6rcMP2f/bkRRM/HCnNSD1XjMgnRhbKcDmCk0CmxTt5WtfSmlO0TYubcxcA==}
+  /@types/ember-qunit/5.0.0:
+    resolution: {integrity: sha512-p7ZZUbohO5E57JsUC6fxD8gveV9LcSnPIx2J86WF7FNLno/2oKvWnI+j5AtobSoy86hfZZaYjiIuW0dNe1eblQ==}
     dependencies:
-      '@types/ember': 4.0.0
-      '@types/ember-test-helpers': 1.0.11
+      '@types/ember__test': 4.0.0
+      '@types/ember__test-helpers': 2.6.1
+      '@types/ember-resolver': 5.0.11
       '@types/qunit': 2.11.3
     dev: true
 
   /@types/ember-resolver/5.0.11:
     resolution: {integrity: sha512-2BL9d8kBdNUO9Je6KBF7Q34BSwbQG6vzCzTeSopt8FAmLDfaDU9xDDdyZobpfy9GR36mCSeG9b9wr4bgYh/MYw==}
     dependencies:
-      '@types/ember__object': 3.12.8
-    dev: true
-
-  /@types/ember-test-helpers/1.0.11:
-    resolution: {integrity: sha512-OYddjJqgDhUBc8BWKpMy/afwtUsk63iZey/iAV4RwZtvSVtMStjTZUCYiQpIjQSpgNF3JNRteVqbtmFnQO66hw==}
-    dependencies:
-      '@types/ember': 3.16.6
-      '@types/htmlbars-inline-precompile': 1.0.1
-      '@types/jquery': 3.5.14
-      '@types/rsvp': 4.0.4
-    dev: true
-
-  /@types/ember/3.16.6:
-    resolution: {integrity: sha512-S8sw98UUK/sqZS73+D5ESuqV4h6AxSy7Ffe6WFH0Np31BQrMflJv+52Wfj43SS0AfQW4DUuhMaMz6F12ge6VBA==}
-    dependencies:
-      '@types/ember__application': 3.16.4
-      '@types/ember__array': 3.16.5
-      '@types/ember__component': 3.16.7
-      '@types/ember__controller': 3.16.7
-      '@types/ember__debug': 3.16.7
-      '@types/ember__engine': 3.16.4
-      '@types/ember__error': 3.16.2
-      '@types/ember__object': 3.12.8
-      '@types/ember__polyfills': 3.12.2
-      '@types/ember__routing': 3.16.17
-      '@types/ember__runloop': 3.16.4
-      '@types/ember__service': 3.16.2
-      '@types/ember__string': 2.0.0
-      '@types/ember__template': 3.16.2
-      '@types/ember__test': 3.16.2
-      '@types/ember__utils': 3.16.3
-      '@types/htmlbars-inline-precompile': 1.0.1
-      '@types/rsvp': 4.0.4
+      '@types/ember__object': 4.0.2
     dev: true
 
   /@types/ember/4.0.0:
     resolution: {integrity: sha512-IR4o8OkFgoiRKVLRI8URvyNhEBSkjO5DXp2900/TptxOl0Retu8/tKtFaRTwkqteg2a0/6zXAA1rpFb3BbxNpA==}
     dependencies:
-      '@types/ember__application': 3.16.4
-      '@types/ember__array': 3.16.5
-      '@types/ember__component': 3.16.7
-      '@types/ember__controller': 3.16.7
-      '@types/ember__debug': 3.16.7
-      '@types/ember__engine': 3.16.4
-      '@types/ember__error': 3.16.2
-      '@types/ember__object': 3.12.8
-      '@types/ember__polyfills': 3.12.2
-      '@types/ember__routing': 3.16.17
-      '@types/ember__runloop': 3.16.4
-      '@types/ember__service': 3.16.2
-      '@types/ember__string': 3.16.3
-      '@types/ember__template': 3.16.2
-      '@types/ember__test': 3.16.2
-      '@types/ember__utils': 3.16.3
-      '@types/htmlbars-inline-precompile': 1.0.1
+      '@types/ember__application': 4.0.0
+      '@types/ember__array': 4.0.1
+      '@types/ember__component': 4.0.8
+      '@types/ember__controller': 4.0.0
+      '@types/ember__debug': 4.0.1
+      '@types/ember__engine': 4.0.0
+      '@types/ember__error': 4.0.0
+      '@types/ember__object': 4.0.2
+      '@types/ember__polyfills': 4.0.0
+      '@types/ember__routing': 4.0.7
+      '@types/ember__runloop': 4.0.1
+      '@types/ember__service': 4.0.0
+      '@types/ember__string': 3.0.9
+      '@types/ember__template': 4.0.0
+      '@types/ember__test': 4.0.0
+      '@types/ember__utils': 4.0.0
+      '@types/htmlbars-inline-precompile': 3.0.0
       '@types/rsvp': 4.0.4
     dev: true
 
-  /@types/ember__application/3.16.4:
-    resolution: {integrity: sha512-8J1XXG2Dm5uWyeWDDlx9tg3pF2TZv9KObi/sxOj0N/uTHS5yUcKzNra1JYzgbLSXNE3UkRO0QQq8SqCBe0wHTA==}
+  /@types/ember__application/4.0.0:
+    resolution: {integrity: sha512-1Atwevfyu1/vjiezPPdP4s96BxWGelEQlCJRU5ZQV9WlzVuMTuCDPumZ1lQdS4/EYycFZeod030FjE3CT9mZFA==}
     dependencies:
-      '@types/ember__engine': 3.16.4
-      '@types/ember__object': 3.12.8
-      '@types/ember__routing': 3.16.17
+      '@types/ember': 4.0.0
+      '@types/ember__engine': 4.0.0
+      '@types/ember__object': 4.0.2
+      '@types/ember__routing': 4.0.7
+      '@types/ember-resolver': 5.0.11
     dev: true
 
-  /@types/ember__array/3.16.5:
-    resolution: {integrity: sha512-ud0Q/SVf7M0SOlEt+MMW04/kaUA8fFLz5LG1qy1/Yb7WymZk/D86fSS7XkxySpW9z999YVYsXAM53aSUKHEpZA==}
+  /@types/ember__array/4.0.1:
+    resolution: {integrity: sha512-fwrYcYmFbsEnu77Xn9z3WSAp6tqpwn8Wksx8RzGg5pib6VmFD/dkT5jefwoKtlcImsxUNEoP1VgWKrdrpGaQcg==}
     dependencies:
-      '@types/ember__object': 3.12.8
+      '@types/ember': 4.0.0
+      '@types/ember__object': 4.0.2
     dev: true
 
-  /@types/ember__component/3.16.7:
-    resolution: {integrity: sha512-zNxvlRYGCrwACmBbUfl+blwtzv9EhyX4TOgalXMPHvLBQrC7Fc3a3hbfIOYOrRilV27YNSV/WX5BcvbWKMA7iA==}
+  /@types/ember__component/4.0.8:
+    resolution: {integrity: sha512-YVGn/kpWtpZAu6I2XtS9fsZV+78/sON5NyKzK5EOUyMiCwwpbUr5XL8dTSdkHehYrsfzJikcYvqpmwbNZSJxGQ==}
     dependencies:
-      '@types/ember__object': 3.12.8
-      '@types/jquery': 3.5.14
+      '@types/ember': 4.0.0
+      '@types/ember__object': 4.0.2
     dev: true
 
-  /@types/ember__controller/3.16.7:
-    resolution: {integrity: sha512-oGyjQPJ5PRY10TqJuxDo4nu59sCO6/YmeY4tsItI5RbDj7hmzd9ZOxKeOI/qrQJosMdHe5cd3RP1/zZOe0Xn3Q==}
+  /@types/ember__controller/4.0.0:
+    resolution: {integrity: sha512-rxJt8McWaaIZFsu2z+IB7TvgSjglAPb07Pj0F7OGvZQ3j9NV7kreqqics/cHQIEBG3GgVAewBE+xI5D6PNq/vg==}
     dependencies:
-      '@types/ember__object': 3.12.8
+      '@types/ember__object': 4.0.2
     dev: true
 
-  /@types/ember__debug/3.16.7:
-    resolution: {integrity: sha512-UkneQ/QoylmVeTc9A+MuvNIkwlAiGg6/u06a1gimbZXbFSGezCdX4rABkKjlTo9AScTa7Z9egbGteMfR/AwSJA==}
+  /@types/ember__debug/4.0.1:
+    resolution: {integrity: sha512-qrKk6Ujh6oev7TSB0eB7AEmQWKCt5t84k/K3hDvJXUiLU3YueN0kyt7aPoIAkVjC111A9FqDugl9n60+N5yeEw==}
     dependencies:
-      '@types/ember__engine': 3.16.4
-      '@types/ember__object': 3.12.8
+      '@types/ember__object': 4.0.2
+      '@types/ember-resolver': 5.0.11
     dev: true
 
-  /@types/ember__destroyable/3.22.1:
-    resolution: {integrity: sha512-F2vLR+MTQVagkwQlCiMgP/3L1ET74buZ46ZeARiyyXKsOFpDJDIUgQbszv1bScUPHV8KyfMALVrx1+i/fT7MyA==}
+  /@types/ember__destroyable/4.0.0:
+    resolution: {integrity: sha512-QxyRhCOlQmc056tbWvHOQZ7vIjlFOFYMOU82P3pcCFfxyi55+NRhj4ySruymcBCfrzKQmVQLCbbOGhyFMLqq0Q==}
     dev: true
 
-  /@types/ember__engine/3.16.4:
-    resolution: {integrity: sha512-0RSTJtrNzD6R+jjXNVm/NEdr74z/ThAGwwGJTNkD6a75eRxeiBeyX8kk3hmKC4/tcPHH0AUgoWHSWBn6vXOI4Q==}
+  /@types/ember__engine/4.0.0:
+    resolution: {integrity: sha512-AfJHIWaBeZ+TZWJbSoUz7LK+z8uNPjMqmucz8C5u+EV2NDiaq02oGPTB4SeKInLNBMga8c5xvz0gVefZJnTBnQ==}
     dependencies:
-      '@types/ember__object': 3.12.8
+      '@types/ember__object': 4.0.2
+      '@types/ember-resolver': 5.0.11
     dev: true
 
-  /@types/ember__error/3.16.2:
-    resolution: {integrity: sha512-7t2fcIdKXg5sWR5HrmtoCeI/ItxDXO04AM8/AaHwEhh0BHUqq9aYpfT2KbDdQjHSzHQFhaR5YB2CJ6vm7lsiBg==}
+  /@types/ember__error/4.0.0:
+    resolution: {integrity: sha512-1WVMR65/QTqPzMWafK2vKEwGafILxRxItbWJng6eEJyKDHRvvHFCl3XzJ4dQjdFcfOlozsn0mmEYCpjKoyzMqA==}
     dev: true
 
-  /@types/ember__object/3.12.8:
-    resolution: {integrity: sha512-xfmJdmkTwPo2gyaVMUgkEZ6w2L/vNTfp/RpI8JG8qJY+b43nEyaxtaSVQ78racfcZMUqXeVfOyH/GGeB7NU1Hg==}
+  /@types/ember__object/4.0.2:
+    resolution: {integrity: sha512-m3xjqjs7bGVT0+QXlgIoDMsp/oqePobnf4IiVoFdXLBpGCICiOAEi7HuUtCLi57WTvx0lYsS9hE1vgGyZn9qnw==}
     dependencies:
+      '@types/ember': 4.0.0
       '@types/rsvp': 4.0.4
     dev: true
 
-  /@types/ember__polyfills/3.12.2:
-    resolution: {integrity: sha512-kXjFVd7pm5wOfZdV2OE7+6Q+59EXdpW2FZsdmxREqUBuRu9In01WzIrtXZUROuhSzf5wPNuVfCXAo5he0Ol4MA==}
+  /@types/ember__polyfills/4.0.0:
+    resolution: {integrity: sha512-Yk85J18y1Ys6agoIBLdJWu6ZkWe68oaC9JPyW7BhOINVNKm89PXrR/yxdOJ1/vN1Hj7ZZQKq+4X6fz3sxebavA==}
     dev: true
 
-  /@types/ember__routing/3.16.17:
-    resolution: {integrity: sha512-NdAeIVK5QPa6ScAaGQjt/htARUZKcUNdC8qo7TUfQo+/F09lqCqeGwZAWUFvcUXDim18cw3ljTxEV7it6ebX1g==}
+  /@types/ember__routing/4.0.7:
+    resolution: {integrity: sha512-iWsk8C0WIqqK6dgK1UdJisyQLs6rVq/+A2f7fXjdLJHA+SAHK8aqfCHHFkTuiy4sXkM/PBINmP9qHpk4KrScbw==}
     dependencies:
-      '@types/ember__component': 3.16.7
-      '@types/ember__controller': 3.16.7
-      '@types/ember__object': 3.12.8
-      '@types/ember__service': 3.16.2
+      '@types/ember': 4.0.0
+      '@types/ember__controller': 4.0.0
+      '@types/ember__object': 4.0.2
+      '@types/ember__service': 4.0.0
     dev: true
 
-  /@types/ember__runloop/3.16.4:
-    resolution: {integrity: sha512-5g2re06jNxvF/1KNycoCEYklFrpAqsMRpbYTsMActTWGzMnkkYZ/OFcDeYkT+/83pSItJLzm1dq8UG3uWSLmaQ==}
-    dev: true
-
-  /@types/ember__service/3.16.2:
-    resolution: {integrity: sha512-YJMQb1O7abs966LDypHHuUGiJjKLh+D+qD4IXdOPK2tjwmqEnEbEKApnemfyGxHxcz/tLRY0RDpTJFT6pKaFbw==}
+  /@types/ember__runloop/4.0.1:
+    resolution: {integrity: sha512-3HrsavVrdgxUkYptQUv/e9RwJG02cV9WbnJxKSvwl9ZYpeX4JbuDVucjTWk5BAvJUVtbiQLPGzLEHZ6daoCbbg==}
     dependencies:
-      '@types/ember__object': 3.12.8
+      '@types/ember': 4.0.0
     dev: true
 
-  /@types/ember__string/2.0.0:
-    resolution: {integrity: sha512-1DGUv9w6/X4UJgYXs1VFQPRCQJ3t/c5Rod4eaYeoj3W9hx2DecXlFFUn/CGxu5x1snn2r4cj/6RsDDWkaqGXuw==}
+  /@types/ember__service/4.0.0:
+    resolution: {integrity: sha512-FbN2y6tRb6NIV+kmzQcxRAoB17vH7qHCfzcKlxsmt2EI7fboLTcdeKpZKPBEromRXg83fx67QX1b95WcwSGtaw==}
     dependencies:
-      '@types/ember__template': 3.16.2
+      '@types/ember__object': 4.0.2
     dev: true
 
-  /@types/ember__string/3.16.3:
-    resolution: {integrity: sha512-0T9ofzm9LL/bSG5u1SxKx/j2h/bHKkl5NKjGCNbFQxEKBw4f2cs6+AMDgWke9z+qrRRIz9vGEtMXnA3yJrO2xA==}
-    dependencies:
-      '@types/ember__template': 3.16.2
+  /@types/ember__string/3.0.9:
+    resolution: {integrity: sha512-v9QwhhfTTgJH6PCviWlz3JgcraYdSWQoTg2XN5Z7bPgXMJYXczxB/N22L9FnuFgDYdN87yXdTJv6E9rw2YGEhw==}
     dev: true
 
-  /@types/ember__template/3.16.2:
-    resolution: {integrity: sha512-eIv2eyff3dhW7FMKbnl49xnuFm6igZ7IoG6BCI4kM3pqwauVXk6gU0e9pA56N/VKNJsVBe95t+QUxZYYBm3+WQ==}
+  /@types/ember__template/4.0.0:
+    resolution: {integrity: sha512-51bAEQecMKpDYRXMmVVfU7excrtxDJixRU7huUsAm4acBCqL2+TmMgTqZEkOQSNy6qnKUc2ktSzX28a9//C6pA==}
     dev: true
 
   /@types/ember__test-helpers/2.6.1:
     resolution: {integrity: sha512-d2RShuBSaBzp04nt8ad+mNE1F6rbIcIIud8WFUVQqGSUGHuZQUq1051Jza12ksCUnXduyE/J9UDjyZvNKOHeBQ==}
     dependencies:
-      '@types/ember__application': 3.16.4
-      '@types/ember__error': 3.16.2
+      '@types/ember__application': 4.0.0
+      '@types/ember__error': 4.0.0
       '@types/ember-resolver': 5.0.11
-      '@types/htmlbars-inline-precompile': 1.0.1
+      '@types/htmlbars-inline-precompile': 3.0.0
     dev: true
 
-  /@types/ember__test/3.16.2:
-    resolution: {integrity: sha512-TUuiw0U5qzkPAaQslMpYv+rZquuyJraCVIndYQNexxXC32bXeYn0An2Z3a5JR9BV409Nc8fvtGTT0lIT1fGCDA==}
+  /@types/ember__test/4.0.0:
+    resolution: {integrity: sha512-vI/qhZkexJLN25lp1UAfjJv4R6pPtrQlAmPDXkKd8PNjwRk3KANFVRzdghN7HWhXgQ+s91PbvxEnZ3eZiRPdcQ==}
     dependencies:
-      '@types/ember__application': 3.16.4
+      '@types/ember__application': 4.0.0
     dev: true
 
-  /@types/ember__utils/3.16.3:
-    resolution: {integrity: sha512-7RA2ExjLz7SMQk+I6wjM1IPOQnEpdqrPPs8Icuu6fFVmAJ7kR0jMT1L7wQINy9XXW2GzvsFmj1IL81CqyvoV6Q==}
+  /@types/ember__utils/4.0.0:
+    resolution: {integrity: sha512-gwSFUm+6t6StkQxSllbn9lqRms/dXMCQDieRfaTGN8IRatnKjJoEPME3A0T6O9afsU6viBQyqlPyFxsOWknYkg==}
+    dependencies:
+      '@types/ember': 4.0.0
     dev: true
 
   /@types/eslint-scope/3.7.3:
@@ -2142,14 +2114,8 @@ packages:
       '@types/minimatch': 3.0.5
       '@types/node': 17.0.36
 
-  /@types/htmlbars-inline-precompile/1.0.1:
-    resolution: {integrity: sha512-sVD2e6QAAHW0Y6Btse+tTA9k9g0iKm87wjxRsgZRU5EwSooz80tenbV+fA+f2BI2g0G2CqxsS1rIlwQCtPRQow==}
-    dev: true
-
-  /@types/jquery/3.5.14:
-    resolution: {integrity: sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg==}
-    dependencies:
-      '@types/sizzle': 2.3.3
+  /@types/htmlbars-inline-precompile/3.0.0:
+    resolution: {integrity: sha512-n1YwM/Q937KmS9W4Ytran71nzhhcT2FDQI00eRGBNUyeErLZspBdDBewEe1F8tcRlUdsCVo2AZBLJsRjEceTRg==}
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -2218,10 +2184,6 @@ packages:
     dependencies:
       '@types/mime': 1.3.2
       '@types/node': 17.0.36
-    dev: true
-
-  /@types/sizzle/2.3.3:
-    resolution: {integrity: sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==}
     dev: true
 
   /@types/symlink-or-copy/1.2.0:
