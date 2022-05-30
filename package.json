@@ -39,7 +39,7 @@
     "ember-auto-import": "^2.2.0",
     "ember-cli-babel": "^7.26.3",
     "ember-cli-htmlbars": "^6.0.1",
-    "ember-cli-typescript": "^4.2.1",
+    "ember-cli-typescript": "^5.1.0",
     "ember-concurrency": "^2.1.2",
     "ember-element-helper": "^0.6.0",
     "ember-modifier": "^3.0.0",
@@ -49,6 +49,7 @@
     "tracked-maps-and-sets": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.4.2",
     "@embroider/test-setup": "^1.2.0",
@@ -57,29 +58,31 @@
     "@nullvoxpopuli/eslint-configs": "^1.5.1",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/user-event": "^13.1.9",
-    "@types/ember-qunit": "^3.4.14",
-    "@types/ember-resolver": "^5.0.10",
-    "@types/ember__application": "^3.16.3",
-    "@types/ember__array": "^3.16.4",
-    "@types/ember__component": "^3.16.6",
-    "@types/ember__controller": "^3.16.6",
-    "@types/ember__debug": "^3.16.5",
-    "@types/ember__destroyable": "^3.22.0",
-    "@types/ember__engine": "^3.16.3",
-    "@types/ember__error": "^3.16.1",
-    "@types/ember__object": "^3.12.6",
-    "@types/ember__polyfills": "^3.12.1",
-    "@types/ember__routing": "^3.16.15",
-    "@types/ember__runloop": "^3.16.3",
-    "@types/ember__service": "^3.16.1",
-    "@types/ember__string": "^3.16.3",
-    "@types/ember__template": "^3.16.1",
-    "@types/ember__test": "^3.16.1",
-    "@types/ember__test-helpers": "^2.0.2",
-    "@types/ember__utils": "^3.16.2",
-    "@types/htmlbars-inline-precompile": "^1.0.1",
-    "@types/qunit": "^2.11.2",
+    "@types/ember": "^4.0.0",
+    "@types/ember-qunit": "^5.0.0",
+    "@types/ember-resolver": "^5.0.11",
+    "@types/ember__application": "^4.0.0",
+    "@types/ember__array": "^4.0.1",
+    "@types/ember__component": "^4.0.8",
+    "@types/ember__controller": "^4.0.0",
+    "@types/ember__debug": "^4.0.1",
+    "@types/ember__destroyable": "^4.0.0",
+    "@types/ember__engine": "^4.0.0",
+    "@types/ember__error": "^4.0.0",
+    "@types/ember__object": "^4.0.2",
+    "@types/ember__polyfills": "^4.0.0",
+    "@types/ember__routing": "^4.0.7",
+    "@types/ember__runloop": "^4.0.1",
+    "@types/ember__service": "^4.0.0",
+    "@types/ember__string": "^3.0.9",
+    "@types/ember__template": "^4.0.0",
+    "@types/ember__test": "^4.0.0",
+    "@types/ember__test-helpers": "^2.6.1",
+    "@types/ember__utils": "^4.0.0",
+    "@types/htmlbars-inline-precompile": "^3.0.0",
+    "@types/qunit": "^2.11.3",
     "@types/rsvp": "^4.0.4",
+    "autoprefixer": "^10.0.2",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv-cli": "^4.0.0",
@@ -112,6 +115,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.2.14",
     "postcss-import": "^14.0.2",
     "prettier": "^2.3.2",
     "qunit": "^2.14.1",
@@ -139,11 +143,26 @@
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },
+  "packageManager": "pnpm@7.1.2",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "volta": {
-    "node": "14.17.3",
-    "yarn": "1.22.10"
+    "node": "16.15.0"
+  },
+  "pnpm": {
+    "overrides-notes": {
+      "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking",
+      "everything else": "results of audit --fix"
+    },
+    "overrides": {
+      "@types/eslint": "7.29.0",
+      "glob-parent@<5.1.2": ">=5.1.2",
+      "minimist@<1.2.6": ">=1.2.6",
+      "ansi-html@<0.0.8": ">=0.0.8",
+      "markdown-it@<12.3.2": ">=12.3.2",
+      "clean-css@<4.1.11": ">=4.1.11",
+      "async@<2.6.4": ">=2.6.4"
+    }
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Component from '@glimmer/component';
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
@@ -73,7 +74,8 @@ export default class DialogComponent extends Component<Args> {
 
     const {
       APP: { rootElement },
-    } = getOwner(this).resolveRegistration('config:environment');
+    } = (getOwner(this) as any) /* typed-ember does not have types for Owner */
+      .resolveRegistration('config:environment');
 
     this.$portalRoot = rootElement
       ? document.querySelector(rootElement)
