@@ -38,10 +38,8 @@ jobs:
       fail-fast: true
       matrix:
         path:
-          - '.'
-          # prep for monorepo
           # - ./docs
-          # - ./ember-headlessui
+          - ./ember-headlessui
           # - ./test-app
           # - ./test-build
     steps:
@@ -121,6 +119,7 @@ jobs:
       #     name: dist
       #     path: ${{ env.dist }}
       - run: pnpm test:ember
+        working-directory: 'ember-headlessui'
       # monorepo prep
       # - run: pnpm --filter test-app run test:ember
 
@@ -163,6 +162,7 @@ jobs:
       #     path: ${{ env.dist }}
       - name: test
         # working-directory: test-app
+        working-directory: 'ember-headlessui'
         run: >
           node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }}
           --skip-cleanup
@@ -209,8 +209,10 @@ jobs:
       #     path: ${{ env.dist }}
       - name: Update TS Version
         run: pnpm add --save-dev ${{ matrix.typescript-scenario }}
+        working-directory: 'ember-headlessui'
         # working-directory: test-app
       - name: Type checking
+        working-directory: 'ember-headlessui'
         run: |
           pnpm tsc -v
           pnpm tsc --build
