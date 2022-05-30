@@ -1,17 +1,14 @@
 // NOTE: we should try an stay in sync with https://github.com/tailwindlabs/headlessui/blob/develop/tailwind.config.js
 
-const defaultTheme = require('tailwindcss/defaultTheme');
+// const defaultTheme = require('tailwindcss/defaultTheme');
+
+let extensions = 'html,hbs,js,ts,gjs,gts';
+let paths = ['./tests/dummy/**/*', './addon/**/*'];
 
 module.exports = {
-  purge: [],
+  content: paths.map((glob) => `${glob}.{${extensions}}`),
   theme: {
-    container: {
-      center: true,
-    },
     extend: {
-      fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-      },
       colors: {
         code: {
           green: '#b5f4a5',
@@ -24,5 +21,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  plugins: [require('@tailwindcss/typography')],
 };
