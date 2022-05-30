@@ -54,7 +54,6 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/eslint-configs": "^1.5.1",
-    "@tailwindcss/ui": "^0.7.2",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/user-event": "^13.1.9",
     "@types/ember-qunit": "^3.4.14",
