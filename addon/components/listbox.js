@@ -74,14 +74,12 @@ export default class ListboxComponent extends Component {
 
   @action
   handleClickOutside(e) {
-    for (let i = 0; i < e.path?.length; i++) {
-      if (e.path[i] === this.buttonElement) {
-        return true;
-      }
+    let isClickOutsideButton = !e.srcElement.closest(
+      `#${this.buttonElement.id}`
+    );
+    if (isClickOutsideButton) {
+      this.closeListbox();
     }
-
-    this.closeListbox();
-
     return true;
   }
 
