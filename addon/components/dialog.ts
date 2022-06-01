@@ -29,7 +29,9 @@ export default class DialogComponent extends Component<Args> {
   stack = modifier(() => {
     this.dialogStackProvider.push(this);
 
-    return this.dialogStackProvider.remove(this);
+    return () => {
+      this.dialogStackProvider.remove(this);
+    };
   });
 
   handleEscapeKey = modifier(
