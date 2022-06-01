@@ -67,7 +67,7 @@ specifiers:
   ember-export-application-global: ^2.0.1
   ember-load-initializers: ^2.1.2
   ember-maybe-import-regenerator: ^1.0.0
-  ember-modifier: ^3.0.0
+  ember-modifier: 4.0.0-beta.1
   ember-on-helper: ^0.1.0
   ember-page-title: ^7.0.0
   ember-qunit: ^5.1.4
@@ -112,7 +112,6 @@ dependencies:
   ember-cli-typescript: 5.1.0
   ember-concurrency: 2.2.1_@babel+core@7.18.2
   ember-element-helper: 0.6.1_ember-source@3.28.9
-  ember-modifier: 3.2.7_@babel+core@7.18.2
   ember-set-helper: 2.0.1
   ember-truth-helpers: 3.0.0
   focus-trap: 6.9.3
@@ -168,6 +167,7 @@ devDependencies:
   ember-export-application-global: 2.0.1
   ember-load-initializers: 2.1.2_@babel+core@7.18.2
   ember-maybe-import-regenerator: 1.0.0
+  ember-modifier: 4.0.0-beta.1_ember-source@3.28.9
   ember-on-helper: 0.1.0
   ember-page-title: 7.0.0
   ember-qunit: 5.1.5_m2vpijm5kklvqmlfibufmotnbi
@@ -1469,6 +1469,14 @@ packages:
       semver: 7.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@embroider/addon-shim/1.7.1:
+    resolution: {integrity: sha512-0xTQLZEAuGeMiZq4tF3KFlP4R/r1js7qq2QEQ89bhEDI8yKCDBScvPrpSpaT6aZj8bWByjDvXHFuSpInFl5gww==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@embroider/shared-internals': 1.7.1
+      semver: 7.3.7
     dev: true
 
   /@embroider/macros/1.7.1:
@@ -6061,19 +6069,22 @@ packages:
       - supports-color
     dev: true
 
-  /ember-modifier/3.2.7_@babel+core@7.18.2:
-    resolution: {integrity: sha512-ezcPQhH8jUfcJQbbHji4/ZG/h0yyj1jRDknfYue/ypQS8fM8LrGcCMo0rjDZLzL1Vd11InjNs3BD7BdxFlzGoA==}
-    engines: {node: 12.* || >= 14}
+  /ember-modifier/4.0.0-beta.1_ember-source@3.28.9:
+    resolution: {integrity: sha512-Mg4NRDCbydlF9hXUzmR9B89GcImA/oDFSK3nFNmy/nQLn5B30zDx8OlL132g9vnnbH/DavlxXwsuv3rDs9g13A==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
-      ember-cli-babel: 7.26.11
+      '@embroider/addon-shim': 1.7.1
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
-      ember-cli-typescript: 5.1.0
-      ember-compatibility-helpers: 1.2.6_@babel+core@7.18.2
+      ember-source: 3.28.9_@babel+core@7.18.2
     transitivePeerDependencies:
-      - '@babel/core'
       - supports-color
-    dev: false
+    dev: true
 
   /ember-on-helper/0.1.0:
     resolution: {integrity: sha512-jjafBnWfoA4VSSje476ft5G+urlvvuSDddwAJjKDCjKY9mbe3hAEsJiMBAaPObJRMm1FOglCuKjQZfwDDls6MQ==}
