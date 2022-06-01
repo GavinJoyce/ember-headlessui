@@ -27,6 +27,7 @@ Router.map(function () {
 
   this.route('dialog', function () {
     this.route('dialog-modal');
+    this.route('dialog-modal-with-transition');
     this.route('dialog-slide-over');
     this.route('dialog-nested');
   });
