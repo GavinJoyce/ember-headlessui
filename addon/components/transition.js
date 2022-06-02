@@ -5,6 +5,8 @@ import { invokeHelper } from '@ember/helper';
 import { action } from '@ember/object';
 import { schedule } from '@ember/runloop';
 
+import { modifier } from 'ember-modifier';
+
 import {
   AppliedClassNamesManager,
   TransitionVisibilityManager,
@@ -22,6 +24,18 @@ export default class TransitionComponent extends Component {
       this.initialRender = false;
     });
   }
+
+  ownNode = modifier((element) => {
+    this.ownDomNode = element;
+  });
+
+  track = modifier((element) => {
+    this.trackDomNode(element);
+
+    return () => {
+      this.untrackDomNode(element);
+    };
+  });
 
   get tagName() {
     return this.args.tagName ?? 'div';
