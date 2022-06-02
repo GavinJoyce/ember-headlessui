@@ -10,6 +10,8 @@ import { hbs } from 'ember-cli-htmlbars';
 import { module, skip, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
+import userEvent from '@testing-library/user-event';
+
 import {
   assertActiveElement,
   assertActiveListboxOption,
@@ -868,6 +870,33 @@ module('Integration | Component | <Listbox>', function (hooks) {
 
       // Verify the active option is the previously selected one
       assertActiveListboxOption(getListboxOptions()[0]);
+    });
+
+    test('should be possible to open the listbox (with transition) with "Enter"', async function (assert) {
+      await render(hbs`
+        <Listbox as |listbox|>
+           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+           <Transition
+            @show={{listbox.isOpen}}
+           >
+             <listbox.Options
+               @isOpen={{true}}
+               as |options|>
+               <options.Option>
+                Option A
+               </options.Option>
+             </listbox.Options>
+            </Transition>
+         </Listbox>`);
+
+      getListboxButton()?.focus();
+      userEvent.keyboard('{Enter}');
+
+      await assert.waitFor(async () => {
+        assertListbox({
+          state: ListboxState.Visible,
+        });
+      });
     });
   });
 
