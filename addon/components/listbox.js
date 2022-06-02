@@ -205,6 +205,11 @@ export default class ListboxComponent extends Component {
   }
 
   @action
+  unregisterOptionsElement() {
+    this.optionsElement = undefined;
+  }
+
+  @action
   setActiveOption(optionComponent) {
     this.optionElements.forEach((o, i) => {
       if (o.id === optionComponent.guid && !o.hasAttribute('disabled')) {
@@ -256,11 +261,6 @@ export default class ListboxComponent extends Component {
       0,
       optionElement.offsetTop - optionElement.parentElement.offsetTop
     );
-  }
-
-  @action
-  unregisterOptionsElement() {
-    this.optionsElement = undefined;
   }
 
   @action
