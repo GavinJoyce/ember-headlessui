@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { getValue } from '@glimmer/tracking/primitives/cache';
 import { assert } from '@ember/debug';
 import { invokeHelper } from '@ember/helper';
-import { action } from '@ember/object';
 import { schedule } from '@ember/runloop';
 
 import { modifier } from 'ember-modifier';
@@ -30,10 +29,10 @@ export default class TransitionComponent extends Component {
   });
 
   track = modifier((element) => {
-    this.trackDomNode(element);
+    this.allTransitionDomNodes.add(element);
 
     return () => {
-      this.untrackDomNode(element);
+      this.allTransitionDomNodes.delete(element);
     };
   });
 
@@ -67,16 +66,6 @@ export default class TransitionComponent extends Component {
 
   get componentIsHidden() {
     return this.unmount ? false : !this.componentIsVisible;
-  }
-
-  @action
-  trackDomNode(element) {
-    this.allTransitionDomNodes.add(element);
-  }
-
-  @action
-  untrackDomNode(element) {
-    this.allTransitionDomNodes.delete(element);
   }
 
   /* === Transition Class Name Management === */
