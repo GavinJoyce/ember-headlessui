@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { assert } from '@ember/debug';
-
 export default class TransitionChildComponent extends Component {
   constructor() {
     super(...arguments);

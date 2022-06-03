@@ -26,6 +26,14 @@ export default class DialogComponent extends Component<Args> {
   $portalRoot: HTMLElement;
   outsideClickedElement: HTMLElement | null = null;
 
+  stack = modifier(() => {
+    this.dialogStackProvider.push(this);
+
+    return () => {
+      this.dialogStackProvider.remove(this);
+    };
+  });
+
   handleEscapeKey = modifier(
     (_element, [isOpen, onClose]: [boolean, () => void]) => {
       let handler = (event: KeyboardEvent) => {

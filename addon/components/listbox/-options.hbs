@@ -11,8 +11,7 @@
       }}
       aria-activedescendant={{@activeOptionGuid}}
       aria-orientation='vertical'
-      {{did-insert @registerOptionsElement}}
-      {{will-destroy @unregisterOptionsElement}}
+      {{this.registerOptions}}
       {{on 'keypress' @handleKeyPress}}
       {{on 'keydown' @handleKeyDown}}
       {{on 'keyup' @handleKeyUp}}

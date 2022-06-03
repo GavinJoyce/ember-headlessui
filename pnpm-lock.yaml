@@ -12,7 +12,6 @@ overrides:
 specifiers:
   '@babel/core': ^7.0.0
   '@ember/optional-features': ^2.0.0
-  '@ember/render-modifiers': ^2.0.0
   '@ember/test-helpers': ^2.4.2
   '@embroider/test-setup': ^1.2.0
   '@glimmer/component': ^1.0.4
@@ -67,7 +66,7 @@ specifiers:
   ember-export-application-global: ^2.0.1
   ember-load-initializers: ^2.1.2
   ember-maybe-import-regenerator: ^1.0.0
-  ember-modifier: ^3.0.0
+  ember-modifier: 4.0.0-beta.1
   ember-on-helper: ^0.1.0
   ember-page-title: ^7.0.0
   ember-qunit: ^5.1.4
@@ -104,7 +103,6 @@ specifiers:
   webpack: ^5.64.1
 
 dependencies:
-  '@ember/render-modifiers': 2.0.4_xzzrirspdsf4xdeq6lrx5s4j7u
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.24
   ember-auto-import: 2.4.2_webpack@5.72.1
   ember-cli-babel: 7.26.11
@@ -112,7 +110,7 @@ dependencies:
   ember-cli-typescript: 5.1.0
   ember-concurrency: 2.2.1_@babel+core@7.18.2
   ember-element-helper: 0.6.1_ember-source@3.28.9
-  ember-modifier: 3.2.7_@babel+core@7.18.2
+  ember-modifier: 4.0.0-beta.1_ember-source@3.28.9
   ember-set-helper: 2.0.1
   ember-truth-helpers: 3.0.0
   focus-trap: 6.9.3
@@ -1424,21 +1422,6 @@ packages:
       - supports-color
     dev: true
 
-  /@ember/render-modifiers/2.0.4_xzzrirspdsf4xdeq6lrx5s4j7u:
-    resolution: {integrity: sha512-Zh/fo5VUmVzYHkHVvzWVjJ1RjFUxA2jH0zCp2+DQa80Bf3DUXauiEByxU22UkN4LFT55DBFttC0xCQSJG3WTsg==}
-    engines: {node: 12.* || 14.* || >= 16}
-    peerDependencies:
-      ember-source: ^3.8 || 4
-    dependencies:
-      '@embroider/macros': 1.7.1
-      ember-cli-babel: 7.26.11
-      ember-modifier-manager-polyfill: 1.2.0_@babel+core@7.18.2
-      ember-source: 3.28.9_@babel+core@7.18.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-    dev: false
-
   /@ember/test-helpers/2.8.1_xzzrirspdsf4xdeq6lrx5s4j7u:
     resolution: {integrity: sha512-jbsYwWyAdhL/pdPu7Gb3SG1gvIXY70FWMtC/Us0Kmvk82Y+5YUQ1SOC0io75qmOGYQmH7eQrd/bquEVd+4XtdQ==}
     engines: {node: 10.* || 12.* || 14.* || 15.* || >= 16.*}
@@ -1470,6 +1453,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@embroider/addon-shim/1.7.1:
+    resolution: {integrity: sha512-0xTQLZEAuGeMiZq4tF3KFlP4R/r1js7qq2QEQ89bhEDI8yKCDBScvPrpSpaT6aZj8bWByjDvXHFuSpInFl5gww==}
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@embroider/shared-internals': 1.7.1
+      semver: 7.3.7
+    dev: false
 
   /@embroider/macros/1.7.1:
     resolution: {integrity: sha512-JmWSCaRVSubV2FIFlOORZzLa8YfSndGqI8B013LtzOkYDkiLTFmE6L9kQmu/c8gdSUoqYiK+pVQn/AIh8ChtHQ==}
@@ -5751,6 +5742,7 @@ packages:
     dependencies:
       resolve: 1.22.0
       semver: 5.7.1
+    dev: true
 
   /ember-cli-version-checker/3.1.3:
     resolution: {integrity: sha512-PZNSvpzwWgv68hcXxyjREpj3WWb81A7rtYNQq1lLEgrWIchF8ApKJjWP3NBpHjaatwILkZAV8klair5WFlXAKg==}
@@ -6044,6 +6036,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: true
 
   /ember-modifier/2.1.2_@babel+core@7.18.2:
     resolution: {integrity: sha512-3Lsu1fV1sIGa66HOW07RZc6EHISwKt5VA5AUnFss2HX6OTfpxTJ2qvPctt2Yt0XPQXJ4G6BQasr/F35CX7UGJA==}
@@ -6061,17 +6054,20 @@ packages:
       - supports-color
     dev: true
 
-  /ember-modifier/3.2.7_@babel+core@7.18.2:
-    resolution: {integrity: sha512-ezcPQhH8jUfcJQbbHji4/ZG/h0yyj1jRDknfYue/ypQS8fM8LrGcCMo0rjDZLzL1Vd11InjNs3BD7BdxFlzGoA==}
-    engines: {node: 12.* || >= 14}
+  /ember-modifier/4.0.0-beta.1_ember-source@3.28.9:
+    resolution: {integrity: sha512-Mg4NRDCbydlF9hXUzmR9B89GcImA/oDFSK3nFNmy/nQLn5B30zDx8OlL132g9vnnbH/DavlxXwsuv3rDs9g13A==}
+    engines: {node: 14.* || 16.* || >= 18}
+    peerDependencies:
+      ember-source: '*'
+    peerDependenciesMeta:
+      ember-source:
+        optional: true
     dependencies:
-      ember-cli-babel: 7.26.11
+      '@embroider/addon-shim': 1.7.1
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
-      ember-cli-typescript: 5.1.0
-      ember-compatibility-helpers: 1.2.6_@babel+core@7.18.2
+      ember-source: 3.28.9_@babel+core@7.18.2
     transitivePeerDependencies:
-      - '@babel/core'
       - supports-color
     dev: false
 

@@ -3,8 +3,14 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { modifier } from 'ember-modifier';
+
 export default class ListboxOptionComponent extends Component {
   @tracked guid = `${guidFor(this)}-headlessui-listbox-option`;
+
+  registerOption = modifier((element) => {
+    this.args.registerOptionElement(this, element);
+  });
 
   @action
   handleClick(e) {

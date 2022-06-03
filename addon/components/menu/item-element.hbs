@@ -9,10 +9,9 @@
     disabled={{@isDisabled}}
     data-disabled={{@isDisabled}}
     ...attributes
-    {{did-insert @registerItemElement}}
+    {{@registerItemElement}}
     {{on 'mouseover' @onMouseOver}}
     {{on 'click' @onClick}}
-    {{will-destroy @unregisterItemElement}}
   >
     {{yield}}
   </Tag>

@@ -13,8 +13,7 @@
   @afterEnter={{@afterEnter}}
   @beforeLeave={{@beforeLeave}}
   @afterLeave={{@afterLeave}}
-  {{did-insert @parent.trackDomNode}}
-  {{will-destroy @parent.untrackDomNode}}
+  {{@track}}
   ...attributes
 >
   {{yield}}

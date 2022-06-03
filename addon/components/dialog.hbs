@@ -17,8 +17,7 @@
         }}
         {{this.handleEscapeKey @isOpen this.onClose}}
         {{this.lockWindowScroll}}
-        {{did-insert (fn this.dialogStackProvider.push this)}}
-        {{will-destroy (fn this.dialogStackProvider.remove this)}}
+        {{this.stack}}
       >
         {{yield
           (hash

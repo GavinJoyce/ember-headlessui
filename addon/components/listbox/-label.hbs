@@ -3,7 +3,7 @@
     id='{{@guid}}-label'
     for='{{@guid}}-button'
     {{on 'click' @handleLabelClick}}
-    {{did-insert @registerLabelElement}}
+    {{this.registerLabel}}
     ...attributes
   >
     {{yield}}

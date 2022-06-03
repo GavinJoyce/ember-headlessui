@@ -4,15 +4,18 @@
       class={{this.transitionClassNames}}
       hidden={{this.componentIsHidden}}
       style={{if this.componentIsHidden 'display: none'}}
-      {{did-insert (set this 'ownDomNode')}}
-      {{did-insert this.trackDomNode}}
-      {{will-destroy this.untrackDomNode}}
+      {{this.ownNode}}
+      {{this.track}}
       ...attributes
     >
       {{yield
         (hash
           Child=(component
-            'transition/child' parent=this show=@show unmount=@unmount
+            'transition/child'
+            parent=this
+            show=@show
+            unmount=@unmount
+            track=this.track
           )
         )
       }}

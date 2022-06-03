@@ -3,10 +3,22 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { modifier } from 'ember-modifier/.';
+
 export default class Item extends Component {
   guid = `${guidFor(this)}-tailwindui-menu-item`;
   element;
   @tracked isActive = false;
+
+  registerItemElement = modifier((element) => {
+    this.element = element;
+    this.args.registerItem(this);
+
+    return () => {
+      this.element = null;
+      this.args.unregisterItem(this);
+    };
+  });
 
   get isDisabled() {
     return Boolean(this.args.isDisabled);
@@ -30,18 +42,6 @@ export default class Item extends Component {
   @action
   deactivate() {
     this.isActive = false;
-  }
-
-  @action
-  registerItemElement(element) {
-    this.element = element;
-    this.args.registerItem(this);
-  }
-
-  @action
-  unregisterItemElement() {
-    this.element = null;
-    this.args.unregisterItem(this);
   }
 
   @action

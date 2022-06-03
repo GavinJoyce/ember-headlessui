@@ -2,8 +2,9 @@ import Component from '@glimmer/component';
 import { getValue } from '@glimmer/tracking/primitives/cache';
 import { assert } from '@ember/debug';
 import { invokeHelper } from '@ember/helper';
-import { action } from '@ember/object';
 import { schedule } from '@ember/runloop';
+
+import { modifier } from 'ember-modifier';
 
 import {
   AppliedClassNamesManager,
@@ -22,6 +23,18 @@ export default class TransitionComponent extends Component {
       this.initialRender = false;
     });
   }
+
+  ownNode = modifier((element) => {
+    this.ownDomNode = element;
+  });
+
+  track = modifier((element) => {
+    this.allTransitionDomNodes.add(element);
+
+    return () => {
+      this.allTransitionDomNodes.delete(element);
+    };
+  });
 
   get tagName() {
     return this.args.tagName ?? 'div';
@@ -53,16 +66,6 @@ export default class TransitionComponent extends Component {
 
   get componentIsHidden() {
     return this.unmount ? false : !this.componentIsVisible;
-  }
-
-  @action
-  trackDomNode(element) {
-    this.allTransitionDomNodes.add(element);
-  }
-
-  @action
-  untrackDomNode(element) {
-    this.allTransitionDomNodes.delete(element);
   }
 
   /* === Transition Class Name Management === */
