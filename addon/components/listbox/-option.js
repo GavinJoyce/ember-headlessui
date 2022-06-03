@@ -9,7 +9,6 @@ export default class ListboxOptionComponent extends Component {
   @tracked guid = `${guidFor(this)}-headlessui-listbox-option`;
 
   registerOption = modifier((element) => {
-    debugger;
     this.args.registerOptionElement(this, element);
   });
 
