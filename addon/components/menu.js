@@ -7,14 +7,10 @@ import { restartableTask, timeout } from 'ember-concurrency';
 
 export default class Menu extends Component {
   guid = `${guidFor(this)}-tailwindui-menu`;
-  _items = [];
+  @tracked items = [];
   @tracked isOpen = false;
   @tracked activeItem;
   @tracked searchTerm = '';
-
-  get items() {
-    return this._items;
-  }
 
   get activeItemIndex() {
     return this.items.indexOf(this.activeItem);
@@ -107,26 +103,26 @@ export default class Menu extends Component {
   }
 
   @action
-  registerItem(item) {
-    let { _items } = this;
+  async registerItem(item) {
+    let { items } = this;
 
-    _items.push(item);
-    this._items = _items;
+    items.push(item);
+    await Promise.resolve(() => (this.items = items));
   }
 
   @action
-  unregisterItem(item) {
-    let { _items } = this;
+  async unregisterItem(item) {
+    let { items } = this;
 
-    let index = _items.indexOf(item);
-    _items.splice(index, 1);
-    this._items = _items;
+    let index = items.indexOf(item);
+    items.splice(index, 1);
+    await Promise.resolve(() => (this.items = items));
   }
 
   _setActiveItem(item) {
     if (item) {
       this.activeItem = item;
-      this._items.forEach((item) => item.deactivate());
+      this.items.forEach((item) => item.deactivate());
       this.activeItem.activate();
       this.itemsElement.focus();
     }
