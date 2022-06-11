@@ -1,12 +1,12 @@
 <@item.Element
   class='flex justify-between w-full text-left px-4 py-2 text-sm leading-5
-    {{if @item.isActive 'bg-indigo-500 text-white' 'text-gray-700'}}
-    {{if @item.isDisabled 'cursor-not-allowed opacity-50'}}
+    {{if @item.isActive "bg-indigo-500 text-white" "text-gray-700"}}
+    {{if @item.isDisabled "cursor-not-allowed opacity-50"}}
     '
   ...attributes
 >
   <span class={{if @item.isActive 'font-bold'}}>
     {{yield}}
   </span>
-  <kbd class='font-sans {{if @item.isActive 'text-indigo-50'}}'>⌘K</kbd>
+  <kbd class='font-sans {{if @item.isActive "text-indigo-50"}}'>⌘K</kbd>
 </@item.Element>
