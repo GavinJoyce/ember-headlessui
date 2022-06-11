@@ -12,17 +12,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
-
-      - uses: actions/cache@v2
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
         with:
-          path: '**/node_modules'
-          key: ci-modules-${{ hashFiles('**/yarn.lock') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 7.1.2
+      - name: Install Dependencies
+        run: pnpm install
 
-      - name: Install
-        run: yarn install --frozen-lockfile --non-interactive
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: Generate Fallback Page
         run: cp dist/index.html dist/404.html
