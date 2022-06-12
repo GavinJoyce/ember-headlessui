@@ -5,6 +5,22 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
+    autoImport: {
+      webpack: {
+        node: {
+          // Required to import `testdouble` in tests
+          global: true,
+        },
+      },
+    },
+
+    postcssOptions: {
+      compile: {
+        plugins: [
+          require('tailwindcss')('./tests/dummy/config/tailwind.config.js'),
+        ],
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -20,5 +36,7 @@ module.exports = function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return app.toTree();
+  const { maybeEmbroider } = require('@embroider/test-setup');
+
+  return maybeEmbroider(app);
 };
