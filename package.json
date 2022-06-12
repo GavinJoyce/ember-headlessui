@@ -19,8 +19,13 @@
       "@types/eslint": "7.29.0"
     },
     "overrides-notes": {
-      "@embroider/addon-shim": "some addons from the test-app are not using ^1.0.0",
       "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": ["@babel/core"],
+      "ignore-notes": {
+        "@babel/core": "See bug report + discussion: https://github.com/ember-cli/ember-cli/issues/9933"
+      }
     }
   }
 }
