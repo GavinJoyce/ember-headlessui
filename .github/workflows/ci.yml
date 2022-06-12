@@ -130,8 +130,9 @@ jobs:
       fail-fast: true
       matrix:
         ember-try-scenario:
-          - ember-minimum-supported
           - ember-lts-3-28
+          - ember-4-0
+          - ember-4-4
           - ember-release
           - ember-beta
           - ember-canary
