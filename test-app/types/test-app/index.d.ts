@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import type Ember from 'ember';
 
 declare global {
   // Prevents ESLint from "fixing" this via its auto-fix to turn it into a type
