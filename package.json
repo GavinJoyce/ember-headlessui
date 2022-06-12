@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build:docs": "pnpm --filter ember-headlessui run build",
     "release": "pnpm --filter ember-headlessui run release",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
