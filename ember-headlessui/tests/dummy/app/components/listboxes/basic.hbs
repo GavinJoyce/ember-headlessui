@@ -42,21 +42,21 @@
         >
           <span
             class='block truncate cursor-default select-none relative py-2 pl-10 pr-4
-              {{if option.selected 'font-medium' 'font-normal'}}
+              {{if option.selected "font-medium" "font-normal"}}
               {{if
                 option.active
-                'text-yellow-900 bg-yellow-100'
-                'text-gray-900'
+                "text-yellow-900 bg-yellow-100"
+                "text-gray-900"
               }}
               '
           >
-            <span class='{{if option.disabled 'text-gray-500'}}'>
+            <span class='{{if option.disabled "text-gray-500"}}'>
               {{person.name}}
             </span>
             {{#if option.selected}}
               <span
                 class='absolute inset-y-0 left-0 flex items-center pl-3
-                  {{if option.active 'text-yellow-600' 'text-yellow-600'}}
+                  {{if option.active "text-yellow-600" "text-yellow-600"}}
                   '
               >
                 <svg
