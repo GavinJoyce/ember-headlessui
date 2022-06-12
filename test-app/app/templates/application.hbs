@@ -1,7 +1,18 @@
-{{page-title "TestApp"}}
+<div class='w-full h-full'>
+  <div
+    class='flex flex-col h-screen overflow-hidden font-sans antialiased text-gray-900 bg-gray-700'
+  >
+    <header
+      class='relative z-10 flex items-center justify-between flex-shrink-0 px-4 py-4 bg-gray-700 border-b border-gray-200 sm:px-6 lg:px-8'
+    >
+      <LinkTo @route='index'>
+        <Logo class='h-6' />
+      </LinkTo>
+    </header>
+    <main class='flex-1 overflow-auto bg-gray-50'>
+      {{outlet}}
 
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+      <KeyCaster />
+    </main>
+  </div>
+</div>
