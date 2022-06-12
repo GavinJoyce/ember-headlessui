@@ -30,10 +30,10 @@ jobs:
         run: pnpm build:docs
 
       - name: Generate Fallback Page
-        run: cp ember-headlessui/dist/index.html ember-headlessui/dist/404.html
+        run: cp test-app/dist/index.html test-app/dist/404.html
 
       - name: Upload to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: ember-headlessui/dist
+          folder: test-app/dist
