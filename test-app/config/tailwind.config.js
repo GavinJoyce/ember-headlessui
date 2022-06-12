@@ -3,7 +3,7 @@
 // const defaultTheme = require('tailwindcss/defaultTheme');
 
 let extensions = 'html,hbs,js,ts,gjs,gts';
-let paths = ['./tests/dummy/**/*', './addon/**/*'];
+let paths = ['./tests/**/*', './app/**/*'];
 
 module.exports = {
   content: paths.map((glob) => `${glob}.{${extensions}}`),

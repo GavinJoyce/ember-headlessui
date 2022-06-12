@@ -166,6 +166,7 @@ importers:
       '@tailwindcss/typography': ^0.5.2
       '@testing-library/dom': ^8.1.0
       '@testing-library/user-event': ^13.1.9
+      '@types/ember': ^4.0.0
       '@types/ember__application': ^4.0.0
       '@types/ember__array': ^4.0.1
       '@types/ember__component': ^4.0.8
@@ -204,9 +205,11 @@ importers:
       ember-cli-terser: ^4.0.2
       ember-cli-typescript: ^5.1.0
       ember-cli-typescript-blueprints: ^3.0.0
+      ember-concurrency: ^2.1.2
       ember-css-transitions: ^2.1.0
       ember-export-application-global: ^2.0.1
       ember-fetch: ^8.1.1
+      ember-headlessui: '*'
       ember-load-initializers: ^2.1.2
       ember-modifier: 4.0.0-beta.1
       ember-on-helper: ^0.1.0
@@ -240,6 +243,8 @@ importers:
       webpack: ^5.72.1
     dependencies:
       '@tailwindcss/typography': 0.5.2_tailwindcss@3.1.2
+      ember-concurrency: 2.2.1
+      ember-headlessui: link:../ember-headlessui
       ember-modifier: 4.0.0-beta.1_ember-source@4.4.1
       tailwindcss: 3.1.2
     devDependencies:
@@ -251,6 +256,7 @@ importers:
       '@nullvoxpopuli/eslint-configs': 1.5.8_typescript@4.7.3
       '@testing-library/dom': 8.13.0
       '@testing-library/user-event': 13.5.0_tlwynutqiyp5mns3woioasuxnq
+      '@types/ember': 4.0.0
       '@types/ember__application': 4.0.0
       '@types/ember__array': 4.0.1
       '@types/ember__component': 4.0.8

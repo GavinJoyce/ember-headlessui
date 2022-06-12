@@ -16,9 +16,7 @@ module.exports = function (defaults) {
 
     postcssOptions: {
       compile: {
-        plugins: [
-          require('tailwindcss')('./tests/dummy/config/tailwind.config.js'),
-        ],
+        plugins: [require('tailwindcss')('./config/tailwind.config.js')],
       },
     },
   });
