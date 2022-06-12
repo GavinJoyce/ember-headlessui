@@ -46,7 +46,7 @@
     "tracked-maps-and-sets": "^3.0.1"
   },
   "peerDependencies": {
-    "ember-source": "~3.28.1 || ^4.0.0"
+    "ember-source": "^3.25.0 || ^4.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
