@@ -46,11 +46,10 @@
     "tracked-maps-and-sets": "^3.0.1"
   },
   "peerDependencies": {
-    "ember-source": "^3.25.0 || ^4.0.0"
+    "ember-source": ">= 3.25.0 || ^4.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
-    "@ember/test-helpers": "^2.4.2",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/eslint-configs": "^1.5.1",
@@ -73,7 +72,6 @@
     "@types/ember__string": "^3.0.9",
     "@types/ember__template": "^4.0.0",
     "@types/ember__test": "^4.0.0",
-    "@types/ember__test-helpers": "^2.6.1",
     "@types/ember__utils": "^4.0.0",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "@types/qunit": "^2.19.0",
@@ -83,16 +81,7 @@
     "dotenv-cli": "^4.0.0",
     "ember-cli": "~4.4.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-cli-sri": "^2.1.1",
-    "ember-cli-terser": "^4.0.1",
-    "ember-disable-prototype-extensions": "^1.1.3",
-    "ember-export-application-global": "^2.0.1",
-    "ember-load-initializers": "^2.1.2",
-    "ember-maybe-import-regenerator": "^1.0.0",
-    "ember-page-title": "^7.0.0",
-    "ember-qunit": "^5.1.4",
-    "ember-resolver": "^8.0.3",
-    "ember-source": "~3.28.1",
+    "ember-source": "~3.25.0",
     "ember-template-lint": "^3.5.1",
     "ember-template-lint-plugin-prettier": "^2.0.1",
     "eslint": "^7.32.0",
