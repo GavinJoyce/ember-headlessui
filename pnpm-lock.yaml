@@ -12,6 +12,8 @@ importers:
     specifiers:
       '@ember/optional-features': ^2.0.0
       '@ember/test-helpers': ^2.4.2
+      '@glimmer/component': ^1.0.4
+      '@glimmer/tracking': ^1.0.4
       '@nullvoxpopuli/eslint-configs': ^1.5.1
       '@types/ember': ^4.0.0
       '@types/ember__application': ^4.0.0
@@ -94,6 +96,8 @@ importers:
     devDependencies:
       '@ember/optional-features': 2.0.0
       '@ember/test-helpers': 2.8.1_ember-source@3.28.9
+      '@glimmer/component': 1.1.2
+      '@glimmer/tracking': 1.1.2
       '@nullvoxpopuli/eslint-configs': 1.5.8_typescript@4.7.3
       '@types/ember': 4.0.0
       '@types/ember__application': 4.0.0
