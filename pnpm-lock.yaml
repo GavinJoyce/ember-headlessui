@@ -64,6 +64,7 @@ importers:
       rollup-plugin-ts: ^3.0.0
       tracked-maps-and-sets: ^3.0.1
       typescript: ^4.7.3
+      webpack: ^5.0.0
     dependencies:
       '@babel/runtime': 7.18.3
       '@embroider/addon-shim': 1.8.0
@@ -117,6 +118,7 @@ importers:
       rollup: 2.75.6
       rollup-plugin-ts: 3.0.2_pbe3bgujq34v33joec2g77egqm
       typescript: 4.7.3
+      webpack: 5.73.0
 
   test-app:
     specifiers:
@@ -2038,7 +2040,7 @@ packages:
       '@embroider/macros': 1.8.0
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
-      ember-source: 3.25.4
+      ember-source: 3.25.4_@babel+core@7.18.2
     transitivePeerDependencies:
       - supports-color
 
@@ -5106,7 +5108,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -5131,7 +5133,7 @@ packages:
       mkdirp: 1.0.4
       move-concurrently: 1.0.1
       p-map: 3.0.0
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 7.1.1
       tar: 6.1.11
@@ -7209,7 +7211,7 @@ packages:
       '@embroider/addon-shim': 1.8.0
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
-      ember-source: 3.25.4
+      ember-source: 3.25.4_@babel+core@7.18.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -12220,13 +12222,15 @@ packages:
     engines: {node: '>=0.4.0'}
     dev: true
 
-  /promise-inflight/1.0.1:
+  /promise-inflight/1.0.1_bluebird@3.7.2:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
     peerDependencies:
       bluebird: '*'
     peerDependenciesMeta:
       bluebird:
         optional: true
+    dependencies:
+      bluebird: 3.7.2
     dev: true
 
   /promise-map-series/0.2.3:
