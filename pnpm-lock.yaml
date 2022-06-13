@@ -21,8 +21,8 @@ importers:
       '@babel/plugin-transform-typescript': ^7.16.8
       '@babel/preset-typescript': ^7.16.7
       '@babel/runtime': ^7.17.8
-      '@embroider/addon-dev': ^1.2.0
-      '@embroider/addon-shim': ^1.2.0
+      '@embroider/addon-dev': ^1.8.0
+      '@embroider/addon-shim': ^1.8.0
       '@glimmer/component': ^1.0.4
       '@glimmer/tracking': ^1.0.4
       '@nullvoxpopuli/eslint-configs': ^2.1.1
@@ -2038,7 +2038,7 @@ packages:
       '@embroider/macros': 1.8.0
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
-      ember-source: 3.25.4_@babel+core@7.18.2
+      ember-source: 3.25.4
     transitivePeerDependencies:
       - supports-color
 
@@ -5106,7 +5106,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -5131,7 +5131,7 @@ packages:
       mkdirp: 1.0.4
       move-concurrently: 1.0.1
       p-map: 3.0.0
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 7.1.1
       tar: 6.1.11
@@ -7209,7 +7209,7 @@ packages:
       '@embroider/addon-shim': 1.8.0
       ember-cli-normalize-entity-name: 1.0.0
       ember-cli-string-utils: 1.1.0
-      ember-source: 3.25.4_@babel+core@7.18.2
+      ember-source: 3.25.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -12220,15 +12220,13 @@ packages:
     engines: {node: '>=0.4.0'}
     dev: true
 
-  /promise-inflight/1.0.1_bluebird@3.7.2:
+  /promise-inflight/1.0.1:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
     peerDependencies:
       bluebird: '*'
     peerDependenciesMeta:
       bluebird:
         optional: true
-    dependencies:
-      bluebird: 3.7.2
     dev: true
 
   /promise-map-series/0.2.3:
@@ -14413,7 +14411,7 @@ packages:
     dev: true
 
   /type-check/0.3.2:
-    resolution: {integrity: sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=}
+    resolution: {integrity: sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg==}
     engines: {node: '>= 0.8.0'}
     dependencies:
       prelude-ls: 1.1.2
