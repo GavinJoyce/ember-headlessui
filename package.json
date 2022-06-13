@@ -11,6 +11,7 @@
     "dev:addon": "echo 'pnpm run --filter ember-headlessui start --no-watch.clearScreen'",
     "dev:docs": "echo 'pnpm run --filter docs docs:watch --preserveWatchOutput'",
     "build:docs": "pnpm --filter ember-headlessui run build",
+    "ci:update": "npx ember-ci-update",
     "release": "pnpm --filter ember-headlessui run release",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
