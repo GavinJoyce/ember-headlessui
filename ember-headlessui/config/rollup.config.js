@@ -24,6 +24,7 @@ export default defineConfig({
       'helpers/**/*.{js,ts}',
       'modifiers/**/*.{js,ts}',
       'services/**/*.{js,ts}',
+      'utils/*.{js,ts}',
     ]),
 
     // These are the modules that should get reexported into the traditional

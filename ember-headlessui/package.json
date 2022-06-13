@@ -11,10 +11,15 @@
   },
   "license": "MIT",
   "author": "",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
+  "exports": {
+    ".": "./dist/index.js",
+    "./addon-main.js": "./addon-main.cjs",
+    "./*": "./dist/*.js"
   },
+  "files": [
+    "addon-main.cjs",
+    "dist"
+  ],
   "scripts": {
     "release": "dotenv release-it --",
     "start": "rollup -c ./config/rollup.config.js --watch",
