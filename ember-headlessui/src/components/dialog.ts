@@ -6,10 +6,10 @@ import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { typeOf } from '@ember/utils';
 
-import { Keys } from 'ember-headlessui/utils/keyboard';
+import { Keys } from '../utils/keyboard';
 import { modifier } from 'ember-modifier';
 
-import type DialogStackProvider from 'ember-headlessui/services/dialog-stack-provider';
+import type DialogStackProvider from '../services/dialog-stack-provider';
 
 interface Args {
   isOpen: boolean;

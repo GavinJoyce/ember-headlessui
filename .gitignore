@@ -3,3 +3,4 @@ node_modules/
 
 .github/
 .pnpm-debug.log
+tsconfig.tsbuildinfo
