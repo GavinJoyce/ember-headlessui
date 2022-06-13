@@ -84,5 +84,8 @@
     "app/**/*",
     "tests/**/*",
     "types/**/*"
+  ],
+  "references": [
+    { "path": "../ember-headlessui" }
   ]
 }
