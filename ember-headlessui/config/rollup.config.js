@@ -1,4 +1,3 @@
-// @ts-nocheck
 import ts from 'rollup-plugin-ts';
 import { Addon } from '@embroider/addon-dev/rollup';
 import { defineConfig } from 'rollup';
@@ -31,10 +30,10 @@ export default defineConfig({
     // "app" tree. Things in here should also be in publicEntrypoints above, but
     // not everything in publicEntrypoints necessarily needs to go here.
     addon.appReexports([
-      'components/**/*.{js,ts}',
-      'helpers/**/*.{js,ts}',
-      'modifiers/**/*.{js,ts}',
-      'services/**/*.{js,ts}',
+      'components/**/*.js',
+      'helpers/**/*.js',
+      'modifiers/**/*.js',
+      'services/**/*.js',
     ]),
 
     // This babel config should *not* apply presets or compile away ES modules.
@@ -48,14 +47,12 @@ export default defineConfig({
       // but we need the ember plugins converted first
       // (template compilation and co-location)
       transpiler: 'babel',
-      babelConfig: './babel.config.cjs',
       browserslist: ['last 2 firefox versions', 'last 2 chrome versions'],
       tsconfig: {
         fileName: 'tsconfig.json',
         hook: (config) => ({
           ...config,
           declaration: true,
-          // TODO: these aren't being generated? why?
           declarationMap: true,
           // See: https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#beta-delta
           // Allows us to use `exports` to define types per export

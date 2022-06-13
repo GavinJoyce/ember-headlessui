@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "concurrently 'npm:dev:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "dev:ember": "pnpm --filter test-app run start",
-    "dev:addon": "echo 'pnpm run --filter ember-headlessui start --no-watch.clearScreen'",
+    "dev:addon": "pnpm run --filter ember-headlessui start --no-watch.clearScreen",
     "dev:docs": "echo 'pnpm run --filter docs docs:watch --preserveWatchOutput'",
     "build:addon": "pnpm --filter ember-headlessui run build",
     "ci:update": "npx ember-ci-update",

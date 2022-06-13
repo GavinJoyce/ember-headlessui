@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-import { Keys } from 'ember-headlessui/utils/keyboard';
+import { Keys } from '../../utils/keyboard';
 
 export default class Items extends Component {
   get menuItemsElementSelector() {
