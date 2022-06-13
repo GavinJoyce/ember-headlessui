@@ -2,8 +2,6 @@ lockfileVersion: 5.4
 
 overrides:
   '@types/eslint': 7.29.0
-  '@embroider/addon-dev': ^1.8.0
-  '@embroider/shared-internals': ^1.8.0
 
 importers:
 
