@@ -6,8 +6,9 @@ import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { typeOf } from '@ember/utils';
 
-import { Keys } from '../utils/keyboard';
 import { modifier } from 'ember-modifier';
+
+import { Keys } from '../utils/keyboard';
 
 import type DialogStackProvider from '../services/dialog-stack-provider';
 
