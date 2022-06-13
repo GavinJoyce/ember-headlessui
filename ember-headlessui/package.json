@@ -45,6 +45,14 @@
     "ember-source": ">= 3.25.0 || ^4.0.0"
   },
   "devDependencies": {
+    "@babel/core": "7.18.2",
+    "@babel/plugin-proposal-class-properties": "7.17.12",
+    "@babel/plugin-proposal-decorators": "7.18.2",
+    "@babel/plugin-syntax-decorators": "7.17.12",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/plugin-transform-typescript": "^7.16.8",
+    "@babel/preset-typescript": "^7.16.7",
+    "@embroider/addon-dev": "^1.2.0",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/eslint-configs": "^2.1.1",
@@ -70,6 +78,7 @@
     "dotenv-cli": "^4.0.0",
     "ember-template-lint": "^3.5.1",
     "ember-template-lint-plugin-prettier": "^2.0.1",
+    "ember-source": "*",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-ember": "^10.5.5",
@@ -79,6 +88,8 @@
     "prettier": "^2.3.2",
     "release-it": "^14.8.0",
     "release-it-lerna-changelog": "^3.1.0",
+    "rollup": "2.75.6",
+    "rollup-plugin-ts": "^3.0.0",
     "typescript": "^4.7.3"
   },
   "ember": {
