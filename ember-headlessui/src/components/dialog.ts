@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Component from '@glimmer/component';
 import { getOwner } from '@ember/application';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { setComponentTemplate } from '@ember/component';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { inject as service } from '@ember/service';
 import { typeOf } from '@ember/utils';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { hbs } from 'ember-cli-htmlbars';
 
 import { modifier } from 'ember-modifier';
 
@@ -167,3 +173,64 @@ export default class DialogComponent extends Component<Args> {
     this.args.onClose();
   }
 }
+
+/**
+ * TODO: some bug with @embroider/addon-dev and
+ *    ts co-located components made the ts transformation
+ *    over-write the template file.
+ *
+ *    For now, we get around the issue by manually inlining
+ *    the template instead of letting the build do it for us.
+ */
+setComponentTemplate(hbs`
+{{#if @isOpen}}
+  {{#let (element this.tagName) as |Tag|}}
+    {{#in-element this.$portalRoot insertBefore=null}}
+      <Tag
+        id={{this.guid}}
+        role='dialog'
+        aria-modal='true'
+        tabindex='-1'
+        ...attributes
+        {{headlessui-focus-trap
+          focusTrapOptions=(hash
+            initialFocus=@initialFocus
+            allowOutsideClick=this.allowOutsideClick
+            setReturnFocus=this.setReturnFocus
+            fallbackFocus=this.dialogElementSelector
+          )
+        }}
+        {{this.handleEscapeKey @isOpen this.onClose}}
+        {{this.lockWindowScroll}}
+        {{this.stack}}
+      >
+        {{yield
+          (hash
+            isOpen=@isOpen
+            onClose=this.onClose
+            Overlay=(component
+              'dialog/-overlay'
+              guid=this.overlayGuid
+              dialogGuid=this.guid
+              isOpen=@isOpen
+              onClose=this.onClose
+            )
+            Title=(component
+              'dialog/-title'
+              guid=this.titleGuid
+              dialogGuid=this.guid
+              isOpen=@isOpen
+            )
+            Description=(component
+              'dialog/-description'
+              guid=this.descriptionGuid
+              dialogGuid=this.guid
+              isOpen=@isOpen
+            )
+          )
+        }}
+      </Tag>
+    {{/in-element}}
+  {{/let}}
+{{/if}}
+`);

@@ -24,7 +24,9 @@
   "packageManager": "pnpm@7.1.7",
   "pnpm": {
     "overrides": {
-      "@types/eslint": "7.29.0"
+      "@types/eslint": "7.29.0",
+      "@embroider/addon-dev": "^1.8.0",
+      "@embroider/shared-internals": "^1.8.0"
     },
     "overrides-notes": {
       "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking"

@@ -14,7 +14,13 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  output: { ...addon.output(), sourcemap: true },
+  output: {
+    ...addon.output(),
+    sourcemap: true,
+    // temporarily added until the ember-cli-htmlbars
+    // removal bug is fixed (side-effect imports are not removed)
+    hoistTransitiveImports: false,
+  },
   plugins: [
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
