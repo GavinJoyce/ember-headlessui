@@ -2,25 +2,39 @@
   "name": "ember-headlessui-monorepo-root",
   "version": "0.0.0",
   "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "scripts": {
+    "dev": "concurrently 'npm:dev:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "dev:ember": "pnpm --filter test-app run start",
+    "dev:addon": "echo 'pnpm run --filter ember-headlessui start --no-watch.clearScreen'",
+    "dev:docs": "echo 'pnpm run --filter docs docs:watch --preserveWatchOutput'",
     "build:docs": "pnpm --filter ember-headlessui run build",
     "release": "pnpm --filter ember-headlessui run release",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "lint:js": "pnpm --filter '*' lint:js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "pnpm --filter test-app test:ember"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.2.1"
+  },
   "packageManager": "pnpm@7.1.7",
   "pnpm": {
     "overrides": {
       "@types/eslint": "7.29.0"
     },
     "overrides-notes": {
-      "@embroider/addon-shim": "some addons from the test-app are not using ^1.0.0",
       "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking"
+    },
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@babel/core"
+      ],
+      "ignore-notes": {
+        "@babel/core": "See bug report + discussion: https://github.com/ember-cli/ember-cli/issues/9933"
+      }
     }
   }
 }
