@@ -2,10 +2,13 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
+const packageJson = require('./package');
+
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
     autoImport: {
+      watchDependencies: Object.keys(packageJson.dependencies),
       webpack: {
         node: {
           // Required to import `testdouble` in tests

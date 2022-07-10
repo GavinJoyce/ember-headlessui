@@ -10,7 +10,7 @@
     // cannot be: they *appear* to be resolve-able to TS, but are in fact not in
     // valid Node-resolveable locations and may not have TS-ready types. This
     // will likely improve over time
-    "allowJs": false,
+    "allowJs": true,
 
     // --- TS for SemVer Types compatibility
     // Strictness settings -- you should *not* change these: Ember code is not
@@ -84,5 +84,8 @@
     "app/**/*",
     "tests/**/*",
     "types/**/*"
+  ],
+  "references": [
+    { "path": "../ember-headlessui" }
   ]
 }

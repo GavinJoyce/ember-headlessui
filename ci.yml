@@ -1,0 +1,43 @@
+provider: github
+template: "v2-addon"
+
+# ---------------------
+
+addon: './ember-headlessui'
+testApp: './test-app'
+
+lint:
+  eslint:
+    - './ember-headlessui'
+    - './test-app'
+
+build:
+  run: 'pnpm build'
+  expect: |
+    components/dialog.d.ts
+    components/dialog.d.ts.map
+    components/dialog.js
+    components/dialog.js.map
+    components/listbox.d.ts
+    components/listbox.js
+    components/listbox.js.map
+    components/menu.d.ts
+    components/menu.js
+    components/menu.js.map
+    components/switch.d.ts
+    components/switch.js
+    components/switch.js.map
+    components/transition.d.ts
+    components/transition.js
+    components/transition.js.map
+
+support:
+  ember-try: true
+  typescript:
+   - typescript@4.3
+   - typescript@4.4
+   - typescript@4.5
+   - typescript@4.6
+   - typescript@4.7
+   - typescript@next
+
