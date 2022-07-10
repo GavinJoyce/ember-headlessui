@@ -14,9 +14,9 @@ import { hbs } from 'ember-cli-htmlbars';
 
 import { modifier } from 'ember-modifier';
 
-import { Keys } from '../utils/keyboard';
+import { Keys } from '../../utils/keyboard';
 
-import type DialogStackProvider from '../services/dialog-stack-provider';
+import type DialogStackProvider from '../../services/dialog-stack-provider';
 
 interface Args {
   isOpen: boolean;

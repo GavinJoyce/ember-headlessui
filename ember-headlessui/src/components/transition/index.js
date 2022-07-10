@@ -9,7 +9,7 @@ import { modifier } from 'ember-modifier';
 import {
   AppliedClassNamesManager,
   TransitionVisibilityManager,
-} from '../helpers/transition';
+} from '../../helpers/transition';
 
 export default class TransitionComponent extends Component {
   constructor() {
