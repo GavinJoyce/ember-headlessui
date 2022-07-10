@@ -182,7 +182,8 @@ export default class DialogComponent extends Component<Args> {
  *    For now, we get around the issue by manually inlining
  *    the template instead of letting the build do it for us.
  */
-setComponentTemplate(hbs`
+setComponentTemplate(
+  hbs`
 {{#if @isOpen}}
   {{#let (element this.tagName) as |Tag|}}
     {{#in-element this.$portalRoot insertBefore=null}}
@@ -233,4 +234,6 @@ setComponentTemplate(hbs`
     {{/in-element}}
   {{/let}}
 {{/if}}
-`, DialogComponent);
+`,
+  DialogComponent
+);
