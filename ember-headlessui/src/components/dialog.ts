@@ -233,4 +233,4 @@ setComponentTemplate(hbs`
     {{/in-element}}
   {{/let}}
 {{/if}}
-`);
+`, DialogComponent);
