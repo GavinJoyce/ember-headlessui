@@ -24,10 +24,12 @@
   "packageManager": "pnpm@7.1.7",
   "pnpm": {
     "overrides": {
-      "@types/eslint": "7.29.0"
+      "@types/eslint": "7.29.0",
+      "@octokit/rest": ">= 4.0.0"
     },
     "overrides-notes": {
-      "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking"
+      "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking",
+      "@octokit/rest": "an octokit plugin depends on v3, yet a plugin of @octokit/rest depends >= 4"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
