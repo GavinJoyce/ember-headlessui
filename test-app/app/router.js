@@ -32,5 +32,7 @@ Router.map(function () {
     this.route('dialog-nested');
   });
 
-  this.route('radio-group');
+  this.route('radio-group', function () {
+    this.route('radio-group-basic');
+  });
 });
