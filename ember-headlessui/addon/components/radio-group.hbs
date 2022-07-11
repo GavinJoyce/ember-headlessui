@@ -1,0 +1,32 @@
+<input type='hidden' value={{this.selectedValue}} />
+{{! template-lint-disable no-positive-tabindex}}
+<div
+  data-test-radio-group
+  id={{this.radioGroupGuid}}
+  role='radiogroup'
+  aria-labelledby={{this.radioGroupLabel}}
+  aria-disabled={{@disabled}}
+  {{this.tabIndex}}
+>
+  {{yield
+    (hash
+      activeValue=this.activeValue
+      Label=(component 'radio-group/-label' guid=this.guid)
+      Option=(component
+        'radio-group/-option'
+        activeValue=this.activeValue
+        disabled=@disabled
+        handleClick=this.handleClick
+        handleKeyup=this.handleKeyup
+        onChange=this.onChange
+        options=this.options
+        radioGroupGuid=this.radioGroupGuid
+        registerOption=this.registerOption
+        unregisterOption=this.unregisterOption
+        selectedValue=this.selectedValue
+        value=@value
+      )
+    )
+  }}
+</div>
+{{! template-lint-disable no-positive-tabindex}}
