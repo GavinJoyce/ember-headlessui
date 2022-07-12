@@ -31,4 +31,8 @@ Router.map(function () {
     this.route('dialog-slide-over');
     this.route('dialog-nested');
   });
+
+  this.route('radio-group', function () {
+    this.route('radio-group-basic');
+  });
 });

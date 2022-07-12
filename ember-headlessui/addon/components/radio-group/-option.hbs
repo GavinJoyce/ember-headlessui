@@ -1,0 +1,14 @@
+<div
+  id={{this.id}}
+  ariaLabel={{@value}}
+  aria-labelledby={{this.label}}
+  aria-disabled={{@disabled}}
+  role='radio'
+  aria-checked={{eq @activeValue @value}}
+  {{on 'click' (fn this.onClick @value)}}
+  {{on 'keyup' @handleKeyup}}
+  {{this.registration}}
+  ...attributes
+>
+  {{yield}}
+</div>
