@@ -23,9 +23,11 @@
   "packageManager": "pnpm@7.1.7",
   "pnpm": {
     "overrides": {
-      "@types/eslint": "7.29.0"
+      "@types/eslint": "7.29.0",
+      "@octokit/core": "^4.0.0"
     },
     "overrides-notes": {
+      "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers",
       "@types/eslint": "webpack brings in @types/eslint@8, which breaks our type checking"
     },
     "peerDependencyRules": {
