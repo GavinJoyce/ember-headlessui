@@ -1,0 +1,15 @@
+diff --git a/lib/configuration.js b/lib/configuration.js
+index 54abd5f3ab38ea459a04bad4184e9107bc849c2a..c4a9a8feee026737a15021549ed0314698eeb99e 100644
+--- a/lib/configuration.js
++++ b/lib/configuration.js
+@@ -19,7 +19,9 @@ function fromPath(rootPath, options = {}) {
+     }
+     let { repo, nextVersion, labels, cacheDir, ignoreCommitters } = config;
+     if (!repo) {
+-        repo = findRepo(rootPath);
++        let cwd = process.cwd();
++        console.log({ cwd});
++        repo = findRepo(cwd);
+         if (!repo) {
+             throw new configuration_error_1.default('Could not infer "repo" from the "package.json" file.');
+         }

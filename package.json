@@ -24,7 +24,8 @@
   "pnpm": {
     "overrides": {
       "@types/eslint": "7.29.0",
-      "@octokit/core": "^4.0.0"
+      "@octokit/core": "^4.0.0",
+      "lerna-changelog": "^2.0.0"
     },
     "overrides-notes": {
       "@octokit/core": "release-it -> @octokit/rest -> @octokit/plugin-paginate-rest wants @octokit/core v4, but found 3.6. The other way of solving this is to go more experimental / git / pr references: https://github.com/GavinJoyce/ember-headlessui/pull/161 -- the problem is that release-it-lerna-changelog + release-it have incompatible peers",
@@ -37,6 +38,9 @@
       "ignore-notes": {
         "@babel/core": "See bug report + discussion: https://github.com/ember-cli/ember-cli/issues/9933"
       }
+    },
+    "patchedDependencies": {
+      "lerna-changelog@2.2.0": "patches/lerna-changelog@2.2.0.patch"
     }
   }
 }
