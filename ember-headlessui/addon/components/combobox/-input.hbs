@@ -1,0 +1,18 @@
+{{#let (element (or @as 'input')) as |Tag|}}
+  <Tag
+    name={{if @name @name 'option'}}
+    value={{@value}}
+    role={{if @role @role 'combobox'}}
+    type={{if @type @type 'input'}}
+    id='{{@guid}}-input'
+    aria-multiselectable={{if @isMultiselectable 'true'}}
+    {{on 'keydown' @handleKeyDown}}
+    {{on 'keyup' @handleKeyUp}}
+    {{on 'keypress' @handleKeyPress}}
+    {{on 'input' this.handleInput}}
+    {{did-insert (fn @registerInputElement this)}}
+    ...attributes
+  >
+    {{yield}}
+  </Tag>
+{{/let}}
