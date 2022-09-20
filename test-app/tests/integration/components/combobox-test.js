@@ -400,7 +400,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
 
       module('type attribute', () => {
-        test('should set the `type` to "button" by default', async (assert) => {
+        test('should set the `type` to "button" by default', async function (assert) {
           await render(hbs`
             <Combobox 
               as |combobox|
@@ -412,7 +412,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assert.dom(getComboboxButton()).hasAttribute('type', 'button');
         });
 
-        test('should not set the `type` to "button" if it already contains a `type`', async (assert) => {
+        test('should not set the `type` to "button" if it already contains a `type`', async function (assert) {
           await render(hbs`
             <Combobox 
               as |combobox|
@@ -429,7 +429,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           async () => {}
         );
 
-        test('should not set the type if the "as" prop is not a "button"', async (assert) => {
+        test('should not set the type if the "as" prop is not a "button"', async function (assert) {
           await render(hbs`
             <Combobox 
               as |combobox|
@@ -482,7 +482,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
         await assertActiveElement(getComboboxInput());
       });
 
-      test('should be possible to always render the Combobox.Options if we provide it a `static` prop', async (assert) => {
+      test('should be possible to always render the Combobox.Options if we provide it a `static` prop', async function (assert) {
         await render(hbs`
           <Combobox 
             @value="test"
@@ -622,7 +622,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       );
     });
 
-    test('should mark all the elements between Combobox.Options and Combobox.Option with role none', async (assert) => {
+    test('should mark all the elements between Combobox.Options and Combobox.Option with role none', async function (assert) {
       assert.expect(5);
 
       await render(hbs`
@@ -739,7 +739,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
   module('Keyboard interactions', () => {
     module('Button', () => {
       module('`Enter` key', () => {
-        test('should be possible to open the combobox with Enter', async (assert) => {
+        test('should be possible to open the combobox with Enter', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -827,7 +827,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
         });
 
-        test('should be possible to open the combobox with Enter, and focus the selected option', async (assert) => {
+        test('should be possible to open the combobox with Enter, and focus the selected option', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="b"
@@ -975,7 +975,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
 
       module('`Space` key', () => {
-        test('should be possible to open the combobox with Space', async (assert) => {
+        test('should be possible to open the combobox with Space', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -1059,7 +1059,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
         });
 
-        test('should be possible to open the combobox with Space, and focus the selected option', async (assert) => {
+        test('should be possible to open the combobox with Space, and focus the selected option', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="b"
@@ -1215,7 +1215,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
 
       module('`ArrowDown` key', () => {
-        test('should be possible to open the combobox with ArrowDown', async (assert) => {
+        test('should be possible to open the combobox with ArrowDown', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -1306,7 +1306,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
         });
 
-        test('should be possible to open the combobox with ArrowDown, and focus the selected option', async (assert) => {
+        test('should be possible to open the combobox with ArrowDown, and focus the selected option', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="b"
@@ -1389,7 +1389,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
 
       module('`ArrowUp` key', () => {
-        test('should be possible to open the combobox with ArrowUp and the last option should be active', async (assert) => {
+        test('should be possible to open the combobox with ArrowUp and the last option should be active', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -1472,7 +1472,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
         });
 
-        test('should be possible to open the combobox with ArrowUp, and focus the selected option', async (assert) => {
+        test('should be possible to open the combobox with ArrowUp, and focus the selected option', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="b"
@@ -1545,7 +1545,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertNoActiveComboboxOption();
         });
 
-        test('should be possible to use ArrowUp to navigate the combobox options and jump to the first non-disabled one', async (assert) => {
+        test('should be possible to use ArrowUp to navigate the combobox options and jump to the first non-disabled one', async function (assert) {
           await render(hbs`
             <Combobox 
               @value={{undefined}}
@@ -1789,7 +1789,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
 
       module('`Tab` key', () => {
         // TODO skipping this because chrome not tabbing to next element in tab order
-        skip('pressing Tab should select the active item and move to the next DOM node', async (assert) => {
+        skip('pressing Tab should select the active item and move to the next DOM node', async function (assert) {
           await render(hbs`
             <input id="before-combobox" />
             <Combobox 
@@ -1887,7 +1887,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           () => {}
         );
 
-        test('should bubble escape when not using Combobox.Options at all', async (assert) => {
+        test('should bubble escape when not using Combobox.Options at all', async function (assert) {
           let spy = 0;
 
           await render(hbs`
@@ -1932,7 +1932,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assert.strictEqual(spy, 2, 'spy called twice');
         });
 
-        test('should sync the input field correctly and reset it when pressing Escape', async (assert) => {
+        test('should sync the input field correctly and reset it when pressing Escape', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="option-b"
@@ -1969,7 +1969,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
 
       module('`ArrowDown` key', () => {
-        test('should be possible to open the combobox with ArrowDown', async (assert) => {
+        test('should be possible to open the combobox with ArrowDown', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -2059,7 +2059,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
         });
 
-        test('should be possible to open the combobox with ArrowDown, and focus the selected option', async (assert) => {
+        test('should be possible to open the combobox with ArrowDown, and focus the selected option', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="option-b"
@@ -2140,7 +2140,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertNoActiveComboboxOption();
         });
 
-        test('should be possible to use ArrowDown to navigate the combobox options', async (assert) => {
+        test('should be possible to use ArrowDown to navigate the combobox options', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -2197,7 +2197,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertActiveComboboxOption(options[2]);
         });
 
-        test('should be possible to use ArrowDown to navigate the combobox options and skip the first disabled one', async (assert) => {
+        test('should be possible to use ArrowDown to navigate the combobox options and skip the first disabled one', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -2237,7 +2237,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           assertActiveComboboxOption(options[2]);
         });
 
-        test('should be possible to use ArrowDown to navigate the combobox options and jump to the first non-disabled one', async (assert) => {
+        test('should be possible to use ArrowDown to navigate the combobox options and jump to the first non-disabled one', async function (assert) {
           await render(hbs`
             <Combobox 
               @value="test"
@@ -2669,7 +2669,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       await assertActiveElement(document.body);
     });
 
-    test('should be possible to open the combobox on click', async (assert) => {
+    test('should be possible to open the combobox on click', async function (assert) {
       await render(hbs`
         <Combobox 
           @value={{null}}
@@ -2776,7 +2776,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
     });
 
-    test('should be possible to open the combobox on click, and focus the selected option', async (assert) => {
+    test('should be possible to open the combobox on click, and focus the selected option', async function (assert) {
       await render(hbs`
         <Combobox 
           @value="b"
@@ -2911,7 +2911,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
       await assertActiveElement(document.querySelector('#after'));
     });
 
-    test('should be possible to click outside of the combobox on another combobox button which should close the current combobox and open the new combobox', async (assert) => {
+    test('should be possible to click outside of the combobox on another combobox button which should close the current combobox and open the new combobox', async function (assert) {
       await render(hbs`
         <Combobox 
           @value="b"
