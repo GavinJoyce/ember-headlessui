@@ -11,10 +11,10 @@
       }}
       aria-activedescendant={{@activeOptionGuid}}
       aria-orientation='vertical'
+      {{this.registerOptionsElement}}
       {{on 'keypress' @handleKeyPress}}
       {{on 'keydown' @handleKeyDown}}
       {{on 'keyup' @handleKeyUp}}
-      {{this.registerOptionsElement}}
       {{headlessui-focus-trap
         focusTrapOptions=(hash
           clickOutsideDeactivates=@handleClickOutside

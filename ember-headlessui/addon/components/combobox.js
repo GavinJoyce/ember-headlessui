@@ -99,6 +99,7 @@ export default class ComboboxComponent extends ListboxComponent {
   @action
   handleButtonClick(e) {
     if (e.button !== 0) return;
+    //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
     this.activateBehaviour = ACTIVATE_FIRST;
 
     if (this.isOpen) {
@@ -236,18 +237,34 @@ export default class ComboboxComponent extends ListboxComponent {
     this.labelElement = labelElement;
   }
 
+  @action
+  registerButtonElement(buttonElement) {
+    this.buttonElement = buttonElement;
+  }
+
+  @action
+  unregisterButtonElement() {
+    this.buttonElement = null;
+  }
+
   pushOptionElement(optionElement) {
     let index = -1;
-    const activeOptionGuid = this.activeOptionGuid;
 
     this.optionElements = Array.from(
       optionElement.parentElement.querySelectorAll('[role="option"]')
     );
 
+    // const activeOptionGuid = this.activeOptionGuid;
     this.optionElements.forEach((anOptionElement, i) => {
+      /*
+        This causes the following error, called from `registerOptionElement`:
+        You attempted to update `activeOptionIndex` on `ComboboxComponent`, but it had already been used previously in the same computation.
+      */
+      /*
       if (anOptionElement.id === activeOptionGuid) {
         this.activeOptionIndex = i;
       }
+      */
 
       if (anOptionElement === optionElement) {
         index = i;
@@ -376,11 +393,13 @@ export default class ComboboxComponent extends ListboxComponent {
       return optionElement !== anOptionElement;
     });
 
-    this.activeOptionIndex = 0;
+    //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
+    // this.activeOptionIndex = 0;
 
     this.optionElements.forEach((optionElement, i) => {
       if (optionElement.id === activeOptionGuid) {
-        this.activeOptionIndex = i;
+        //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
+        // this.activeOptionIndex = i;
       }
 
       optionElement.setAttribute('data-index', i);

@@ -7,6 +7,7 @@ import { modifier } from 'ember-modifier';
 
 export default class ComboboxOptionComponent extends Component {
   registerOption = modifier((element) => {
+    console.log('registerOption');
     this.args.registerOptionElement(this, element);
 
     return () => {

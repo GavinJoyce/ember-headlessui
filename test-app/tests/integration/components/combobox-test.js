@@ -117,7 +117,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
 
   module('rendering', () => {
     module('Combobox', () => {
-      test('should be possible to render a Listbox using a "isOpen" property', async function () {
+      test('should be possible to render a Combobox using a "isOpen" property', async function () {
         await render(hbs`
           <Combobox as |combobox|>
             <combobox.Input/>
@@ -135,6 +135,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
         });
         assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
 
+        console.log('click');
         await click(getComboboxButton());
 
         assertComboboxButton({
@@ -193,10 +194,12 @@ module('Integration | Component | <Combobox>', function (hooks) {
           </Combobox>
         `);
 
+        console.log('click');
         await click(getComboboxButton());
 
         assertComboboxList({ state: ComboboxState.Visible });
 
+        console.log('click option');
         await click(getComboboxOptions()[1]);
 
         assert.dom(getComboboxInput()).hasValue('b');

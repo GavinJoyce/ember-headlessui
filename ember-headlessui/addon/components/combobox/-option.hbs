@@ -3,6 +3,7 @@
     role='option'
     id={{this.guid}}
     tabindex='-1'
+    {{this.registerOption}}
     {{on 'focus' (fn @setActiveOption this)}}
     {{on 'mousedown' this.handleMouseDown}}
     {{on 'mouseover' (fn @setActiveOption this)}}
