@@ -1,7 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
+import { modifier } from 'ember-modifier';
+
 export default class ComboboxInputComponent extends Component {
+  registerInput = modifier((element) => {
+    this.args.registerInputElement(this, element);
+  });
+
   @action
   displayValue(value) {
     if (this.args.displayValue) {

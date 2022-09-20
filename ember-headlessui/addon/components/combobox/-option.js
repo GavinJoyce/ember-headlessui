@@ -3,7 +3,17 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { modifier } from 'ember-modifier';
+
 export default class ComboboxOptionComponent extends Component {
+  registerOption = modifier((element) => {
+    this.args.registerOptionElement(this, element);
+
+    return () => {
+      this.args.unregisterOptionElement(this, element);
+    };
+  });
+
   @tracked guid = `${guidFor(this)}-headlessui-combobox-option`;
 
   @action

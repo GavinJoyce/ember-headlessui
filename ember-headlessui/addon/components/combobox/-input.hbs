@@ -10,7 +10,7 @@
     {{on 'keyup' @handleKeyUp}}
     {{on 'keypress' @handleKeyPress}}
     {{on 'input' this.handleInput}}
-    {{did-insert (fn @registerInputElement this)}}
+    {{this.registerInput}}
     ...attributes
   >
     {{yield}}
