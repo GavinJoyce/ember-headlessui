@@ -16,6 +16,7 @@ export default class ComboboxOptionComponent extends Component {
   });
 
   @tracked guid = `${guidFor(this)}-headlessui-combobox-option`;
+  @tracked index;
 
   @action
   handleOptionClick(e) {
@@ -42,7 +43,7 @@ export default class ComboboxOptionComponent extends Component {
   }
 
   get isActiveOption() {
-    return this.args.activeOptionGuid == this.guid;
+    return this.args.activeOptionIndex === this.index;
   }
 
   get isSelectedOption() {

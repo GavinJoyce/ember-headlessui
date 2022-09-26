@@ -194,12 +194,10 @@ module('Integration | Component | <Combobox>', function (hooks) {
           </Combobox>
         `);
 
-        console.log('click');
         await click(getComboboxButton());
 
         assertComboboxList({ state: ComboboxState.Visible });
 
-        console.log('click option');
         await click(getComboboxOptions()[1]);
 
         assert.dom(getComboboxInput()).hasValue('b');

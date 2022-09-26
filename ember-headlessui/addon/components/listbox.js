@@ -33,7 +33,10 @@ export default class ListboxComponent extends Component {
   @tracked selectedOptionIndex;
 
   get activeOptionGuid() {
-    return this.optionElements[this.activeOptionIndex]?.id;
+    let activeElement = this.optionElements.find((element) =>
+      element.getAttribute('data-is-active')
+    );
+    return activeElement?.id;
   }
 
   get isDisabled() {

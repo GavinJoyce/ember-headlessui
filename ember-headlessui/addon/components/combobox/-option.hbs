@@ -10,6 +10,7 @@
     {{on 'mouseout' this.handleMouseOut}}
     {{on 'click' this.handleOptionClick}}
     aria-selected={{if this.isSelectedOption 'true'}}
+    data-is-active={{if this.isActiveOption 'true'}}
     disabled={{if @disabled true false}}
     ...attributes
   >

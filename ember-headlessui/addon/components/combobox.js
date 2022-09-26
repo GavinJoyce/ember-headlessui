@@ -99,7 +99,6 @@ export default class ComboboxComponent extends ListboxComponent {
   @action
   handleButtonClick(e) {
     if (e.button !== 0) return;
-    //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
     this.activateBehaviour = ACTIVATE_FIRST;
 
     if (this.isOpen) {
@@ -394,12 +393,12 @@ export default class ComboboxComponent extends ListboxComponent {
     });
 
     //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
-    // this.activeOptionIndex = 0;
+    this.activeOptionIndex = 0;
 
     this.optionElements.forEach((optionElement, i) => {
       if (optionElement.id === activeOptionGuid) {
         //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
-        // this.activeOptionIndex = i;
+        this.activeOptionIndex = i;
       }
 
       optionElement.setAttribute('data-index', i);
