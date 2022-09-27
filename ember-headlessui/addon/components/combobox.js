@@ -22,7 +22,7 @@ const PREVENTED_KEYDOWN_EVENTS = new Set([
 export default class ComboboxComponent extends Component {
   @tracked selectedOptionGuids = new TrackedSet();
   @tracked _isOpen = this.args.isOpen || false;
-  optionElements = [];
+  @tracked optionElements = [];
   @tracked activateBehaviour = ACTIVATE_NONE;
   @tracked _activeOptionGuid;
 
@@ -99,14 +99,6 @@ export default class ComboboxComponent extends Component {
   get isMultiselectable() {
     return Array.isArray(this.args.value);
   }
-
-  /*
-  get selectedOptionIndexes() {
-    return this.selectedOptionGuids.map(
-      (indx) => this.optionElements[indx]?.id
-    );
-  }
-  */
 
   get activeOptionGuid() {
     if (this._activeOptionGuid) {
