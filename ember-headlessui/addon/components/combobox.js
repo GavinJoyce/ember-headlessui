@@ -73,11 +73,10 @@ export default class ComboboxComponent extends Component {
     this.inputComponent?.clearInput();
 
     if (!isOpen) {
-      /*
-      if (this.selectedOptionGuids[0]) {
-        this.inputValue = this.optionValues[this.selectedOptionGuids[0]];
+      if (this.selectedOptionGuids.size > 0) {
+        let firstSelectedGuid = Array.from(this.selectedOptionGuids)[0];
+        this.inputValue = this.optionValues[firstSelectedGuid];
       }
-      */
 
       this.selectedOptionGuids.clear();
       this._activeOptionGuid = null;
