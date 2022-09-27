@@ -1,8 +1,8 @@
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
-import ListboxComponent from 'ember-headlessui/components/listbox';
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 const ACTIVATE_NONE = 0;
@@ -18,11 +18,21 @@ const PREVENTED_KEYDOWN_EVENTS = new Set([
   'End',
 ]);
 
-export default class ComboboxComponent extends ListboxComponent {
-  @tracked activeOptionIndex;
+export default class ComboboxComponent extends Component {
   @tracked selectedOptionIndexes = [];
   @tracked _isOpen = this.args.isOpen || false;
   @tracked optionElements = [];
+  @tracked activateBehaviour = ACTIVATE_NONE;
+  @tracked _activeOptionGuid;
+
+  /*
+    The idea now is to get rid of `activeOptionIndexes` which were only needed
+    to implement keyboard navigation. We should be able to achieve keyboard
+    navigation by having guids, `_activeOptionGuid` and maintaining a double
+    linked list where each item points to the next and previous items.
+    Possibly the first and last items should also be stored to be able to go to
+    the first item from the last and the last from the first.
+  */
 
   guid = `${guidFor(this)}-headlessui-combobox`;
   optionValues = {};
@@ -31,7 +41,6 @@ export default class ComboboxComponent extends ListboxComponent {
   labelElement;
   inputElement;
   inputComponent;
-  activateBehaviour = ACTIVATE_NONE;
 
   constructor() {
     super(...arguments);
@@ -67,8 +76,8 @@ export default class ComboboxComponent extends ListboxComponent {
         this.inputValue = this.optionValues[this.selectedOptionGuids[0]];
       }
 
-      this.activeOptionIndex = undefined;
       this.selectedOptionIndexes = [];
+      this._activeOptionGuid = null;
       this.optionElements = [];
       this.optionValues = {};
     }
@@ -81,6 +90,10 @@ export default class ComboboxComponent extends ListboxComponent {
     }
   }
 
+  get isDisabled() {
+    return !!this.args.disabled;
+  }
+
   get isMultiselectable() {
     return Array.isArray(this.args.value);
   }
@@ -89,6 +102,24 @@ export default class ComboboxComponent extends ListboxComponent {
     return this.selectedOptionIndexes.map(
       (indx) => this.optionElements[indx]?.id
     );
+  }
+
+  get activeOptionGuid() {
+    if (this._activeOptionGuid) {
+      return this._activeOptionGuid;
+    }
+    //TODO: Do we have to account for the case when this.selectedOptionIndexes.length > 0 ?
+    // If so, what should happen then?
+
+    if (this.activateBehaviour === ACTIVATE_FIRST) {
+      return this.firstNonDisabledOption?.id;
+    }
+
+    if (this.activateBehaviour === ACTIVATE_LAST) {
+      return this.lastNonDisabledOption?.id;
+    }
+
+    return null;
   }
 
   @action
@@ -146,8 +177,10 @@ export default class ComboboxComponent extends ListboxComponent {
         this.setPreviousOptionActive();
       }
     } else if (event.key === Keys.Home || event.key === Keys.PageUp) {
+      //TODO: I think we just need to set activateBehavior to ACTIVATE_FIRST
       this.setFirstOptionActive();
     } else if (event.key === Keys.End || event.key === Keys.PageDown) {
+      //TODO: I think we just need to set activateBehavior to ACTIVATE_LAST
       this.setLastOptionActive();
     } else if (event.key === Keys.Escape) {
       this.isOpen = false;
@@ -247,35 +280,23 @@ export default class ComboboxComponent extends ListboxComponent {
   }
 
   pushOptionElement(optionElement) {
-    let index = -1;
-
     this.optionElements = Array.from(
       optionElement.parentElement.querySelectorAll('[role="option"]')
     );
+  }
 
-    // const activeOptionGuid = this.activeOptionGuid;
-    this.optionElements.forEach((anOptionElement, i) => {
-      /*
-        This causes the following error, called from `registerOptionElement`:
-        You attempted to update `activeOptionIndex` on `ComboboxComponent`, but it had already been used previously in the same computation.
-      */
-      /*
-      if (anOptionElement.id === activeOptionGuid) {
-        this.activeOptionIndex = i;
-      }
-      */
-
-      if (anOptionElement === optionElement) {
-        index = i;
-      }
-    });
-
-    return index;
+  indexForOptionElement(optionElement) {
+    let optionElements =
+      optionElement.parentElement.querySelectorAll('[role="option"]');
+    return [...optionElements].findIndex(
+      (anOptionElement) => anOptionElement.id === optionElement.id
+    );
   }
 
   @action
   registerOptionElement(optionComponent, optionElement) {
-    const index = this.pushOptionElement(optionElement);
+    this.pushOptionElement(optionElement);
+    let index = this.indexForOptionElement(optionElement);
 
     this.optionValues[optionComponent.guid] = optionComponent.args.value;
 
@@ -287,28 +308,24 @@ export default class ComboboxComponent extends ListboxComponent {
     if (this.args.value) {
       if (this.isMultiselectable) {
         if (this.args.value.includes(optionComponent.args.value)) {
-          if (!this.activeOptionIndex) {
-            this.activeOptionIndex = index;
-          }
-
           this.selectedOptionIndexes = [...this.selectedOptionIndexes, index];
         }
       } else if (this.args.value === optionComponent.args.value) {
-        this.activeOptionIndex = index;
         this.selectedOptionIndexes = [index];
       }
     }
+  }
 
-    if (!this.selectedOptionIndexes.length && !this.activeOptionGuid) {
-      switch (this.activateBehaviour) {
-        case ACTIVATE_FIRST:
-          this.setFirstOptionActive();
-          break;
-        case ACTIVATE_LAST:
-          this.setLastOptionActive();
-          break;
-      }
-    }
+  get firstNonDisabledOption() {
+    return this.optionElements.find((optionElement) => {
+      return !optionElement.hasAttribute('disabled');
+    });
+  }
+
+  get lastNonDisabledOption() {
+    return [...this.optionElements.reverse()].find((optionElement) => {
+      return !optionElement.hasAttribute('disabled');
+    });
   }
 
   @action
@@ -326,6 +343,8 @@ export default class ComboboxComponent extends ListboxComponent {
   setSelectedOption(optionComponent, e) {
     let optionIndex, optionValue;
 
+    //TODO: Understand what the `else if` does and see how to do it without
+    // `activeOptionIndex`
     if (optionComponent.constructor.name === 'ComboboxOptionComponent') {
       optionValue = optionComponent.args.value;
       optionIndex = optionComponent.index;
@@ -386,30 +405,23 @@ export default class ComboboxComponent extends ListboxComponent {
 
   @action
   unregisterOptionElement(optionComponent, optionElement) {
-    const activeOptionGuid = this.activeOptionGuid;
-
     this.optionElements = this.optionElements.filter((anOptionElement) => {
       return optionElement !== anOptionElement;
     });
 
-    //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
-    this.activeOptionIndex = 0;
-
     this.optionElements.forEach((optionElement, i) => {
-      if (optionElement.id === activeOptionGuid) {
-        //TODO: Restore this but avoid the "it had already been used previously in the same computation" error
-        this.activeOptionIndex = i;
-      }
-
       optionElement.setAttribute('data-index', i);
     });
   }
 
   @action
-  setActiveOption(optionComponent) {
-    this.optionElements.forEach((o, i) => {
-      if (o.id === optionComponent.guid && !o.hasAttribute('disabled')) {
-        this.activeOptionIndex = i;
+  setActiveOption({ guid }) {
+    this.optionElements.forEach((optionElement) => {
+      if (
+        optionElement.id === guid &&
+        !optionElement.hasAttribute('disabled')
+      ) {
+        this._activeOptionGuid = guid;
       }
     });
   }

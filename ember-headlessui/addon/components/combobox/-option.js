@@ -7,7 +7,6 @@ import { modifier } from 'ember-modifier';
 
 export default class ComboboxOptionComponent extends Component {
   registerOption = modifier((element) => {
-    console.log('registerOption');
     this.args.registerOptionElement(this, element);
 
     return () => {
@@ -16,7 +15,7 @@ export default class ComboboxOptionComponent extends Component {
   });
 
   @tracked guid = `${guidFor(this)}-headlessui-combobox-option`;
-  @tracked index;
+  index;
 
   @action
   handleOptionClick(e) {
@@ -43,7 +42,7 @@ export default class ComboboxOptionComponent extends Component {
   }
 
   get isActiveOption() {
-    return this.args.activeOptionIndex === this.index;
+    return this.args.activeOptionGuid === this.guid;
   }
 
   get isSelectedOption() {
