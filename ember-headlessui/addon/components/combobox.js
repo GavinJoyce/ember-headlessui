@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
+import { TrackedSet } from 'tracked-maps-and-sets';
 
 const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
@@ -19,9 +20,9 @@ const PREVENTED_KEYDOWN_EVENTS = new Set([
 ]);
 
 export default class ComboboxComponent extends Component {
-  @tracked selectedOptionIndexes = [];
+  @tracked selectedOptionGuids = new TrackedSet();
   @tracked _isOpen = this.args.isOpen || false;
-  @tracked optionElements = [];
+  optionElements = [];
   @tracked activateBehaviour = ACTIVATE_NONE;
   @tracked _activeOptionGuid;
 
@@ -72,11 +73,13 @@ export default class ComboboxComponent extends Component {
     this.inputComponent?.clearInput();
 
     if (!isOpen) {
+      /*
       if (this.selectedOptionGuids[0]) {
         this.inputValue = this.optionValues[this.selectedOptionGuids[0]];
       }
+      */
 
-      this.selectedOptionIndexes = [];
+      this.selectedOptionGuids.clear();
       this._activeOptionGuid = null;
       this.optionElements = [];
       this.optionValues = {};
@@ -98,18 +101,23 @@ export default class ComboboxComponent extends Component {
     return Array.isArray(this.args.value);
   }
 
-  get selectedOptionGuids() {
-    return this.selectedOptionIndexes.map(
+  /*
+  get selectedOptionIndexes() {
+    return this.selectedOptionGuids.map(
       (indx) => this.optionElements[indx]?.id
     );
   }
+  */
 
   get activeOptionGuid() {
     if (this._activeOptionGuid) {
       return this._activeOptionGuid;
     }
-    //TODO: Do we have to account for the case when this.selectedOptionIndexes.length > 0 ?
-    // If so, what should happen then?
+
+    let selectedGuids = this.selectedOptionGuids;
+    if (selectedGuids.size > 0) {
+      return Array.from(selectedGuids)[0];
+    }
 
     if (this.activateBehaviour === ACTIVATE_FIRST) {
       return this.firstNonDisabledOption?.id;
@@ -298,20 +306,25 @@ export default class ComboboxComponent extends Component {
     this.pushOptionElement(optionElement);
     let index = this.indexForOptionElement(optionElement);
 
-    this.optionValues[optionComponent.guid] = optionComponent.args.value;
+    let value = this.args.value;
+    let optionValue = optionComponent.args.value;
+    let optionGuid = optionComponent.guid;
+
+    this.optionValues[optionComponent.guid] = optionValue;
 
     // store the index at which the option appears in the list
     // so we can avoid a O(n) find operation later
     optionComponent.index = index;
     optionElement.setAttribute('data-index', index);
 
-    if (this.args.value) {
+    if (value) {
       if (this.isMultiselectable) {
-        if (this.args.value.includes(optionComponent.args.value)) {
-          this.selectedOptionIndexes = [...this.selectedOptionIndexes, index];
+        if (value.includes(optionValue)) {
+          this.selectedOptionGuids.add(optionGuid);
         }
-      } else if (this.args.value === optionComponent.args.value) {
-        this.selectedOptionIndexes = [index];
+      } else if (value === optionValue) {
+        this.selectedOptionGuids.clear();
+        this.selectedOptionGuids.add(optionGuid);
       }
     }
   }
@@ -341,14 +354,14 @@ export default class ComboboxComponent extends Component {
 
   @action
   setSelectedOption(optionComponent, e) {
-    let optionIndex, optionValue;
+    let optionGuid, optionValue;
 
-    //TODO: Understand what the `else if` does and see how to do it without
-    // `activeOptionIndex`
+    //TODO: Understand what the `else if` does and restore it
     if (optionComponent.constructor.name === 'ComboboxOptionComponent') {
       optionValue = optionComponent.args.value;
-      optionIndex = optionComponent.index;
-    } else if (
+      optionGuid = optionComponent.guid;
+    }
+    /*else if (
       this.activeOptionIndex !== undefined &&
       this.optionElements[this.activeOptionIndex]
     ) {
@@ -366,25 +379,24 @@ export default class ComboboxComponent extends Component {
       this.optionElements[optionIndex].hasAttribute('disabled')
     )
       return;
+    */
 
     if (this.isMultiselectable) {
-      if (this.selectedOptionIndexes.includes(optionIndex)) {
-        this.selectedOptionIndexes = this.selectedOptionIndexes.filter(
-          (indx) => indx !== optionIndex
-        );
+      let isAlreadySelected = this.selectedOptionGuids.has(optionGuid);
+      if (isAlreadySelected) {
+        this.selectedOptionGuids.delete(optionGuid);
       } else {
-        this.selectedOptionIndexes = [
-          ...this.selectedOptionIndexes,
-          optionIndex,
-        ];
+        this.selectedOptionGuids.add(optionGuid);
       }
     } else {
-      this.selectedOptionIndexes = [optionIndex];
+      this.selectedOptionGuids.clear();
+      this.selectedOptionGuids.add(optionGuid);
     }
 
     if (this.args.onChange) {
       if (this.isMultiselectable) {
-        const selectedOptionValues = this.selectedOptionGuids.map(
+        let selectedGuids = this.selectedOptionGuids.values();
+        const selectedOptionValues = selectedGuids.map(
           (selectedOptionGuid) => this.optionValues[selectedOptionGuid]
         );
         this.args.onChange(selectedOptionValues);

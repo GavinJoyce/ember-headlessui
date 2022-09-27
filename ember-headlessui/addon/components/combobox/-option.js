@@ -46,6 +46,6 @@ export default class ComboboxOptionComponent extends Component {
   }
 
   get isSelectedOption() {
-    return this.args.selectedOptionGuids.includes(this.guid);
+    return this.args.selectedOptionGuids.has(this.guid);
   }
 }
