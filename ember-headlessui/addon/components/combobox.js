@@ -496,4 +496,10 @@ export default class ComboboxComponent extends Component {
       }
     });
   }
+
+  @action
+  unsetActiveOption() {
+    this._activeOptionGuid = null;
+    this.activateBehaviour = ACTIVATE_NONE;
+  }
 }
