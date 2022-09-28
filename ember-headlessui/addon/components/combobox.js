@@ -177,10 +177,9 @@ export default class ComboboxComponent extends Component {
         this.setPreviousOptionActive();
       }
     } else if (event.key === Keys.Home || event.key === Keys.PageUp) {
-      //TODO: I think we just need to set activateBehavior to ACTIVATE_FIRST
       this.setFirstOptionActive();
     } else if (event.key === Keys.End || event.key === Keys.PageDown) {
-      //TODO: I think we just need to set activateBehavior to ACTIVATE_LAST
+      //TODO:
       this.setLastOptionActive();
     } else if (event.key === Keys.Escape) {
       this.isOpen = false;
@@ -233,7 +232,9 @@ export default class ComboboxComponent extends Component {
           return false;
         } else if (element === this.optionsElement) {
           return true;
-        } else if (this.optionElements.includes(element)) {
+        } else if (
+          this.optionElements.map(({ element }) => element).includes(element)
+        ) {
           return true;
         }
       })
@@ -279,23 +280,43 @@ export default class ComboboxComponent extends Component {
     this.buttonElement = null;
   }
 
-  pushOptionElement(optionElement) {
-    this.optionElements = Array.from(
+  rebuildOptionElements(optionElement) {
+    let optionDOMElements = Array.from(
       optionElement.parentElement.querySelectorAll('[role="option"]')
     );
+
+    let newElements = [];
+    optionDOMElements.forEach((anOptionElement) => {
+      let data = {
+        id: anOptionElement.id,
+        element: anOptionElement,
+      };
+
+      newElements.push(data);
+    });
+
+    newElements.forEach((element, index) => {
+      // Current implementation doesn't go around :(
+      element.previous = index > 0 ? newElements[index - 1] : null;
+      element.next =
+        index < optionDOMElements.length - 1 ? newElements[index + 1] : null;
+    });
+
+    this.optionElements = newElements;
   }
 
   indexForOptionElement(optionElement) {
     let optionElements =
       optionElement.parentElement.querySelectorAll('[role="option"]');
-    return [...optionElements].findIndex(
+
+    return Array.from(optionElements).findIndex(
       (anOptionElement) => anOptionElement.id === optionElement.id
     );
   }
 
   @action
   registerOptionElement(optionComponent, optionElement) {
-    this.pushOptionElement(optionElement);
+    this.rebuildOptionElements(optionElement);
     let index = this.indexForOptionElement(optionElement);
 
     let value = this.args.value;
@@ -323,14 +344,58 @@ export default class ComboboxComponent extends Component {
 
   get firstNonDisabledOption() {
     return this.optionElements.find((optionElement) => {
-      return !optionElement.hasAttribute('disabled');
+      return !optionElement.element.hasAttribute('disabled');
     });
   }
 
   get lastNonDisabledOption() {
     return [...this.optionElements].reverse().find((optionElement) => {
-      return !optionElement.hasAttribute('disabled');
+      return !optionElement.element.hasAttribute('disabled');
     });
+  }
+
+  setNextOptionActive() {
+    //TODO: This should be made into a function/getter
+    let activeOption = this.optionElements.find(({ id }) => {
+      return id === this.activeOptionGuid;
+    });
+
+    let option = activeOption.next;
+    while (option?.element.hasAttribute('disabled')) {
+      option = option.next;
+    }
+
+    if (option) {
+      this._activeOptionGuid = option.id;
+    }
+  }
+
+  setPrevOptionActive() {
+    //TODO: This should be made into a function/getter
+    let activeOption = this.optionElements.find(({ id }) => {
+      return id === this.activeOptionGuid;
+    });
+
+    let option = activeOption.previous;
+    while (option?.element.hasAttribute('disabled')) {
+      option = activeOption.previous;
+    }
+
+    if (option) {
+      this._activeOptionGuid = option.id;
+    }
+  }
+
+  setFirstOptionActive() {
+    let firstOption = this.optionElements[0];
+    let option = firstOption;
+    while (option?.element.hasAttribute('disabled')) {
+      option = option.next;
+    }
+
+    if (option) {
+      this._activeOptionGuid = option.id;
+    }
   }
 
   @action
@@ -411,11 +476,11 @@ export default class ComboboxComponent extends Component {
   unregisterOptionElement(optionComponent, optionElement) {
     next(() => {
       this.optionElements = this.optionElements.filter((anOptionElement) => {
-        return optionElement !== anOptionElement;
+        return optionElement.id !== anOptionElement.id;
       });
-  
+
       this.optionElements.forEach((optionElement, i) => {
-        optionElement.setAttribute('data-index', i);
+        optionElement.element.setAttribute('data-index', i);
       });
     });
   }
@@ -425,7 +490,7 @@ export default class ComboboxComponent extends Component {
     this.optionElements.forEach((optionElement) => {
       if (
         optionElement.id === guid &&
-        !optionElement.hasAttribute('disabled')
+        !optionElement.element.hasAttribute('disabled')
       ) {
         this._activeOptionGuid = guid;
       }
