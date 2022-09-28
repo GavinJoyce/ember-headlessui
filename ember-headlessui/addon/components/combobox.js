@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import { next } from '@ember/runloop';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 import { TrackedSet } from 'tracked-maps-and-sets';
@@ -408,12 +409,14 @@ export default class ComboboxComponent extends Component {
 
   @action
   unregisterOptionElement(optionComponent, optionElement) {
-    this.optionElements = this.optionElements.filter((anOptionElement) => {
-      return optionElement !== anOptionElement;
-    });
-
-    this.optionElements.forEach((optionElement, i) => {
-      optionElement.setAttribute('data-index', i);
+    next(() => {
+      this.optionElements = this.optionElements.filter((anOptionElement) => {
+        return optionElement !== anOptionElement;
+      });
+  
+      this.optionElements.forEach((optionElement, i) => {
+        optionElement.setAttribute('data-index', i);
+      });
     });
   }
 
