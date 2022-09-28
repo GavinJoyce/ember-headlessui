@@ -327,7 +327,7 @@ export default class ComboboxComponent extends Component {
   }
 
   get lastNonDisabledOption() {
-    return [...this.optionElements.reverse()].find((optionElement) => {
+    return [...this.optionElements].reverse().find((optionElement) => {
       return !optionElement.hasAttribute('disabled');
     });
   }
