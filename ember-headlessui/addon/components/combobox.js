@@ -361,7 +361,7 @@ export default class ComboboxComponent extends Component {
     }
   }
 
-  setPrevOptionActive() {
+  setPreviousOptionActive() {
     let option = this.activeOption.previous;
     while (option?.element.hasAttribute('disabled')) {
       option = option.previous;
