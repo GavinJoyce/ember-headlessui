@@ -351,12 +351,7 @@ export default class ComboboxComponent extends Component {
   }
 
   setNextOptionActive() {
-    //TODO: This should be made into a function/getter
-    let activeOption = this.optionElements.find(({ id }) => {
-      return id === this.activeOptionGuid;
-    });
-
-    let option = activeOption.next;
+    let option = this.activeOption.next;
     while (option?.element.hasAttribute('disabled')) {
       option = option.next;
     }
@@ -367,14 +362,9 @@ export default class ComboboxComponent extends Component {
   }
 
   setPrevOptionActive() {
-    //TODO: This should be made into a function/getter
-    let activeOption = this.optionElements.find(({ id }) => {
-      return id === this.activeOptionGuid;
-    });
-
-    let option = activeOption.previous;
+    let option = this.activeOption.previous;
     while (option?.element.hasAttribute('disabled')) {
-      option = activeOption.previous;
+      option = option.previous;
     }
 
     if (option) {
@@ -387,6 +377,18 @@ export default class ComboboxComponent extends Component {
     let option = firstOption;
     while (option?.element.hasAttribute('disabled')) {
       option = option.next;
+    }
+
+    if (option) {
+      this._activeOptionGuid = option.id;
+    }
+  }
+
+  setLastOptionActive() {
+    let lastOption = this.optionElements[this.optionElements.length - 1];
+    let option = lastOption;
+    while (option?.element.hasAttribute('disabled')) {
+      option = option.previous;
     }
 
     if (option) {
