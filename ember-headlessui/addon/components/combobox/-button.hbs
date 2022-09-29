@@ -13,6 +13,7 @@
     {{on 'keypress' @handleKeyPress}}
     aria-expanded={{unless @isDisabled (if @isOpen 'true' 'false')}}
     disabled={{@isDisabled}}
+    {{this.registerButtonElement}}
     ...attributes
   >
     {{yield}}
