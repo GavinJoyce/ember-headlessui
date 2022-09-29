@@ -444,9 +444,9 @@ export default class ComboboxComponent extends Component {
 
     if (this.args.onChange) {
       if (this.isMultiselectable) {
-        let selectedGuids = this.selectedOptionGuids.values();
+        let selectedGuids = Array.from(this.selectedOptionGuids.values());
         const selectedOptionValues = selectedGuids.map(
-          (selectedOptionGuid) => this.optionValues[selectedOptionGuid]
+          (guid) => this.optionValues[guid]
         );
         this.args.onChange(selectedOptionValues);
       } else {
