@@ -419,18 +419,26 @@ export default class ComboboxComponent extends Component {
     // I think even the value (`optionValue` could be had in a simpler way)
     let optionGuid, optionValue;
 
+    let optionToCheck;
     let activeOption = this.activeOption;
+    let firstOption = this.optionElements[0];
+
     if (optionComponent.constructor.name === 'ComboboxOptionComponent') {
       optionValue = optionComponent.args.value;
       optionGuid = optionComponent.guid;
     } else if (activeOption) {
+      optionToCheck = activeOption;
       optionValue = this.optionValues[activeOption.id];
       optionGuid = activeOption.id;
+    } else if (firstOption) {
+      optionToCheck = firstOption;
+      optionValue = this.optionValues[firstOption.id];
+      optionGuid = firstOption.id;
     } else {
       return;
     }
 
-    if (activeOption?.element.hasAttribute('disabled')) {
+    if (optionToCheck?.element.hasAttribute('disabled')) {
       return;
     }
 
