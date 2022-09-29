@@ -23,6 +23,7 @@ const PREVENTED_KEYDOWN_EVENTS = new Set([
 export default class ComboboxComponent extends Component {
   @tracked selectedOptionGuids = new TrackedSet();
   @tracked _isOpen = this.args.isOpen || false;
+  //TODO: `options` would be a better name as we store other stuff in it, too.
   @tracked optionElements = [];
   @tracked activateBehaviour = ACTIVATE_NONE;
   @tracked _activeOptionGuid;
@@ -122,6 +123,11 @@ export default class ComboboxComponent extends Component {
     return null;
   }
 
+  get activeOption() {
+    let activeGuid = this.activeOptionGuid;
+    return this.optionElements.find((option) => option.id === activeGuid);
+  }
+
   @action
   handleInput(/*e*/) {
     this.isOpen = true;
@@ -179,7 +185,6 @@ export default class ComboboxComponent extends Component {
     } else if (event.key === Keys.Home || event.key === Keys.PageUp) {
       this.setFirstOptionActive();
     } else if (event.key === Keys.End || event.key === Keys.PageDown) {
-      //TODO:
       this.setLastOptionActive();
     } else if (event.key === Keys.Escape) {
       this.isOpen = false;
@@ -411,32 +416,26 @@ export default class ComboboxComponent extends Component {
 
   @action
   setSelectedOption(optionComponent, e) {
+    //TODO: This can be called from `-Option` (when clicking one of the options)
+    // or when hitting Enter on the active option.
+    // Thus it should be possible to simplify the below and not check the constructor name
+    // I think even the value (`optionValue` could be had in a simpler way)
     let optionGuid, optionValue;
 
-    //TODO: Understand what the `else if` does and restore it
+    let activeOption = this.activeOption;
     if (optionComponent.constructor.name === 'ComboboxOptionComponent') {
       optionValue = optionComponent.args.value;
       optionGuid = optionComponent.guid;
-    }
-    /*else if (
-      this.activeOptionIndex !== undefined &&
-      this.optionElements[this.activeOptionIndex]
-    ) {
-      optionValue =
-        this.optionValues[this.optionElements[this.activeOptionIndex].id];
-      optionIndex = parseInt(
-        this.optionElements[this.activeOptionIndex].getAttribute('data-index')
-      );
+    } else if (activeOption) {
+      optionValue = this.optionValues[activeOption.id];
+      optionGuid = activeOption.id;
     } else {
       return;
     }
 
-    if (
-      !this.optionElements[optionIndex] ||
-      this.optionElements[optionIndex].hasAttribute('disabled')
-    )
+    if (activeOption.element.hasAttribute('disabled')) {
       return;
-    */
+    }
 
     if (this.isMultiselectable) {
       let isAlreadySelected = this.selectedOptionGuids.has(optionGuid);
