@@ -33,10 +33,7 @@ export default class ListboxComponent extends Component {
   @tracked selectedOptionIndex;
 
   get activeOptionGuid() {
-    let activeElement = this.optionElements.find((element) =>
-      element.getAttribute('data-is-active')
-    );
-    return activeElement?.id;
+    return this.optionElements[this.activeOptionIndex]?.id;
   }
 
   get isDisabled() {
@@ -274,10 +271,6 @@ export default class ListboxComponent extends Component {
   }
 
   setNextOptionActive() {
-    if (typeof this.activeOptionIndex === 'undefined') {
-      return this.setFirstOptionActive();
-    }
-
     for (
       let i = this.activeOptionIndex + 1;
       i < this.optionElements.length;
@@ -291,10 +284,6 @@ export default class ListboxComponent extends Component {
   }
 
   setPreviousOptionActive() {
-    if (typeof this.activeOptionIndex === 'undefined') {
-      return this.setLastOptionActive();
-    }
-
     for (let i = this.activeOptionIndex - 1; i >= 0; i--) {
       if (!this.optionElements[i].hasAttribute('disabled')) {
         this.activeOptionIndex = i;
