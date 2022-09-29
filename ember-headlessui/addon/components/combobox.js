@@ -28,15 +28,6 @@ export default class ComboboxComponent extends Component {
   @tracked activateBehaviour = ACTIVATE_NONE;
   @tracked _activeOptionGuid;
 
-  /*
-    The idea now is to get rid of `activeOptionIndexes` which were only needed
-    to implement keyboard navigation. We should be able to achieve keyboard
-    navigation by having guids, `_activeOptionGuid` and maintaining a double
-    linked list where each item points to the next and previous items.
-    Possibly the first and last items should also be stored to be able to go to
-    the first item from the last and the last from the first.
-  */
-
   guid = `${guidFor(this)}-headlessui-combobox`;
   optionValues = {};
   optionsElement;
