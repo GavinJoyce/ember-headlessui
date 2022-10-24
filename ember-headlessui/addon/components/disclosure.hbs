@@ -1,0 +1,9 @@
+{{yield
+  (hash
+    isOpen=this.isOpen
+    Button=(component
+      'disclosure/button' toggleState=this.toggleState isOpen=this.isOpen
+    )
+    Panel=(component 'disclosure/panel' isOpen=this.isOpen)
+  )
+}}
