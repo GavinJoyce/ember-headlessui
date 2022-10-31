@@ -1,0 +1,28 @@
+<div class='w-full px-4 py-4 pt-16'>
+    <TabsGroup as |tabs|>
+        <div class='flex mx-auto w-full max-w-md shadow-md px-4 py-4 rounded-lg'>
+            <tabs.Title
+                @index={{1}}
+                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ing-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 text-blue-100'
+                >
+                hello
+            </tabs.Title>
+            <tabs.Title 
+                @index={{2}} 
+                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 text-blue-100'>
+                hell02
+            </tabs.Title>
+        </div>
+        <div class="mx-auto w-full max-w-md shadow-md px-4 py-4 rounded-lg">
+            <tabs.Content>
+                <p>hello world</p>
+            </tabs.Content>
+            <tabs.Content>
+                <p>hello world 2</p>
+            </tabs.Content>
+        </div>
+    </TabsGroup>
+
+</div>
+
+

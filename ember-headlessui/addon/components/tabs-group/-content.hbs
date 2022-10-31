@@ -1,0 +1,7 @@
+<div
+    class="content {{if this.renderPanel '' 'hidden'}}"
+    {{did-insert this.registerPanel}} ...attributes>
+    {{#if this.renderPanel}}
+        {{yield}}
+    {{/if}}
+</div>

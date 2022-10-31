@@ -35,4 +35,8 @@ Router.map(function () {
   this.route('radio-group', function () {
     this.route('radio-group-basic');
   });
+
+  this.route('tabs', function () {
+    this.route('tabs-basic');
+  });
 });

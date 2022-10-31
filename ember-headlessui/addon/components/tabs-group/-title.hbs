@@ -1,0 +1,11 @@
+<button
+  type='button'
+  class="{{if this.isSelected 'bg-indigo-600' 'bg-indigo-200'}}"
+  data-test-headlessui-disclosure-button='test-tabs-title-btn-{{@index}}'
+  id={{guid}}
+  {{on 'click' this.selectTab}}
+  {{did-insert this.registerTabNames}}
+  ...attributes
+>
+  {{yield}}
+</button>

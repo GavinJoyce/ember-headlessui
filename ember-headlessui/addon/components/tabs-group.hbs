@@ -1,0 +1,5 @@
+<div class="flex flex-col space-x-1 rounded-xl bg-blue-900/20 p-1" ...attributes>
+    {{yield (hash 
+            Title=(component 'tabs-group/-title' registerTabNames=this.registerTabNames selectTab=this.selectTab selectedTab=this.selectedTab)
+            Content=(component 'tabs-group/-content' selectedPanel=this.selectedPanel registerPanel=this.registerPanel))}}
+</div>
