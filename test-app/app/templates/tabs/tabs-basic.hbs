@@ -1,28 +1,45 @@
-<div class='w-full px-4 py-4 pt-16'>
-    <TabsGroup as |tabs|>
-        <div class='flex mx-auto w-full max-w-md shadow-md px-4 py-4 rounded-lg'>
+<div class='w-full max-w-md px-2 py-16 mx-auto'>
+    <TabsGroup class="flex flex-col space-x-1 rounded-xl p-1" @onChange = {{this.onChange}} as |tabs|>
+        <div class='flex space-x-1 rounded-xl bg-sky-600/20 p-1'>
             <tabs.Title
                 @index={{1}}
-                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ing-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 text-blue-100'
+                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 space-x-4'
                 >
                 hello
             </tabs.Title>
             <tabs.Title 
                 @index={{2}} 
-                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 text-blue-100'>
+                @disable={{true}}
+                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 space-x-4'>
                 hell02
             </tabs.Title>
+            <tabs.Title 
+                @index={{3}} 
+                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 space-x-4'>
+                hell03
+            </tabs.Title>
+            <tabs.Title 
+                @index={{4}} 
+                class='w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 space-x-4'>
+                hell04
+            </tabs.Title>
         </div>
-        <div class="mx-auto w-full max-w-md shadow-md px-4 py-4 rounded-lg">
-            <tabs.Content>
+        <div class="mx-auto w-full max-w-md shadow-md px-4 py-4 rounded-xl bg-white mt-4">
+            <tabs.Content class="content">
                 <p>hello world</p>
             </tabs.Content>
-            <tabs.Content>
+            <tabs.Content class="content">
                 <p>hello world 2</p>
+            </tabs.Content>
+            <tabs.Content class="content">
+                <p>hello world 3</p>
+            </tabs.Content>
+            <tabs.Content class="content">
+                <p>hello world 4</p>
             </tabs.Content>
         </div>
     </TabsGroup>
-
 </div>
 
+<h3>current selected tab:{{this.activeOn}} </h3>
 

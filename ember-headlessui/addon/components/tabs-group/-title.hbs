@@ -1,8 +1,9 @@
 <button
   type='button'
-  class="{{if this.isSelected 'bg-indigo-600' 'bg-indigo-200'}}"
+  class="{{if this.isSelected 'bg-white shadow' 'text-blue-600 hover:bg-white/[0.12]'}} pointer-events-auto"
   data-test-headlessui-disclosure-button='test-tabs-title-btn-{{@index}}'
   id={{guid}}
+  disabled={{if @disable true false}}
   {{on 'click' this.selectTab}}
   {{did-insert this.registerTabNames}}
   ...attributes

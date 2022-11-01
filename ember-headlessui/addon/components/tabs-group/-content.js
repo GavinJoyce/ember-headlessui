@@ -4,12 +4,12 @@ import { action } from '@ember/object';
 
 export default class Content extends Component {
   @tracked element = null;
-  get renderPanel() {
-    return this.element === this.args.selectedPanel;
+  get renderContent() {
+    return this.element === this.args.selectedContent;
   }
   @action
-  registerPanel(e) {
+  registerContent(e) {
     this.element = e;
-    return this.args.registerPanel(e);
+    return this.args.registerContent(e);
   }
 }
