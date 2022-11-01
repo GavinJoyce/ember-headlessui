@@ -1,0 +1,25 @@
+{{#let (element (or @as 'li')) as |Tag|}}
+  <Tag
+    role='option'
+    id={{this.guid}}
+    tabindex='-1'
+    {{this.registerOption}}
+    {{on 'focus' (fn @setActiveOption this)}}
+    {{on 'mousedown' this.handleMouseDown}}
+    {{on 'mouseover' (fn @setActiveOption this)}}
+    {{on 'mouseout' this.handleMouseOut}}
+    {{on 'click' this.handleOptionClick}}
+    aria-selected={{if this.isSelectedOption 'true'}}
+    data-is-active={{if this.isActiveOption 'true'}}
+    disabled={{if @disabled true false}}
+    ...attributes
+  >
+    {{yield
+      (hash
+        active=this.isActiveOption
+        selected=this.isSelectedOption
+        disabled=(if @disabled true false)
+      )
+    }}
+  </Tag>
+{{/let}}
