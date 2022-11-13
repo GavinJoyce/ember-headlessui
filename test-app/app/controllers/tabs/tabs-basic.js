@@ -14,7 +14,7 @@ export default class TabsTabsBasicController extends Controller {
   @action
   onChange(changedTo, changedFrom, activeIndex) {
     alert(
-      `sure you want to change tp ${changedTo.textContent.trim()} from ${changedFrom.textContent.trim()}`
+      `sure you want to change to ${changedTo.textContent.trim()} from ${changedFrom.textContent.trim()}?`
     );
     this.activatedIndex = activeIndex;
   }
