@@ -1,15 +1,15 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
+
+import { modifier } from 'ember-modifier';
 
 export default class Content extends Component {
   @tracked element = null;
   get renderContent() {
     return this.element === this.args.selectedContent;
   }
-  @action
-  registerContent(e) {
+  registerContent = modifier((e) => {
     this.element = e;
-    return this.args.registerContent(e);
-  }
+    this.args.registerContent(e);
+  });
 }

@@ -12,7 +12,10 @@ export default class TabsTabsBasicController extends Controller {
     'planes content',
   ];
   @action
-  onChange(activeIndex) {
+  onChange(activeIndex, changedTo, changedFrom) {
+    alert(
+      `sure you want to change to ${changedTo.textContent.trim()} from ${changedFrom.textContent.trim()}?`
+    );
     this.activatedIndex = activeIndex;
   }
 }

@@ -1,3 +1,3 @@
 import Route from '@ember/routing/route';
 
-export default class TabsTabsBasicRoute extends Route {}
+export default class TabsBasicRoute extends Route {}

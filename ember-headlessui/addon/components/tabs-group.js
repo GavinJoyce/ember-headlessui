@@ -3,8 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 export default class TABSGROUP extends Component {
   tabNames = [];
-  @tracked Contents = [];
-  @tracked currentTab = 0;
+  Contents = [];
+  @tracked currentTab = null;
   @action
   registerTabNames(e) {
     this.tabNames = [...this.tabNames, e];
@@ -12,6 +12,7 @@ export default class TABSGROUP extends Component {
   @action
   registerContent(e) {
     this.Contents = [...this.Contents, e];
+    this.currentTab = 0;
   }
   @action
   selectTab(changedTo, changedFrom) {
@@ -19,9 +20,9 @@ export default class TABSGROUP extends Component {
     this.pastTab = this.tabNames.indexOf(changedFrom);
     if (this.args.onChange) {
       return this.args.onChange(
+        this.currentTab,
         this.tabNames[this.currentTab],
-        this.tabNames[this.pastTab],
-        this.currentTab
+        this.tabNames[this.pastTab]
       );
     }
   }

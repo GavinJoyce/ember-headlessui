@@ -38,5 +38,7 @@ Router.map(function () {
 
   this.route('tabs', function () {
     this.route('tabs-basic');
+    this.route('tabs-with-onchange-action');
+    this.route('tabs-with-disable-state');
   });
 });

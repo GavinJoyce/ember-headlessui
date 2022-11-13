@@ -3,6 +3,7 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 
 export default class TabsTabsBasicController extends Controller {
+  disabledToBeIndex = 2;
   @tracked activatedIndex = 0;
   titles = ['cars', 'motor cycles', 'boats', 'planes'];
   contents = [

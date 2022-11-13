@@ -1,6 +1,6 @@
 <div class="{{if this.renderContent '' 'hidden'}}"
     data-test-headlessui-tabs-content='test-tabs-content-{{@content-index}}'
-    {{did-insert this.registerContent}} ...attributes>
+    {{this.registerContent}} ...attributes>
     {{#if this.renderContent}}
         {{yield}}
     {{/if}}
