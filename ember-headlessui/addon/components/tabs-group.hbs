@@ -1,5 +1,5 @@
-<div ...attributes>
-    {{yield (hash 
+<div data-test-ember-headlessui-tabs-wrapper ...attributes>
+    {{yield (hash
             Title=(component 'tabs-group/-title' registerTabNames=this.registerTabNames selectTab=this.selectTab selectedTab=this.selectedTab)
             Content=(component 'tabs-group/-content' selectedContent=this.selectedContent registerContent=this.registerContent))}}
 </div>

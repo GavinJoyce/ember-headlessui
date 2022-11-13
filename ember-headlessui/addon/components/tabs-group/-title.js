@@ -3,19 +3,20 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
+import { modifier } from 'ember-modifier';
+
 export default class Title extends Component {
   guid = `${guidFor(this)}-tailwindui-tabs-title`;
   @tracked element = null;
-  get isSelected() {
-    return this.element === this.args.selectedTab;
-  }
-  @action
-  registerTabNames(e) {
+
+  registerTabs = modifier((e) => {
     this.element = e;
-    return this.args.registerTabNames(e);
-  }
+    this.args.registerTabNames(e);
+  });
+
   @action
-  selectTab(e) {
-    return this.args.selectTab(e);
+  selectTab(changedTo) {
+    let changedFrom = this.args.selectedTab;
+    return this.args.selectTab(changedTo, changedFrom);
   }
 }
