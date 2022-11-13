@@ -110,6 +110,4 @@ module('Integration | Component | <Tabs>', function (hooks) {
       .dom('[data-test-headlessui-tabs-content="test-tabs-content-3"]')
       .exists();
   });
-
-  test();
 });

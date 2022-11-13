@@ -4,13 +4,18 @@ import { action } from '@ember/object';
 
 export default class TabsTabsBasicController extends Controller {
   @tracked activatedIndex = 0;
-  titles = ['hello', 'hello1', 'hello2', 'hello3'];
-  contents = ['hello world', 'hello world 1', 'hello world 2', 'hello world 3'];
+  titles = ['cars', 'motor cycles', 'boats', 'planes'];
+  contents = [
+    'cars content',
+    'motor cycles content',
+    'boats content',
+    'planes content',
+  ];
   @action
-  onChange(e, f, g) {
+  onChange(changedTo, changedFrom, activeIndex) {
     alert(
-      `sure you want to change tp ${e.textContent.trim()} from ${f.textContent.trim()}`
+      `sure you want to change tp ${changedTo.textContent.trim()} from ${changedFrom.textContent.trim()}`
     );
-    this.activatedIndex = g;
+    this.activatedIndex = activeIndex;
   }
 }
