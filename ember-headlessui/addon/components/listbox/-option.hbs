@@ -8,15 +8,15 @@
     {{on 'mouseover' (fn @setActiveOption this)}}
     {{on 'mouseout' @unsetActiveOption}}
     {{on 'click' this.handleClick}}
-    aria-selected={{if this.isSelectedOption 'true' 'false'}}
+    aria-selected={{if this.isSelected 'true' 'false'}}
     aria-disabled={{if @disabled 'true' 'false'}}
     disabled={{if @disabled true false}}
     ...attributes
   >
     {{yield
       (hash
-        active=this.isActiveOption
-        selected=this.isSelectedOption
+        active=this.isActive
+        selected=this.isSelected
         disabled=(if @disabled true false)
       )
     }}

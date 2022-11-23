@@ -30,7 +30,7 @@ export default class ListboxComponent extends Component {
   labelElement;
   optionsElement;
   optionElements = [];
-  optionValues = {};
+  optionComponents = [];
   search = '';
   @tracked selectedOptionIndexes = new TrackedSet();
 
@@ -57,7 +57,6 @@ export default class ListboxComponent extends Component {
       this.activeOptionIndex = undefined;
       this.selectedOptionIndexes.clear();
       this.optionElements = [];
-      this.optionValues = {};
       this._isOpen = true;
     } else {
       this._isOpen = false;
@@ -179,34 +178,25 @@ export default class ListboxComponent extends Component {
   @action
   registerOptionElement(optionComponent, optionElement) {
     this.optionElements.push(optionElement);
-    this.optionValues[optionComponent.guid] = optionComponent.args.value;
 
     // store the index at which the option appears in the list
     // so we can avoid a O(n) find operation later
-    optionComponent.index = this.optionElements.length - 1;
-    optionElement.setAttribute('data-index', this.optionElements.length - 1);
+    let index = this.optionElements.length - 1;
+    optionComponent.index = index;
+    optionElement.setAttribute('data-index', index);
 
-    if (this.args.value) {
-      let isSelected;
-
-      if (this.args.multiple) {
-        isSelected = this.args.value.includes(optionComponent.args.value);
-      } else {
-        isSelected = this.args.value === optionComponent.args.value;
-      }
-
-      if (isSelected) {
-        this.selectedOptionIndexes.add(this.optionElements.length - 1);
-        this.activeOptionIndex = this.optionElements.length - 1;
-
-        this.scrollIntoView(optionElement);
-      }
-    }
+    this.optionComponents[index] = optionComponent;
 
     scheduleOnce('afterRender', this, this.setDefaultActiveOption);
   }
 
   setDefaultActiveOption() {
+    let selectedIndexes = this.optionComponents
+      .filter((o) => o.isSelected)
+      .map((o) => o.index);
+
+    this.selectedOptionIndexes = new TrackedSet(selectedIndexes);
+
     if (this.selectedOptionIndexes.size === 0) {
       switch (this.activateBehaviour) {
         case ACTIVATE_FIRST:
@@ -218,6 +208,7 @@ export default class ListboxComponent extends Component {
       }
     } else {
       this.activeOptionIndex = Math.min(...this.selectedOptionIndexes);
+      this.scrollIntoView(this.optionElements[this.activeOptionIndex]);
     }
   }
 
@@ -249,8 +240,7 @@ export default class ListboxComponent extends Component {
       optionValue = optionComponent.args.value;
       optionIndex = optionComponent.index;
     } else if (this.activeOptionIndex !== undefined) {
-      optionValue =
-        this.optionValues[this.optionElements[this.activeOptionIndex].id];
+      optionValue = this.optionComponents[this.activeOptionIndex].args.value;
       optionIndex = parseInt(
         this.optionElements[this.activeOptionIndex].getAttribute('data-index')
       );
