@@ -20,11 +20,20 @@ export default class ListboxOptionComponent extends Component {
     this.args.setSelectedOption(this, e);
   }
 
-  get isActiveOption() {
+  get isActive() {
     return this.args.activeOptionGuid == this.guid;
   }
 
-  get isSelectedOption() {
-    return this.args.selectedOptionGuid == this.guid;
+  get isSelected() {
+    if (this.args.multiple) {
+      let selected = this.args.selected ?? [];
+      return selected.includes(this.args.value);
+    } else {
+      return (
+        // allow 0 and null to as possible values
+        this.args.selected !== undefined &&
+        this.args.selected === this.args.value
+      );
+    }
   }
 }

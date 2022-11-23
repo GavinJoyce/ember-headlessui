@@ -11,6 +11,7 @@
       }}
       aria-activedescendant={{@activeOptionGuid}}
       aria-orientation='vertical'
+      aria-multiselectable={{if @multiple 'true'}}
       {{this.registerOptions}}
       {{on 'keypress' @handleKeyPress}}
       {{on 'keydown' @handleKeyDown}}
@@ -28,10 +29,12 @@
             'listbox/-option'
             registerOptionElement=@registerOptionElement
             activeOptionGuid=@activeOptionGuid
-            selectedOptionGuid=@selectedOptionGuid
+            selectedOptionGuids=@selectedOptionGuids
             setActiveOption=@setActiveOption
             unsetActiveOption=@unsetActiveOption
             setSelectedOption=@setSelectedOption
+            multiple=@multiple
+            selected=@selected
           )
         )
       }}

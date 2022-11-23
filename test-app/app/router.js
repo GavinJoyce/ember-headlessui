@@ -18,6 +18,7 @@ Router.map(function () {
   this.route('listbox', function () {
     this.route('listbox-basic');
     this.route('listbox-with-transition');
+    this.route('listbox-multiple');
   });
 
   this.route('combobox', function () {

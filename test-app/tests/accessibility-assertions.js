@@ -101,6 +101,13 @@ const ListboxState = {
   InvisibleUnmounted: 'InvisibleUnmounted',
 };
 
+const ListboxMode = {
+  /** The listbox is in the `single` mode. */
+  Single: 'Single',
+  /** The listbox is in the `multiple` mode. */
+  Multiple: 'Multiple',
+};
+
 const ComboboxState = {
   Visible: 'Visible',
   InvisibleHidden: 'InvisibleHidden',
@@ -808,7 +815,7 @@ function assertNoActiveListboxOption(listbox = getListbox()) {
 function assertNoSelectedListboxOption(items = getListboxOptions()) {
   try {
     for (let item of items)
-      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+      Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
   } catch (err) {
     Error.captureStackTrace(err, assertNoSelectedListboxOption);
     throw err;
@@ -877,7 +884,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
       Qunit.assert.dom(item).hasAttribute('tabindex', '-1');
 
     // Ensure listbox button has the following attributes
-    if (!tag && !attributes && !selected) return;
+    if (!tag && !attributes && selected === undefined) return;
 
     for (let attributeName in attributes) {
       Qunit.assert
@@ -895,7 +902,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
           return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
 
         case false:
-          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
 
         default:
           Qunit.assert.ok();
@@ -908,7 +915,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
 }
 
 function assertListbox(
-  { state, attributes, textContent },
+  { state, attributes, textContent, mode },
   listbox = getListbox(),
   orientation = 'vertical'
 ) {
@@ -943,6 +950,12 @@ function assertListbox(
         Qunit.assert.dom(listbox).hasAria('labelledby', { any: true });
         Qunit.assert.dom(listbox).hasAttribute('aria-orientation', orientation);
         Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (mode && mode === ListboxMode.Multiple) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute('aria-multiselectable', 'true');
+        }
 
         if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
 
@@ -994,7 +1007,7 @@ function assertComboboxOption({ tag, attributes, selected }, item) {
           return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
 
         case false:
-          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
 
         default:
           Qunit.assert.ok();
@@ -1009,7 +1022,7 @@ function assertComboboxOption({ tag, attributes, selected }, item) {
 function assertNoSelectedComboboxOption(items = getComboboxOptions()) {
   try {
     for (let item of items)
-      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+      Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
   } catch (err) {
     Error.captureStackTrace(err, assertNoSelectedComboboxOption);
     throw err;
@@ -1363,5 +1376,6 @@ export {
   getListboxLabel,
   getListboxOptions,
   getRadioGroupOptions,
+  ListboxMode,
   ListboxState,
 };

@@ -30,6 +30,7 @@ import {
   getListboxes,
   getListboxLabel,
   getListboxOptions,
+  ListboxMode,
   ListboxState,
 } from '../../accessibility-assertions';
 
@@ -3406,9 +3407,172 @@ module('Integration | Component | <Listbox>', function (hooks) {
 
       let options = getListboxOptions();
 
-      // We should not be able to focus the first option
-      await focus(options[1]);
+      try {
+        // We should not be able to focus the first option
+        await focus(options[1]);
+      } catch {
+        // `focus` test helper errors because this element is not focusable
+        // we ignore the error
+      }
       assertNoActiveListboxOption();
+    });
+  });
+
+  module('Multi-select', () => {
+    test('should be possible to pass multiple values to the Listbox component', async function () {
+      this.selectedOption = ['b', 'c'];
+
+      this.set('onChange', (value) => {
+        this.set('selectedOption', value);
+      });
+
+      await render(hbs`
+        <Listbox @onChange={{this.onChange}} @value={{this.selectedOption}} @multiple={{true}} as |listbox|>
+           <listbox.Button>Trigger</listbox.Button>
+           <listbox.Options as |options|>
+             <options.Option @value="a">
+               Option A
+             </options.Option>
+             <options.Option @value="b">
+               Option B
+             </options.Option>
+             <options.Option @value="c">
+               Option C
+             </options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      // Open listbox
+      await click(getListboxButton());
+
+      // Verify that we have an open listbox with multiple mode
+      assertListbox({
+        state: ListboxState.Visible,
+        mode: ListboxMode.Multiple,
+      });
+
+      // // Verify that we have multiple selected listbox options
+      let options = getListboxOptions();
+
+      assertListboxOption({ selected: false }, options[0]);
+      assertListboxOption({ selected: true }, options[1]);
+      assertListboxOption({ selected: true }, options[2]);
+    });
+
+    test('should make the first selected option the active item', async function () {
+      this.selectedOption = ['b', 'c'];
+
+      this.set('onChange', (value) => {
+        this.set('selectedOption', value);
+      });
+
+      await render(hbs`
+        <Listbox @onChange={{this.onChange}} @value={{this.selectedOption}} @multiple={{true}} as |listbox|>
+           <listbox.Button>Trigger</listbox.Button>
+           <listbox.Options as |options|>
+             <options.Option @value="a">
+               Option A
+             </options.Option>
+             <options.Option @value="b">
+               Option B
+             </options.Option>
+             <options.Option @value="c">
+               Option C
+             </options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      // Open listbox
+      await click(getListboxButton());
+
+      // Verify that b is the active option
+      assertActiveListboxOption(getListboxOptions()[1]);
+    });
+
+    test('should keep the listbox open when selecting an item via click', async function () {
+      this.selectedOption = ['b', 'c'];
+
+      this.set('onChange', (value) => {
+        this.set('selectedOption', value);
+      });
+
+      await render(hbs`
+        <Listbox @onChange={{this.onChange}} @value={{this.selectedOption}} @multiple={{true}} as |listbox|>
+           <listbox.Button>Trigger</listbox.Button>
+           <listbox.Options as |options|>
+             <options.Option @value="a">
+               Option A
+             </options.Option>
+             <options.Option @value="b">
+               Option B
+             </options.Option>
+             <options.Option @value="c">
+               Option C
+             </options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      // Open listbox
+      await click(getListboxButton());
+      assertListbox({ state: ListboxState.Visible });
+
+      // Select an option
+      await click(getListboxOptions()[0]);
+
+      // Verify that the listbox is still open
+      assertListbox({ state: ListboxState.Visible });
+    });
+
+    test('should toggle the selected state of an option when clicking on it', async function () {
+      this.selectedOption = ['b', 'c'];
+
+      this.set('onChange', (value) => {
+        this.set('selectedOption', value);
+      });
+
+      await render(hbs`
+        <Listbox @onChange={{this.onChange}} @value={{this.selectedOption}} @multiple={{true}} as |listbox|>
+           <listbox.Button>Trigger</listbox.Button>
+           <listbox.Options as |options|>
+             <options.Option @value="a">
+               Option A
+             </options.Option>
+             <options.Option @value="b">
+               Option B
+             </options.Option>
+             <options.Option @value="c">
+               Option C
+             </options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      // Open listbox
+      await click(getListboxButton());
+      assertListbox({ state: ListboxState.Visible });
+
+      let options = getListboxOptions();
+
+      assertListboxOption({ selected: false }, options[0]);
+      assertListboxOption({ selected: true }, options[1]);
+      assertListboxOption({ selected: true }, options[2]);
+
+      // Click on b
+      await click(options[1]);
+
+      assertListboxOption({ selected: false }, options[0]);
+      assertListboxOption({ selected: false }, options[1]);
+      assertListboxOption({ selected: true }, options[2]);
+
+      // Click on b again
+      await click(options[1]);
+
+      assertListboxOption({ selected: false }, options[0]);
+      assertListboxOption({ selected: true }, options[1]);
+      assertListboxOption({ selected: true }, options[2]);
     });
   });
 
