@@ -3407,8 +3407,13 @@ module('Integration | Component | <Listbox>', function (hooks) {
 
       let options = getListboxOptions();
 
-      // We should not be able to focus the first option
-      await focus(options[1]);
+      try {
+        // We should not be able to focus the first option
+        await focus(options[1]);
+      } catch {
+        // `focus` test helper errors because this element is not focusable
+        // we ignore the error
+      }
       assertNoActiveListboxOption();
     });
   });
