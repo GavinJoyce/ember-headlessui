@@ -2,7 +2,9 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { debounce } from '@ember/runloop';
+import { debounce, scheduleOnce } from '@ember/runloop';
+
+import { TrackedSet } from 'tracked-maps-and-sets';
 
 const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
@@ -30,7 +32,7 @@ export default class ListboxComponent extends Component {
   optionElements = [];
   optionValues = {};
   search = '';
-  @tracked selectedOptionIndex;
+  @tracked selectedOptionIndexes = new TrackedSet();
 
   get activeOptionGuid() {
     return this.optionElements[this.activeOptionIndex]?.id;
@@ -40,8 +42,10 @@ export default class ListboxComponent extends Component {
     return !!this.args.disabled;
   }
 
-  get selectedOptionGuid() {
-    return this.optionElements[this.selectedOptionIndex]?.id;
+  get selectedOptionGuids() {
+    return Array.from(this.selectedOptionIndexes).map(
+      (i) => this.optionElements[i]?.id
+    );
   }
 
   get isOpen() {
@@ -51,7 +55,7 @@ export default class ListboxComponent extends Component {
   set isOpen(isOpen) {
     if (isOpen) {
       this.activeOptionIndex = undefined;
-      this.selectedOptionIndex = undefined;
+      this.selectedOptionIndexes.clear();
       this.optionElements = [];
       this.optionValues = {};
       this._isOpen = true;
@@ -132,7 +136,9 @@ export default class ListboxComponent extends Component {
       this.activateBehaviour = ACTIVATE_FIRST;
       if (this.isOpen) {
         this.setSelectedOption(event.target, event);
-        this.isOpen = false;
+        if (!this.args.multiple) {
+          this.isOpen = false;
+        }
       } else {
         this.isOpen = true;
       }
@@ -181,15 +187,27 @@ export default class ListboxComponent extends Component {
     optionElement.setAttribute('data-index', this.optionElements.length - 1);
 
     if (this.args.value) {
-      if (this.args.value === optionComponent.args.value) {
-        this.selectedOptionIndex = this.activeOptionIndex =
-          this.optionElements.length - 1;
+      let isSelected;
+
+      if (this.args.multiple) {
+        isSelected = this.args.value.includes(optionComponent.args.value);
+      } else {
+        isSelected = this.args.value === optionComponent.args.value;
+      }
+
+      if (isSelected) {
+        this.selectedOptionIndexes.add(this.optionElements.length - 1);
+        this.activeOptionIndex = this.optionElements.length - 1;
 
         this.scrollIntoView(optionElement);
       }
     }
 
-    if (!this.selectedOptionIndex) {
+    scheduleOnce('afterRender', this, this.setDefaultActiveOption);
+  }
+
+  setDefaultActiveOption() {
+    if (this.selectedOptionIndexes.size === 0) {
       switch (this.activateBehaviour) {
         case ACTIVATE_FIRST:
           this.setFirstOptionActive();
@@ -198,6 +216,8 @@ export default class ListboxComponent extends Component {
           this.setLastOptionActive();
           break;
       }
+    } else {
+      this.activeOptionIndex = Math.min(...this.selectedOptionIndexes);
     }
   }
 
@@ -239,13 +259,21 @@ export default class ListboxComponent extends Component {
     }
 
     if (!this.optionElements[optionIndex].hasAttribute('disabled')) {
-      this.selectedOptionIndex = optionIndex;
+      if (this.args.multiple) {
+        let value = this.args.value ?? [];
 
-      if (this.args.onChange) {
-        this.args.onChange(optionValue);
+        if (this.selectedOptionIndexes.has(optionIndex)) {
+          optionValue = value.filter((i) => i !== optionValue);
+        } else {
+          optionValue = [...value, optionValue];
+        }
       }
 
-      if (e.type === 'click') {
+      this.selectedOptionIndexes.add(optionIndex);
+
+      this.args.onChange?.(optionValue);
+
+      if (e.type === 'click' && !this.args.multiple) {
         this.isOpen = false;
       }
     } else {

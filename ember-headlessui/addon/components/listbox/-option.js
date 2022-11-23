@@ -25,6 +25,6 @@ export default class ListboxOptionComponent extends Component {
   }
 
   get isSelectedOption() {
-    return this.args.selectedOptionGuid == this.guid;
+    return this.args.selectedOptionGuids.includes(this.guid);
   }
 }

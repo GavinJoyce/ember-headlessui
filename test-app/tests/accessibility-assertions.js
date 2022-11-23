@@ -101,6 +101,13 @@ const ListboxState = {
   InvisibleUnmounted: 'InvisibleUnmounted',
 };
 
+const ListboxMode = {
+  /** The listbox is in the `single` mode. */
+  Single: 'Single',
+  /** The listbox is in the `multiple` mode. */
+  Multiple: 'Multiple',
+};
+
 const ComboboxState = {
   Visible: 'Visible',
   InvisibleHidden: 'InvisibleHidden',
@@ -908,7 +915,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
 }
 
 function assertListbox(
-  { state, attributes, textContent },
+  { state, attributes, textContent, mode },
   listbox = getListbox(),
   orientation = 'vertical'
 ) {
@@ -943,6 +950,12 @@ function assertListbox(
         Qunit.assert.dom(listbox).hasAria('labelledby', { any: true });
         Qunit.assert.dom(listbox).hasAttribute('aria-orientation', orientation);
         Qunit.assert.dom(listbox).hasAttribute('role', 'listbox');
+
+        if (mode && mode === ListboxMode.Multiple) {
+          Qunit.assert
+            .dom(listbox)
+            .hasAttribute('aria-multiselectable', 'true');
+        }
 
         if (textContent) Qunit.assert.dom(listbox).hasText(textContent);
 
@@ -1363,5 +1376,6 @@ export {
   getListboxLabel,
   getListboxOptions,
   getRadioGroupOptions,
+  ListboxMode,
   ListboxState,
 };
