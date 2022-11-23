@@ -264,12 +264,14 @@ export default class ListboxComponent extends Component {
 
         if (this.selectedOptionIndexes.has(optionIndex)) {
           optionValue = value.filter((i) => i !== optionValue);
+          this.selectedOptionIndexes.delete(optionIndex);
         } else {
           optionValue = [...value, optionValue];
+          this.selectedOptionIndexes.add(optionIndex);
         }
+      } else {
+        this.selectedOptionIndexes.add(optionIndex);
       }
-
-      this.selectedOptionIndexes.add(optionIndex);
 
       this.args.onChange?.(optionValue);
 

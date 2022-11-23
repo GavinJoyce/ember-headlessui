@@ -2,13 +2,14 @@
   <Tag
     role='option'
     id={{this.guid}}
-    tabindex='-1'
+    tabindex={{unless @disabled '-1'}}
     {{this.registerOption}}
     {{on 'focus' (fn @setActiveOption this)}}
     {{on 'mouseover' (fn @setActiveOption this)}}
     {{on 'mouseout' @unsetActiveOption}}
     {{on 'click' this.handleClick}}
-    aria-selected={{if this.isSelectedOption 'true'}}
+    aria-selected={{if this.isSelectedOption 'true' 'false'}}
+    aria-disabled={{if @disabled 'true' 'false'}}
     disabled={{if @disabled true false}}
     ...attributes
   >

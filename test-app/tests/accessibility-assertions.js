@@ -815,7 +815,7 @@ function assertNoActiveListboxOption(listbox = getListbox()) {
 function assertNoSelectedListboxOption(items = getListboxOptions()) {
   try {
     for (let item of items)
-      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+      Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
   } catch (err) {
     Error.captureStackTrace(err, assertNoSelectedListboxOption);
     throw err;
@@ -884,7 +884,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
       Qunit.assert.dom(item).hasAttribute('tabindex', '-1');
 
     // Ensure listbox button has the following attributes
-    if (!tag && !attributes && !selected) return;
+    if (!tag && !attributes && selected === undefined) return;
 
     for (let attributeName in attributes) {
       Qunit.assert
@@ -902,7 +902,7 @@ export function assertListboxOption({ tag, attributes, selected }, item) {
           return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
 
         case false:
-          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
 
         default:
           Qunit.assert.ok();
@@ -1007,7 +1007,7 @@ function assertComboboxOption({ tag, attributes, selected }, item) {
           return Qunit.assert.dom(item).hasAttribute('aria-selected', 'true');
 
         case false:
-          return Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+          return Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
 
         default:
           Qunit.assert.ok();
@@ -1022,7 +1022,7 @@ function assertComboboxOption({ tag, attributes, selected }, item) {
 function assertNoSelectedComboboxOption(items = getComboboxOptions()) {
   try {
     for (let item of items)
-      Qunit.assert.dom(item).doesNotHaveAttribute('aria-selected');
+      Qunit.assert.dom(item).hasAttribute('aria-selected', 'false');
   } catch (err) {
     Error.captureStackTrace(err, assertNoSelectedComboboxOption);
     throw err;
