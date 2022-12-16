@@ -4,6 +4,7 @@
     id={{this.guid}}
     tabindex='-1'
     {{this.registerOption}}
+    {{this.scroll this.shouldScroll @scrollIntoView}}
     {{on 'focus' (fn @setActiveOption this)}}
     {{on 'mouseover' (fn @setActiveOption this)}}
     {{on 'mouseout' @unsetActiveOption}}
