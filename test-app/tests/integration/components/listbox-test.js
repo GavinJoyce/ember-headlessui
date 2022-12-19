@@ -3440,4 +3440,42 @@ module('Integration | Component | <Listbox>', function (hooks) {
 
     assert.strictEqual(callCount, 0, 'onSubmit not called');
   });
+
+  test('should scroll to selected item only once', async function (assert) {
+    this.set('items', [1, 2, 3, 4]);
+    this.set('selected', 1);
+    this.set('select', (item) => {
+      this.selected = item;
+    });
+
+    let factory = this.owner.factoryFor('component:listbox');
+    let callCount = 0;
+    class ExtendedListbox extends factory.class {
+      scrollIntoView() {
+        callCount++;
+      }
+    }
+
+    this.owner.unregister('component:listbox');
+    this.owner.register('component:listbox', ExtendedListbox);
+
+    await render(hbs`
+      <Listbox @onChange={{this.select}} @value={{this.selected}} as |listbox|>
+        <listbox.Button>Trigger</listbox.Button>
+        <listbox.Options as |options|>
+          {{#each this.items as |item|}}
+            <options.Option @value={{item}} as |option|>
+              {{item}}
+            </options.Option>
+          {{/each}}
+        </listbox.Options>
+      </Listbox>
+    `);
+
+    await click(getListboxButton());
+    let options = getListboxOptions();
+    await click(options[2]);
+
+    assert.strictEqual(callCount, 1, 'called exactly once');
+  });
 });

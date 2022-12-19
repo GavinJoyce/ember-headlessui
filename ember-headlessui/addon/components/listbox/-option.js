@@ -7,9 +7,21 @@ import { modifier } from 'ember-modifier';
 
 export default class ListboxOptionComponent extends Component {
   @tracked guid = `${guidFor(this)}-headlessui-listbox-option`;
+  @tracked shouldScroll = false;
+
+  constructor() {
+    super(...arguments);
+    this.shouldScroll = this.args.selectedValue === this.args.value;
+  }
 
   registerOption = modifier((element) => {
     this.args.registerOptionElement(this, element);
+  });
+
+  scroll = modifier((element, [shouldScroll, scrollFn]) => {
+    if (shouldScroll) {
+      scrollFn(element);
+    }
   });
 
   @action
