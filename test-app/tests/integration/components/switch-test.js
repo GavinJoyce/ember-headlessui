@@ -50,6 +50,10 @@ function assertSwitchState(
     assert.dom(labelSelector).hasText(options.labelText);
   }
 
+  if (options.type) {
+    assert.dom(buttonSelector).hasAttribute('type', options.type);
+  }
+
   switch (options.state) {
     case SwitchState.On:
       assertSwitchIsOn(selector);
@@ -117,6 +121,28 @@ module('Integration | Component | <Switch>', function (hooks) {
         state: SwitchState.Off,
         text: 'Off',
         buttonTagName: 'span',
+      });
+    });
+
+    module('`type` attribute', function () {
+      test('should set the `type` to "button" by default', async function () {
+        await render(hbs`
+          <Switch @isOn={{false}} data-test-switch as |switch|>
+            <switch.Button />
+          </Switch>
+        `);
+
+        assertSwitchState({ type: 'button' });
+      });
+
+      test('should not set the `type` to "button" if it already contains a `type`', async function () {
+        await render(hbs`
+          <Switch @isOn={{false}} data-test-switch as |switch|>
+            <switch.Button type="submit" />
+          </Switch>
+        `);
+
+        assertSwitchState({ type: 'submit' });
       });
     });
   });
