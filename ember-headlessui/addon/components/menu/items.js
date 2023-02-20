@@ -1,11 +1,17 @@
 import Component from '@glimmer/component';
+import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
 export default class Items extends Component {
-  get menuItemsElementSelector() {
-    return `#${this.args.itemsGuid}`;
+  get menuItemsElement() {
+    return (
+      document.getElementById(this.itemsGuid) ??
+      getOwner(this).rootElement.querySelector?.(
+        `[id="${this.args.itemsGuid}"]`
+      )
+    );
   }
 
   @action
@@ -52,10 +58,16 @@ export default class Items extends Component {
   }
 
   clickInsideMenuTrigger(event) {
-    const buttonElement = document.getElementById(this.args.buttonGuid);
+    const buttonElement =
+      document.getElementById(this.args.buttonGuid) ??
+      getOwner(this).rootElement.querySelector?.(
+        `[id="${this.args.buttonGuid}"]`
+      );
 
     // The `buttonElement` could not exist if the element has been removed from the DOM
-    return buttonElement ? buttonElement.contains(event.target) : false;
+    return buttonElement
+      ? buttonElement.contains(event.composedPath()[0])
+      : false;
   }
 
   @action
