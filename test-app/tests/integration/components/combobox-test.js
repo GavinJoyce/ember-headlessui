@@ -181,7 +181,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
         await render(hbs`
           <Combobox 
             @value={{this.value}} 
-            @onChange={{this.setValue}} 
+            @onChange={{this.onChange}} 
             as |combobox|
           >
             <combobox.Input/>
@@ -215,7 +215,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
         await render(hbs`
           <Combobox 
             @value={{this.value}} 
-            @onChange={{this.setValue}} 
+            @onChange={{this.onChange}} 
             as |combobox|
           >
             <combobox.Input @displayValue={{this.displayValue}}/>
@@ -3658,10 +3658,16 @@ module('Integration | Component | <Combobox>', function (hooks) {
       assertCombobox({ state: ComboboxState.Visible });
     });
 
-    test('should toggle the selected state of an option when clicking on it', async () => {
+    test('should toggle the selected state of an option when clicking on it', async function () {
+      this.set('value', ['bob', 'charlie']);
+      this.set('onChange', (values) => {
+        this.set('value', values);
+      });
+
       await render(hbs`
         <Combobox 
-          @value={{array "bob" "charlie"}}
+          @value={{this.value}}
+          @onChange={{this.onChange}}
           as |combobox|
         >
           <combobox.Label>Label</combobox.Label/>

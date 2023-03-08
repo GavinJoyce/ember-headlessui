@@ -5,7 +5,6 @@ import { guidFor } from '@ember/object/internals';
 import { next } from '@ember/runloop';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
-import { TrackedSet } from 'tracked-maps-and-sets';
 
 const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
@@ -21,15 +20,14 @@ const PREVENTED_KEYDOWN_EVENTS = new Set([
 ]);
 
 export default class ComboboxComponent extends Component {
-  @tracked selectedOptionGuids = new TrackedSet();
   @tracked _isOpen = this.args.isOpen || false;
   //TODO: `options` would be a better name as we store other stuff in it, too.
   @tracked optionElements = [];
   @tracked activateBehaviour = ACTIVATE_NONE;
   @tracked _activeOptionGuid;
+  options = [];
 
   guid = `${guidFor(this)}-headlessui-combobox`;
-  optionValues = {};
   optionsElement;
   buttonElement;
   labelElement;
@@ -40,6 +38,21 @@ export default class ComboboxComponent extends Component {
     super(...arguments);
 
     this._originalValue = this.args.value;
+  }
+
+  @action
+  registerOption(option) {
+    this.options.push(option);
+  }
+
+  @action
+  unregisterOption(option) {
+    let ix = this.options.indexOf(option);
+    this.options.splice(ix, 1);
+  }
+
+  get firstSelectedOption() {
+    return this.options?.find((o) => o.isSelectedOption);
   }
 
   get inputValue() {
@@ -66,15 +79,8 @@ export default class ComboboxComponent extends Component {
     this.inputComponent?.clearInput();
 
     if (!isOpen) {
-      if (this.selectedOptionGuids.size > 0) {
-        let firstSelectedGuid = Array.from(this.selectedOptionGuids)[0];
-        this.inputValue = this.optionValues[firstSelectedGuid];
-      }
-
-      this.selectedOptionGuids.clear();
       this._activeOptionGuid = null;
       this.optionElements = [];
-      this.optionValues = {};
     }
 
     if (isOpen) {
@@ -98,9 +104,8 @@ export default class ComboboxComponent extends Component {
       return this._activeOptionGuid;
     }
 
-    let selectedGuids = this.selectedOptionGuids;
-    if (selectedGuids.size > 0) {
-      return Array.from(selectedGuids)[0];
+    if (this.firstSelectedOption) {
+      return this.firstSelectedOption.guid;
     }
 
     if (this.activateBehaviour === ACTIVATE_FIRST) {
@@ -117,6 +122,13 @@ export default class ComboboxComponent extends Component {
   get activeOption() {
     let activeGuid = this.activeOptionGuid;
     return this.optionElements.find((option) => option.id === activeGuid);
+  }
+
+  setActiveAsSelected() {
+    let active = this.options?.find((o) => o.guid === this.activeOptionGuid);
+    if (active) {
+      active.callOnChangeWithSelectedValue();
+    }
   }
 
   @action
@@ -192,6 +204,7 @@ export default class ComboboxComponent extends Component {
     ) {
       this.activateBehaviour = ACTIVATE_FIRST;
       if (this.isOpen) {
+        this.setActiveAsSelected();
         this.setSelectedOption(event.target, event);
         this.isOpen = false;
         this.inputElement?.focus();
@@ -315,27 +328,10 @@ export default class ComboboxComponent extends Component {
     this.rebuildOptionElements(optionElement);
     let index = this.indexForOptionElement(optionElement);
 
-    let value = this.args.value;
-    let optionValue = optionComponent.args.value;
-    let optionGuid = optionComponent.guid;
-
-    this.optionValues[optionComponent.guid] = optionValue;
-
     // store the index at which the option appears in the list
     // so we can avoid a O(n) find operation later
     optionComponent.index = index;
     optionElement.setAttribute('data-index', index);
-
-    if (value) {
-      if (this.isMultiselectable) {
-        if (value.includes(optionValue)) {
-          this.selectedOptionGuids.add(optionGuid);
-        }
-      } else if (value === optionValue) {
-        this.selectedOptionGuids.clear();
-        this.selectedOptionGuids.add(optionGuid);
-      }
-    }
   }
 
   get firstNonDisabledOption() {
@@ -417,53 +413,21 @@ export default class ComboboxComponent extends Component {
     // or when hitting Enter on the active option.
     // Thus it should be possible to simplify the below and not check the constructor name
     // I think even the value (`optionValue` could be had in a simpler way)
-    let optionGuid, optionValue;
 
     let optionToCheck;
     let activeOption = this.activeOption;
     let firstOption = this.optionElements[0];
 
-    if (optionComponent.constructor.name === 'ComboboxOptionComponent') {
-      optionValue = optionComponent.args.value;
-      optionGuid = optionComponent.guid;
-    } else if (activeOption) {
+    if (activeOption) {
       optionToCheck = activeOption;
-      optionValue = this.optionValues[activeOption.id];
-      optionGuid = activeOption.id;
     } else if (firstOption) {
       optionToCheck = firstOption;
-      optionValue = this.optionValues[firstOption.id];
-      optionGuid = firstOption.id;
     } else {
       return;
     }
 
     if (optionToCheck?.element.hasAttribute('disabled')) {
       return;
-    }
-
-    if (this.isMultiselectable) {
-      let isAlreadySelected = this.selectedOptionGuids.has(optionGuid);
-      if (isAlreadySelected) {
-        this.selectedOptionGuids.delete(optionGuid);
-      } else {
-        this.selectedOptionGuids.add(optionGuid);
-      }
-    } else {
-      this.selectedOptionGuids.clear();
-      this.selectedOptionGuids.add(optionGuid);
-    }
-
-    if (this.args.onChange) {
-      if (this.isMultiselectable) {
-        let selectedGuids = Array.from(this.selectedOptionGuids.values());
-        const selectedOptionValues = selectedGuids.map(
-          (guid) => this.optionValues[guid]
-        );
-        this.args.onChange(selectedOptionValues);
-      } else {
-        this.args.onChange(optionValue);
-      }
     }
 
     if (e?.type === 'click') {
@@ -496,6 +460,7 @@ export default class ComboboxComponent extends Component {
         optionElement.id === guid &&
         !optionElement.element.hasAttribute('disabled')
       ) {
+        optionElement.element.focus();
         this._activeOptionGuid = guid;
       }
     });

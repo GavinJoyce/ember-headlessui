@@ -13,7 +13,6 @@
       registerOptionsElement=this.registerOptionsElement
       hasLabelElement=this.labelElement
       activeOptionGuid=this.activeOptionGuid
-      selectedOptionGuids=this.selectedOptionGuids
       setActiveOption=this.setActiveOption
       unsetActiveOption=this.unsetActiveOption
       setSelectedOption=this.setSelectedOption
@@ -25,6 +24,10 @@
       handleClickOutside=this.handleClickOutside
       optionsFallbackFocus=this.optionsFallbackFocus
       optionsReturnFocus=this.optionsReturnFocus
+      registerOption=this.registerOption
+      unregisterOption=this.unregisterOption
+      selectedValue=@value
+      onChange=@onChange
     )
     Button=(component
       'combobox/-button'

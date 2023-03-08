@@ -17,6 +17,16 @@ export default class ComboboxOptionComponent extends Component {
   @tracked guid = `${guidFor(this)}-headlessui-combobox-option`;
   index;
 
+  constructor() {
+    super(...arguments);
+    this.args.registerOption(this);
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.args.unregisterOption(this);
+  }
+
   @action
   handleOptionClick(e) {
     e.stopPropagation();
@@ -25,6 +35,7 @@ export default class ComboboxOptionComponent extends Component {
     if (this.args.disabled) return;
 
     this.args.setSelectedOption(this, e);
+    this.callOnChangeWithSelectedValue();
   }
 
   @action
@@ -41,11 +52,38 @@ export default class ComboboxOptionComponent extends Component {
     }
   }
 
+  callOnChangeWithSelectedValue() {
+    if (this.args.onChange) {
+      let newSelectedValue;
+
+      if (this.isMultiselectable) {
+        if (this.isSelectedOption) {
+          newSelectedValue = this.args.selectedValue.filter(
+            (s) => s !== this.args.value
+          );
+        } else {
+          newSelectedValue = [...this.args.selectedValue, this.args.value];
+        }
+      } else {
+        newSelectedValue = this.args.value;
+      }
+      this.args.onChange(newSelectedValue);
+    }
+  }
+
   get isActiveOption() {
     return this.args.activeOptionGuid === this.guid;
   }
 
   get isSelectedOption() {
-    return this.args.selectedOptionGuids.has(this.guid);
+    if (this.isMultiselectable) {
+      return this.args.selectedValue.includes(this.args.value);
+    } else {
+      return this.args.selectedValue === this.args.value;
+    }
+  }
+
+  get isMultiselectable() {
+    return Array.isArray(this.args.selectedValue);
   }
 }
