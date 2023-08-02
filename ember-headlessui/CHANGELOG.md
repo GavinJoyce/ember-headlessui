@@ -1,3 +1,26 @@
+{
+  cwd: '/home/nvp/Development/OpenSource/ember-headlessui/ember-headlessui'
+}
+
+## v0.14.0 (2023-08-02)
+
+#### :rocket: Enhancement
+* [#173](https://github.com/GavinJoyce/ember-headlessui/pull/173) :bug: <Listbox> should scroll option into view only once ([@far-fetched](https://github.com/far-fetched))
+* [#165](https://github.com/GavinJoyce/ember-headlessui/pull/165) Add Combobox component ([@balinterdi](https://github.com/balinterdi))
+
+#### :bug: Bug Fix
+* [#176](https://github.com/GavinJoyce/ember-headlessui/pull/176) Fix ember-modifier import path ([@herzzanu](https://github.com/herzzanu))
+* [#175](https://github.com/GavinJoyce/ember-headlessui/pull/175) FIX: add default type='button' to switch ([@rreckonerr](https://github.com/rreckonerr))
+
+#### :house: Internal
+* [#178](https://github.com/GavinJoyce/ember-headlessui/pull/178) Combobox refactor selected value ([@far-fetched](https://github.com/far-fetched))
+
+#### Committers: 4
+- Balint Erdi ([@balinterdi](https://github.com/balinterdi))
+- Piotr ([@far-fetched](https://github.com/far-fetched))
+- Sabin Hertanu ([@herzzanu](https://github.com/herzzanu))
+- Volodymyr Radchenko ([@rreckonerr](https://github.com/rreckonerr))
+
 ## v0.13.0 (2022-07-16)
 
 #### :rocket: Enhancement

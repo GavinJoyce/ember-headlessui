@@ -1,6 +1,6 @@
 {
   "name": "ember-headlessui",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
