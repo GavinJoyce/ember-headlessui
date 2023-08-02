@@ -42,5 +42,9 @@
     "patchedDependencies": {
       "lerna-changelog@2.2.0": "patches/lerna-changelog@2.2.0.patch"
     }
+  },
+  "volta": {
+    "node": "18.17.0",
+    "pnpm": "7.33.5"
   }
 }
