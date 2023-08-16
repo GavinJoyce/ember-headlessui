@@ -1,0 +1,11 @@
+<button
+  type='button'
+  data-test-headlessui-tabs-title='test-tabs-title-btn-{{@index}}'
+  id={{guid}}
+  disabled={{if @disable true false}}
+  {{on 'click' this.selectTab}}
+  {{this.registerTabs}}
+  ...attributes
+>
+  {{yield}}
+</button>
