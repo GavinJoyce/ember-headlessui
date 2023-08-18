@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
@@ -133,7 +134,12 @@ export default class Menu extends Component {
   }
 
   get itemsElement() {
-    return document.getElementById(this.itemsGuid);
+    return (
+      document.getElementById(this.itemsGuid) ??
+      getOwner(this).rootElement.querySelector?.(
+        `[id="${this.args.itemsGuid}"]`
+      )
+    );
   }
 
   get buttonGuid() {
@@ -141,6 +147,11 @@ export default class Menu extends Component {
   }
 
   get buttonElement() {
-    return document.getElementById(this.buttonGuid);
+    return (
+      document.getElementById(this.buttonGuid) ??
+      getOwner(this).rootElement.querySelector?.(
+        `[id="${this.args.buttonGuid}"]`
+      )
+    );
   }
 }
