@@ -21,6 +21,8 @@ export default class Items extends Component {
         }
       // eslint-disable-next-line no-fallthrough
       case Keys.Enter:
+        event.preventDefault()
+        event.stopPropagation()
         if (this.args.activeItem) {
           this.args.activeItem.element.click();
         }
