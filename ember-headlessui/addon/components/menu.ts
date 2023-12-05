@@ -1,3 +1,4 @@
+/* eslint-disable padding-line-between-statements */
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -5,15 +6,49 @@ import { guidFor } from '@ember/object/internals';
 
 import { restartableTask, timeout } from 'ember-concurrency';
 
-export default class Menu extends Component {
+import type Button from './menu/button';
+import type Item from './menu/item';
+import type Items from './menu/items';
+
+interface MenuSignature {
+  Args: {
+    buttonGuid: string;
+    itemsGuid: string;
+    isOpen: boolean;
+    closeMenu: () => void;
+    activeItem: Item;
+    registerItem: (item: Item) => void;
+    unregisterItem: (item: Item) => void;
+    goToFirstItem: () => void;
+    goToLastItem: () => void;
+    goToNextItem: () => void;
+    goToPreviousItem: () => void;
+    goToItem: (item: Item) => void;
+    search: (key: string) => void;
+    searchTaskIsRunning: boolean;
+  };
+  Blocks: {
+    default: [
+      {
+        isOpen: boolean;
+        open: () => void;
+        close: () => void;
+        Button: Button;
+        Items: Items;
+      }
+    ];
+  };
+}
+
+export default class Menu extends Component<MenuSignature> {
   guid = `${guidFor(this)}-tailwindui-menu`;
-  @tracked items = [];
+  @tracked items: Item[] = [];
   @tracked isOpen = false;
-  @tracked activeItem;
+  @tracked activeItem?: Item;
   @tracked searchTerm = '';
 
   get activeItemIndex() {
-    return this.items.indexOf(this.activeItem);
+    return this.activeItem ? this.items.indexOf(this.activeItem) : -1;
   }
 
   @action
@@ -79,18 +114,18 @@ export default class Menu extends Component {
   }
 
   @action
-  goToItem(item) {
+  goToItem(item: Item) {
     this._setActiveItem(item);
   }
 
   @restartableTask
-  *searchTask(nextCharacter) {
+  *searchTask(nextCharacter: string) {
     this.searchTerm += nextCharacter.toLowerCase();
 
     const searchResult = this.items.find((item) => {
-      const textValue = item.element.textContent.toLowerCase().trim();
+      const textValue = item.element?.textContent?.toLowerCase().trim();
 
-      return item.isEnabled && textValue.startsWith(this.searchTerm);
+      return item.isEnabled && textValue?.startsWith(this.searchTerm);
     });
 
     if (searchResult) {
@@ -103,7 +138,7 @@ export default class Menu extends Component {
   }
 
   @action
-  async registerItem(item) {
+  async registerItem(item: Item) {
     let { items } = this;
 
     items.push(item);
@@ -111,7 +146,7 @@ export default class Menu extends Component {
   }
 
   @action
-  async unregisterItem(item) {
+  async unregisterItem(item: Item) {
     let { items } = this;
 
     let index = items.indexOf(item);
@@ -119,12 +154,12 @@ export default class Menu extends Component {
     await Promise.resolve(() => (this.items = items));
   }
 
-  _setActiveItem(item) {
+  _setActiveItem(item?: Item) {
     if (item) {
       this.activeItem = item;
       this.items.forEach((item) => item.deactivate());
       this.activeItem.activate();
-      this.itemsElement.focus();
+      this.itemsElement?.focus();
     }
   }
 

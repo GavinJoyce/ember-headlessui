@@ -1,15 +1,37 @@
+/* eslint-disable padding-line-between-statements */
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
-export default class Items extends Component {
+import type Item from './item';
+
+interface MenuItemsSignature {
+  Args: {
+    buttonGuid: string;
+    itemsGuid: string;
+    isOpen: boolean;
+    closeMenu: () => void;
+    activeItem: Item;
+    registerItem: (item: Item) => void;
+    unregisterItem: (item: Item) => void;
+    goToFirstItem: () => void;
+    goToLastItem: () => void;
+    goToNextItem: () => void;
+    goToPreviousItem: () => void;
+    goToItem: (item: Item) => void;
+    search: (key: string) => void;
+    searchTaskIsRunning: boolean;
+  };
+}
+
+export default class Items extends Component<MenuItemsSignature> {
   get menuItemsElementSelector() {
     return `#${this.args.itemsGuid}`;
   }
 
   @action
-  onKeydown(event) {
+  onKeydown(event: KeyboardEvent) {
     switch (event.key) {
       // Ref: https://www.w3.org/TR/wai-aria-practices-1.2/#keyboard-interaction-12
       // `Escape` key is handled by focus-trap
@@ -22,7 +44,7 @@ export default class Items extends Component {
       // eslint-disable-next-line no-fallthrough
       case Keys.Enter:
         if (this.args.activeItem) {
-          this.args.activeItem.element.click();
+          this.args.activeItem?.element?.click();
         }
         this.args.closeMenu();
         break;
@@ -51,20 +73,22 @@ export default class Items extends Component {
     }
   }
 
-  clickInsideMenuTrigger(event) {
-    const buttonElement = document.getElementById(this.args.buttonGuid);
+  clickInsideMenuTrigger(event: MouseEvent) {
+    const buttonElement = document.getElementById(
+      this.args.buttonGuid
+    ) as HTMLButtonElement | null;
 
     // The `buttonElement` could not exist if the element has been removed from the DOM
-    return buttonElement ? buttonElement.contains(event.target) : false;
+    return buttonElement ? buttonElement.contains(event.target as Node) : false;
   }
 
   @action
-  allowClickOutsideFocusTrap(event) {
+  allowClickOutsideFocusTrap(event: MouseEvent) {
     return this.clickInsideMenuTrigger(event);
   }
 
   @action
-  clickOutsideFocusTrapDeactivates(event) {
+  clickOutsideFocusTrapDeactivates(event: MouseEvent) {
     return !this.clickInsideMenuTrigger(event);
   }
 }

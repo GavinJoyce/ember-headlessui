@@ -4,10 +4,31 @@ import { next } from '@ember/runloop';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
 
-export default class Button extends Component {
+interface MenuButtonSignature {
+  Args: {
+    buttonGuid: string;
+    itemsGuid: string;
+    isOpen: boolean;
+    openMenu: () => void;
+    closeMenu: () => void;
+    toggleMenu: () => void;
+    goToFirstItem: () => void;
+    goToLastItem: () => void;
+    goToNextItem: () => void;
+    goToPreviousItem: () => void;
+  };
+  Blocks: {
+    default: [];
+  };
+}
+
+export default class Button extends Component<MenuButtonSignature> {
   @action
-  onKeydown(event) {
-    if (event.target.disabled) return;
+  onKeydown(event: KeyboardEvent) {
+    const target = event.target as HTMLButtonElement | undefined;
+
+    if (target?.disabled) return;
+
     switch (event.key) {
       case Keys.Space:
       case Keys.Enter:
@@ -23,6 +44,7 @@ export default class Button extends Component {
             this.args.goToFirstItem();
           });
         }
+
         break;
       case Keys.ArrowUp:
         event.preventDefault();

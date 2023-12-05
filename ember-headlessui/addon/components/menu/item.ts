@@ -5,12 +5,26 @@ import { guidFor } from '@ember/object/internals';
 
 import { modifier } from 'ember-modifier';
 
-export default class Item extends Component {
+
+interface MenuItemSignature {
+  Args: {
+    registerItem: (item: Item) => void;
+    unregisterItem: (item: Item) => void;
+    closeMenu: () => void;
+    goToItem: (item: Item) => void;
+    isDisabled?: boolean;
+  };
+  Blocks: {
+    default: [{ isActive: boolean; isDisabled: boolean; Element: Element }];
+  };
+}
+
+export default class Item extends Component<MenuItemSignature> {
   guid = `${guidFor(this)}-tailwindui-menu-item`;
-  element;
+  element?: HTMLElement | null;
   @tracked isActive = false;
 
-  registerItemElement = modifier((element) => {
+  registerItemElement = modifier((element: HTMLElement) => {
     this.element = element;
     this.args.registerItem(this);
 
@@ -30,7 +44,12 @@ export default class Item extends Component {
 
   @action
   focus() {
-    this.element.focus();
+    if (
+      this.element &&
+      'focus' in this.element &&
+      typeof this.element.focus == 'function'
+    )
+      this.element?.focus();
   }
 
   @action
@@ -45,7 +64,7 @@ export default class Item extends Component {
   }
 
   @action
-  onElementClick(event) {
+  onElementClick(event: MouseEvent) {
     if (this.isDisabled) return event.preventDefault();
     this.args.closeMenu();
   }
