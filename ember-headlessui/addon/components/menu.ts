@@ -11,22 +11,6 @@ import type Item from './menu/item';
 import type Items from './menu/items';
 
 interface MenuSignature {
-  Args: {
-    buttonGuid: string;
-    itemsGuid: string;
-    isOpen: boolean;
-    closeMenu: () => void;
-    activeItem: Item;
-    registerItem: (item: Item) => void;
-    unregisterItem: (item: Item) => void;
-    goToFirstItem: () => void;
-    goToLastItem: () => void;
-    goToNextItem: () => void;
-    goToPreviousItem: () => void;
-    goToItem: (item: Item) => void;
-    search: (key: string) => void;
-    searchTaskIsRunning: boolean;
-  };
   Blocks: {
     default: [
       {
