@@ -1,0 +1,19 @@
+{{#if (or @open @isStatic)}}
+  {{#let (element this.tagName) as |Tag|}}
+    <Tag
+      id={{@guid}}
+      ...attributes
+      {{headlessui-focus-trap
+        focusTrapOptions=(hash
+          allowOutsideClick=this.allowClickOutsideFocusTrap
+          clickOutsideDeactivates=this.onFocusDeactivate
+          fallbackFocus=this.popoverPanelElementSelector
+          initialFocus=this.popoverPanelElementSelector
+          escapeDeactivates=this.onFocusDeactivate
+        )
+      }}
+    >
+      {{yield}}
+    </Tag>
+  {{/let}}
+{{/if}}

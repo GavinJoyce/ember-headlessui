@@ -1,0 +1,29 @@
+{{#let (element this.tagName) as |Tag|}}
+  <Tag id={{this.guid}} ...attributes>
+    {{yield (hash
+      isOpen=this.isOpen
+      close=this.close
+      toggle=this.toggle
+      Button=(component "popover/button"
+        guid=this.buttonGuid
+        popoverGuid=this.guid
+        panelGuid=this.panelGuid
+        open=this.isOpen
+        onClick=this.handleButtonClick
+      )
+      Panel=(component "popover/panel"
+        guid=this.panelGuid
+        popoverGuid=this.guid
+        panelGuid=this.panelGuid
+        buttonGuid=this.buttonGuid
+        open=this.isOpen
+        close=this.close
+      )
+      Overlay=(component "popover/overlay"
+        guid=this.overlayGuid
+        popoverGuid=this.guid
+        open=this.isOpen
+      )
+    )}}
+  </Tag>
+{{/let}}
