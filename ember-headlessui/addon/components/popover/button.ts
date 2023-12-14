@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
 
 interface PopoverButtonComponentSignature {
-  Element: HTMLElement
+  Element: HTMLElement;
   Args: {
-    as?: string
-    guid?: string
-    popoverGuid?: string
-    panelGuid?: string
-    onClick?: () => void
-    open?: boolean
-  }
+    as?: string;
+    guid?: string;
+    popoverGuid?: string;
+    panelGuid?: string;
+    onClick?: () => void;
+    open?: boolean;
+  };
   Blocks: {
-    default?: []
-  }
+    default?: [];
+  };
 }
 
 export default class PopoverButtonComponent extends Component<PopoverButtonComponentSignature> {

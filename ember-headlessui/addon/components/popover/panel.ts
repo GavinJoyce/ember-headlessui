@@ -2,22 +2,22 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 interface PopoverPanelComponentSignature {
-  Element: HTMLElement
+  Element: HTMLElement;
   Args: {
-    as?: string
-    guid?: string
-    popoverGuid?: string
-    panelGuid?: string
-    buttonGuid?: string
-    isStatic?: boolean
-    unmount?: boolean
-    open?: boolean
-    close?(): void
-    onFocusDeactivate?(): void
-  }
+    as?: string;
+    guid?: string;
+    popoverGuid?: string;
+    panelGuid?: string;
+    buttonGuid?: string;
+    static?: boolean;
+    unmount?: boolean;
+    open?: boolean;
+    close?(): void;
+    onFocusDeactivate?(): void;
+  };
   Blocks: {
-    default: []
-  }
+    default: [];
+  };
 }
 
 export default class PopoverPanelComponent extends Component<PopoverPanelComponentSignature> {
@@ -34,7 +34,7 @@ export default class PopoverPanelComponent extends Component<PopoverPanelCompone
       );
     }
 
-    if (this.args.isStatic !== undefined && this.args.unmount !== undefined) {
+    if (this.args.static !== undefined && this.args.unmount !== undefined) {
       throw new Error(
         '<Popover::Panel /> cannot be passed `@static` and `@unmount` at the same time'
       );
@@ -51,7 +51,9 @@ export default class PopoverPanelComponent extends Component<PopoverPanelCompone
 
   @action
   clickInsidePanelTrigger(event: Event) {
-    const buttonElement = this.args.buttonGuid ? document.getElementById(this.args.buttonGuid) : undefined;
+    const buttonElement = this.args.buttonGuid
+      ? document.getElementById(this.args.buttonGuid)
+      : undefined;
 
     // The `buttonElement` could not exist if the element has been removed from the DOM
     return buttonElement ? buttonElement.contains(event.target as Node) : false;
@@ -69,9 +71,10 @@ export default class PopoverPanelComponent extends Component<PopoverPanelCompone
 
   @action
   onFocusDeactivate(event: Event) {
-    const clickInsidePanelTrigger = this.clickInsidePanelTrigger(event)
+    const clickInsidePanelTrigger = this.clickInsidePanelTrigger(event);
+
     if (clickInsidePanelTrigger) return false;
+
     return this.args.onFocusDeactivate?.();
   }
-
 }

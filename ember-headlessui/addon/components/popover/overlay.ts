@@ -1,16 +1,16 @@
 import Component from '@glimmer/component';
 
 interface PopoverOverlayComponentSignature {
-  Element: HTMLElement
+  Element: HTMLElement;
   Args: {
-    as?: string
-    guid?: string
-    popoverGuid?: string
-    open?: boolean
-  }
+    as?: string;
+    guid?: string;
+    popoverGuid?: string;
+    open?: boolean;
+  };
   Blocks: {
-    default?: []
-  }
+    default?: [];
+  };
 }
 
 export default class PopoverOverlayComponent extends Component<PopoverOverlayComponentSignature> {

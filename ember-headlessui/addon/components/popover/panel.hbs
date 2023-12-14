@@ -1,4 +1,4 @@
-{{#if (or @open @isStatic)}}
+{{#if (or @open @static)}}
   {{#let (element this.tagName) as |Tag|}}
     <Tag
       id={{@guid}}

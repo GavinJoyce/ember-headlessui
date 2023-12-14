@@ -1,27 +1,29 @@
 import Component from '@glimmer/component';
-import { guidFor } from '@ember/object/internals';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+
 import type PopoverButtonComponent from './popover/button';
-import type PopoverPanelComponent from './popover/panel';
 import type PopoverOverlayComponent from './popover/overlay';
+import type PopoverPanelComponent from './popover/panel';
 
 interface PopoverComponentSignature {
-  Element: HTMLElement
+  Element: HTMLElement;
   Args: {
-    as?: string
-  }
+    as?: string;
+  };
   Blocks: {
-    default: [{
-      isOpen: boolean
-      close: () => void
-      toggle: () => void
-      Button: PopoverButtonComponent
-      Panel: PopoverPanelComponent
-      Overlay: PopoverOverlayComponent
-    }]
-  }
-
+    default: [
+      {
+        isOpen: boolean;
+        close: () => void;
+        toggle: () => void;
+        Button: typeof PopoverButtonComponent;
+        Panel: typeof PopoverPanelComponent;
+        Overlay: typeof PopoverOverlayComponent;
+      }
+    ];
+  };
 }
 
 export default class PopoverComponent extends Component<PopoverComponentSignature> {
@@ -70,5 +72,4 @@ export default class PopoverComponent extends Component<PopoverComponentSignatur
   close() {
     this.isOpen = false;
   }
-
 }
