@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 interface PopoverPanelComponentSignature {
   Element: HTMLElement;
   Args: {
-    as?: string;
+    as?: string | typeof Component;
     guid?: string;
     popoverGuid?: string;
     panelGuid?: string;

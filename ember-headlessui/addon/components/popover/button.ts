@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 interface PopoverButtonComponentSignature {
   Element: HTMLElement;
   Args: {
-    as?: string;
+    as?: string | typeof Component;
     guid?: string;
     popoverGuid?: string;
     panelGuid?: string;

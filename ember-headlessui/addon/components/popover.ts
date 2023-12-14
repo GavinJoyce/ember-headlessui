@@ -10,7 +10,7 @@ import type PopoverPanelComponent from './popover/panel';
 interface PopoverComponentSignature {
   Element: HTMLElement;
   Args: {
-    as?: string;
+    as?: string | typeof Component;
   };
   Blocks: {
     default: [
