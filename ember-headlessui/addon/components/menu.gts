@@ -5,10 +5,13 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
 import { restartableTask, timeout } from 'ember-concurrency';
+import perform from 'ember-concurrency/helpers/perform'; 
 
-import type Button from './menu/button';
+import Button from './menu/button';
 import type Item from './menu/item';
-import type Items from './menu/items';
+import Items from './menu/items';
+import { hash } from '@ember/helper';
+import { ensureSafeComponent } from '@embroider/util';
 
 interface MenuSignature {
   Blocks: {
@@ -162,4 +165,44 @@ export default class Menu extends Component<MenuSignature> {
   get buttonElement() {
     return document.getElementById(this.buttonGuid);
   }
+
+  <template>
+    {{yield
+      (hash
+        isOpen=this.isOpen
+        open=this.open
+        close=this.close
+        Button=(component
+          (ensureSafeComponent Button this)
+          buttonGuid=this.buttonGuid
+          itemsGuid=this.itemsGuid
+          isOpen=this.isOpen
+          openMenu=this.open
+          closeMenu=this.close
+          toggleMenu=this.toggle
+          goToFirstItem=this.goToFirstItem
+          goToLastItem=this.goToLastItem
+          goToNextItem=this.goToNextItem
+          goToPreviousItem=this.goToPreviousItem
+        )
+        Items=(component
+          (ensureSafeComponent Items this)
+          buttonGuid=this.buttonGuid
+          itemsGuid=this.itemsGuid
+          isOpen=this.isOpen
+          closeMenu=this.close
+          activeItem=this.activeItem
+          registerItem=this.registerItem
+          unregisterItem=this.unregisterItem
+          goToFirstItem=this.goToFirstItem
+          goToLastItem=this.goToLastItem
+          goToNextItem=this.goToNextItem
+          goToPreviousItem=this.goToPreviousItem
+          goToItem=this.goToItem
+          search=(perform this.searchTask)
+          searchTaskIsRunning=this.searchTask.isRunning
+        )
+      )
+    }}
+  </template>
 }

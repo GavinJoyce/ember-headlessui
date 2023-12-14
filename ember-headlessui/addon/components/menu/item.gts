@@ -4,33 +4,37 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
 import { modifier } from 'ember-modifier';
+import { hash } from '@ember/helper';
+import { ensureSafeComponent } from '@embroider/util';
 
+import ItemElement from './item-element';
 
 interface MenuItemSignature {
+  Element: Element;
   Args: {
-    registerItem: (item: Item) => void;
-    unregisterItem: (item: Item) => void;
-    closeMenu: () => void;
-    goToItem: (item: Item) => void;
+    registerItem?: (item: Item) => void;
+    unregisterItem?: (item: Item) => void;
+    closeMenu?: () => void;
+    goToItem?: (item: Item) => void;
     isDisabled?: boolean;
   };
   Blocks: {
-    default: [{ isActive: boolean; isDisabled: boolean; Element: Element }];
+    default: [{isActive: boolean, isDisabled: boolean, Element: typeof ItemElement}];
   };
 }
 
 export default class Item extends Component<MenuItemSignature> {
   guid = `${guidFor(this)}-tailwindui-menu-item`;
-  element?: HTMLElement | null;
+  element?: HTMLElement;
   @tracked isActive = false;
 
-  registerItemElement = modifier((element: HTMLElement) => {
+  registerItemElement = modifier((element) => {
     this.element = element;
-    this.args.registerItem(this);
+    this.args.registerItem?.(this);
 
     return () => {
-      this.element = null;
-      this.args.unregisterItem(this);
+      this.element = undefined;
+      this.args.unregisterItem?.(this);
     };
   });
 
@@ -66,7 +70,7 @@ export default class Item extends Component<MenuItemSignature> {
   @action
   onElementClick(event: MouseEvent) {
     if (this.isDisabled) return event.preventDefault();
-    this.args.closeMenu();
+    this.args.closeMenu?.();
   }
 
   @action
@@ -74,6 +78,23 @@ export default class Item extends Component<MenuItemSignature> {
     if (this.args.isDisabled) return;
     if (this.isActive) return;
 
-    this.args.goToItem(this);
+    this.args.goToItem?.(this);
   }
+
+  <template>
+    {{yield
+      (hash
+        isActive=this.isActive
+        isDisabled=this.isDisabled
+        Element=(component
+          (ensureSafeComponent ItemElement this)
+          guid=this.guid
+          isDisabled=@isDisabled
+          onMouseOver=this.onMouseOver
+          registerItemElement=this.registerItemElement
+          onClick=this.onElementClick
+        )
+      )
+    }}
+  </template>
 }
