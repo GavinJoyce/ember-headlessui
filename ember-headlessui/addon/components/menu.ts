@@ -17,8 +17,8 @@ interface MenuSignature {
         isOpen: boolean;
         open: () => void;
         close: () => void;
-        Button: Button;
-        Items: Items;
+        Button: typeof Button;
+        Items: typeof Items;
       }
     ];
   };
