@@ -8,6 +8,16 @@
 https://github.com/GavinJoyce/ember-headlessui/pull/204 barryofguilder ## v0.16.0 (2026-02-20)
 
 
+
+## v0.16.1 (2026-02-26)
+
+#### :rocket: Enhancement
+* [#205](https://github.com/GavinJoyce/ember-headlessui/pull/205) Add event to the dialog onClose action ([@barryofguilder](https://github.com/barryofguilder))
+
+#### Committers: 1
+- Jason Barry ([@barryofguilder](https://github.com/barryofguilder))
+
+
 ## v0.15.0 (2026-02-19)
 
 #### :rocket: Enhancement
