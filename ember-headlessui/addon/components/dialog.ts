@@ -13,7 +13,7 @@ import type DialogStackProvider from 'ember-headlessui/services/dialog-stack-pro
 
 interface Args {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (event: Event) => void;
   as: string | typeof Component;
 }
 
@@ -35,7 +35,7 @@ export default class DialogComponent extends Component<Args> {
   });
 
   handleEscapeKey = modifier(
-    (_element, [isOpen, onClose]: [boolean, () => void]) => {
+    (_element, [isOpen, onClose]: [boolean, (event: Event) => void]) => {
       let handler = (event: KeyboardEvent) => {
         if (event.key !== Keys.Escape) return;
         if (!isOpen) return;
@@ -43,7 +43,7 @@ export default class DialogComponent extends Component<Args> {
         event.preventDefault();
         event.stopPropagation();
 
-        onClose();
+        onClose(event);
       };
 
       window.addEventListener('keyup', handler);
@@ -155,14 +155,14 @@ export default class DialogComponent extends Component<Args> {
       this.outsideClickedElement = target;
     }
 
-    this.onClose();
+    this.onClose(e);
 
     return true;
   }
 
   @action
-  onClose() {
+  onClose(event: Event) {
     if (this.dialogStackProvider.hasOpenChild(this)) return;
-    this.args.onClose();
+    this.args.onClose(event);
   }
 }

@@ -26,6 +26,6 @@ export default class DialogOverlayComponent extends Component {
     event.preventDefault();
     event.stopPropagation();
 
-    onClose();
+    onClose(event);
   }
 }

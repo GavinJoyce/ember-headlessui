@@ -422,6 +422,29 @@ module('Integration | Component | <Dialog>', function (hooks) {
 
         assertDialog({ state: DialogState.InvisibleUnmounted });
       });
+
+      test('the `onClose` action sends the event with Escape', async function (assert) {
+        this.set('isOpen', false);
+        this.set('handleClose', (event) => {
+          assert.step(event.key);
+        });
+
+        await render(hbs`
+          <button type="button" {{on "click" (set this "isOpen" true)}}>
+            Trigger
+          </button>
+
+          <Dialog @isOpen={{this.isOpen}} @onClose={{this.handleClose}}>
+            Hello
+            <div tabindex="0"></div>
+          </Dialog>
+        `);
+
+        await click(getByText('Trigger'));
+        await triggerKeyEvent(getDialog(), 'keyup', Keys.Escape);
+
+        assert.verifySteps([Keys.Escape]);
+      });
     });
   });
 
@@ -448,6 +471,31 @@ module('Integration | Component | <Dialog>', function (hooks) {
       await click(getDialogOverlay());
 
       assertDialog({ state: DialogState.InvisibleUnmounted });
+    });
+
+    test('the `onClose` action sends the event when clicking the Dialog.Overlay', async function (assert) {
+      this.set('isOpen', false);
+      this.set('handleClose', (event) => {
+        const isOverlay = event.target.hasAttribute('data-dialog-overlay');
+        assert.step(isOverlay ? 'true' : 'false');
+      });
+
+      await render(hbs`
+        <button type="button" {{on "click" (set this "isOpen" true)}}>
+          Trigger
+        </button>
+
+        <Dialog @isOpen={{this.isOpen}} @onClose={{this.handleClose}} as |d|>
+          <d.Overlay data-dialog-overlay />
+          Contents
+          <div tabindex="0"></div>
+        </Dialog>
+      `);
+
+      await click(getByText('Trigger'));
+      await click(getDialogOverlay());
+
+      assert.verifySteps(['true']);
     });
 
     test('it should be possible to close the dialog, and re-focus the button when we click outside on the body element', async function () {
