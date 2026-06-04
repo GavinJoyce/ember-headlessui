@@ -281,6 +281,13 @@ export default class ListboxComponent extends Component {
   }
 
   scrollIntoView(optionElement) {
+    // The option may have been removed from the DOM by a re-render while
+    // still registered with the listbox (e.g. search/type-ahead racing a
+    // re-render) — without a parent there is nothing to scroll.
+    if (!optionElement.parentElement) {
+      return;
+    }
+
     // Cannot use optionElement.scrollIntoView() here because that function
     // also scrolls the *window* by some amount. Here, we don't want to
     // jerk the window, we just want to make the the option element visible
