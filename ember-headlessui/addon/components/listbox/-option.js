@@ -23,6 +23,10 @@ export default class ListboxOptionComponent extends Component {
 
   registerOption = modifier((element) => {
     this.args.registerOptionElement(this, element);
+
+    return () => {
+      this.args.unregisterOptionElement(this, element);
+    };
   });
 
   scroll = modifier((element, [shouldScroll, scrollFn]) => {

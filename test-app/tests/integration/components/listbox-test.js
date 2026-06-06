@@ -3,6 +3,7 @@ import {
   click,
   focus,
   render,
+  settled,
   triggerEvent,
   triggerKeyEvent,
 } from '@ember/test-helpers';
@@ -2757,12 +2758,19 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
-    test('should ignore options that are no longer in the DOM', async function () {
+    test('should unregister options that are no longer in the DOM', async function (assert) {
+      this.set('showAlice', true);
+      this.set('onChange', () => {
+        assert.step('onChange');
+      });
+
       await render(hbs`
-        <Listbox as |listbox|>
+        <Listbox @onChange={{this.onChange}} as |listbox|>
            <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
            <listbox.Options data-test="headlessui-listbox-options-1" as |options|>
-             <options.Option @value="alice">alice</options.Option>
+             {{#if this.showAlice}}
+               <options.Option @value="alice">alice</options.Option>
+             {{/if}}
              <options.Option @value="bob">bob</options.Option>
            </listbox.Options>
          </Listbox>
@@ -2772,15 +2780,24 @@ module('Integration | Component | <Listbox>', function (hooks) {
       await click(getListboxButton());
 
       let options = getListboxOptions();
+      assert.strictEqual(options.length, 2);
 
-      // Simulate a re-render race: the option's element leaves the DOM
-      // while the listbox still has it registered
-      options[0].remove();
+      this.set('showAlice', false);
+      await settled();
 
-      // Searching for the detached option must not throw
+      options = getListboxOptions();
+      assert.strictEqual(options.length, 1);
+      assert.strictEqual(options[0].getAttribute('data-index'), '0');
+
+      // Searching for the removed option must not select its stale value
       await typeWord('alice');
 
       assertListbox({ state: ListboxState.Visible });
+      assertNoActiveListboxOption();
+
+      await triggerKeyEvent(document.activeElement, 'keypress', 'Enter');
+
+      assert.verifySteps([]);
     });
 
     test('should be possible to search for a word (case insensitive)', async function () {

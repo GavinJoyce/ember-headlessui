@@ -196,6 +196,44 @@ export default class ListboxComponent extends Component {
     scheduleOnce('afterRender', this, this.setDefaultActiveOption);
   }
 
+  @action
+  unregisterOptionElement(optionComponent, optionElement) {
+    let removedIndex = this.optionElements.findIndex((element) => {
+      return element === optionElement;
+    });
+
+    if (removedIndex === -1) {
+      return;
+    }
+
+    this.optionElements = this.optionElements.filter((element) => {
+      return element !== optionElement;
+    });
+
+    this.optionComponents = this.optionComponents.filter((component) => {
+      return component !== optionComponent;
+    });
+
+    this.optionComponents.forEach((component, index) => {
+      let element = this.optionElements[index];
+
+      component.index = index;
+      element.setAttribute('data-index', index);
+    });
+
+    if (this.activeOptionIndex === removedIndex) {
+      this.activeOptionIndex = undefined;
+    } else if (this.activeOptionIndex > removedIndex) {
+      this.activeOptionIndex--;
+    }
+
+    let selectedIndexes = this.optionComponents
+      .filter((option) => option.isSelected)
+      .map((option) => option.index);
+
+    this.selectedOptionIndexes = new TrackedSet(selectedIndexes);
+  }
+
   setDefaultActiveOption() {
     let selectedIndexes = this.optionComponents
       .filter((o) => o.isSelected)
@@ -361,6 +399,7 @@ export default class ListboxComponent extends Component {
       let optionElement = this.optionElements[i];
 
       if (
+        optionElement.isConnected &&
         !optionElement.hasAttribute('disabled') &&
         optionElement.textContent.trim().toLowerCase().startsWith(this.search)
       ) {
