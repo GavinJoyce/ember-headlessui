@@ -2757,6 +2757,32 @@ module('Integration | Component | <Listbox>', function (hooks) {
       assertActiveListboxOption(options[2]);
     });
 
+    test('should ignore options that are no longer in the DOM', async function () {
+      await render(hbs`
+        <Listbox as |listbox|>
+           <listbox.Button data-test="headlessui-listbox-button-1">Trigger</listbox.Button>
+           <listbox.Options data-test="headlessui-listbox-options-1" as |options|>
+             <options.Option @value="alice">alice</options.Option>
+             <options.Option @value="bob">bob</options.Option>
+           </listbox.Options>
+         </Listbox>
+      `);
+
+      // Open listbox
+      await click(getListboxButton());
+
+      let options = getListboxOptions();
+
+      // Simulate a re-render race: the option's element leaves the DOM
+      // while the listbox still has it registered
+      options[0].remove();
+
+      // Searching for the detached option must not throw
+      await typeWord('alice');
+
+      assertListbox({ state: ListboxState.Visible });
+    });
+
     test('should be possible to search for a word (case insensitive)', async function () {
       await render(hbs`
         <Listbox as |listbox|>
