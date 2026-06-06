@@ -4,6 +4,18 @@ cwd: '/home/nvp/Development/OpenSource/ember-headlessui/ember-headlessui'
 
 https://github.com/GavinJoyce/ember-headlessui/pull/204 barryofguilder ## v0.16.0 (2026-02-20)
 
+
+## v0.16.2 (2026-06-06)
+
+#### :bug: Bug Fix
+* [#207](https://github.com/GavinJoyce/ember-headlessui/pull/207) Skip detached listbox options during typeahead ([@GavinJoyce](https://github.com/GavinJoyce))
+* [#206](https://github.com/GavinJoyce/ember-headlessui/pull/206) Guard Listbox scrollIntoView against options removed from the DOM ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+
+#### Committers: 2
+- David McNamara ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+- Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
+
+
 ## v0.16.1 (2026-02-26)
 
 #### :rocket: Enhancement
