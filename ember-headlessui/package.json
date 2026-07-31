@@ -46,7 +46,7 @@
     "tracked-maps-and-sets": "^3.0.1"
   },
   "peerDependencies": {
-    "ember-source": ">= 3.25.0 || ^4.0.0"
+    "ember-source": ">= 4.4.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -81,7 +81,7 @@
     "dotenv-cli": "^4.0.0",
     "ember-cli": "~4.4.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-source": "~3.25.0",
+    "ember-source": "~4.4.0",
     "ember-template-lint": "^3.5.1",
     "ember-template-lint-plugin-prettier": "^2.0.1",
     "eslint": "^7.32.0",

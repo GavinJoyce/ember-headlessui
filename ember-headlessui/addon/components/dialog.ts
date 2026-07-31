@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { typeOf } from '@ember/utils';
 
 import { Keys } from 'ember-headlessui/utils/keyboard';
