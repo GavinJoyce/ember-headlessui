@@ -24,6 +24,10 @@ import {
 module('Integration | Component | radio-group', function (hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function () {
+    this.set('noop', function () {});
+  });
+
   module('Safe guards', function () {
     test('should error when we are using a <RadioGroup::-Option /> without a parent <RadioGroup />', async function (assert) {
       assert.expect(1);
@@ -41,7 +45,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
     test('should be possible to render a RadioGroup without crashing', async function () {
       await render(hbs`
-        <RadioGroup @value='pizza-delivery' @onChange={{console.log}} as |RadioGroup|>
+        <RadioGroup @value='pizza-delivery' @onChange={{this.noop}} as |RadioGroup|>
           <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
           <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
           <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
@@ -54,7 +58,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
     test('should be possible to render a RadioGroup without options and without crashing', async function (assert) {
       await render(
-        hbs`<RadioGroup @value={{undefined}} @onChange={{console.log}} />`
+        hbs`<RadioGroup @value={{undefined}} @onChange={{this.noop}} />`
       );
 
       assert.dom('[data-test-radio-group]').exists();
@@ -64,7 +68,7 @@ module('Integration | Component | radio-group', function (hooks) {
   module('Rendering', function () {
     test('should be possible to render a RadioGroup, where the first element is tabbable (value is undefined)', async function (assert) {
       await render(hbs`
-          <RadioGroup @value={{undefined}} @onChange={{console.log}} as |RadioGroup|>
+          <RadioGroup @value={{undefined}} @onChange={{this.noop}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
             <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
@@ -81,7 +85,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
     test('should be possible to render a RadioGroup, where the first element is tabbable (value is null)', async function (assert) {
       await render(hbs`
-          <RadioGroup @value={{null}} @onChange={{console.log}} as |RadioGroup|>
+          <RadioGroup @value={{null}} @onChange={{this.noop}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
             <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
@@ -98,7 +102,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
     test('should be possible to render a RadioGroup with an active value', async function (assert) {
       await render(hbs`
-          <RadioGroup @value='home-delivery' @onChange={{console.log}} as |RadioGroup|>
+          <RadioGroup @value='home-delivery' @onChange={{this.noop}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
             <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
@@ -116,7 +120,7 @@ module('Integration | Component | radio-group', function (hooks) {
     test('should guarantee the radio option order after a few unmounts', async function () {
       await render(hbs`
         <button>Toggle</button>
-        <RadioGroup @value={{undefined}} @onChange={{console.log}} as |RadioGroup|>
+        <RadioGroup @value={{undefined}} @onChange={{this.noop}} as |RadioGroup|>
           <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
           <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
           <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
@@ -156,8 +160,8 @@ module('Integration | Component | radio-group', function (hooks) {
       });
 
       await render(hbs`
-          <button onClick={{setDisabled}}>Toggle</button>
-          <RadioGroup @value={{undefined}} @onChange={{onChange}} @disabled={{isDisabled}} as |RadioGroup|>
+          <button onClick={{this.setDisabled}}>Toggle</button>
+          <RadioGroup @value={{undefined}} @onChange={{this.onChange}} @disabled={{this.isDisabled}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
             <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
@@ -200,12 +204,12 @@ module('Integration | Component | radio-group', function (hooks) {
       });
 
       await render(hbs`
-          <button onClick={{setDisabled}}>Toggle</button>
-          <RadioGroup @value={{undefined}} @onChange={{onChange}} as |RadioGroup|>
+          <button onClick={{this.setDisabled}}>Toggle</button>
+          <RadioGroup @value={{undefined}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value="pickup">Pickup</RadioGroup.Option>
             <RadioGroup.Option @value="home-delivery">Home delivery</RadioGroup.Option>
-            <RadioGroup.Option @value="dine-in" @disabled={{isDisabled}}>Dine in</RadioGroup.Option>
+            <RadioGroup.Option @value="dine-in" @disabled={{this.isDisabled}}>Dine in</RadioGroup.Option>
           </RadioGroup>
         `);
 
@@ -262,7 +266,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
         await render(hbs`
            <button>Before</button>
-          <RadioGroup @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -294,7 +298,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
         await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{value}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{this.value}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -388,7 +392,7 @@ module('Integration | Component | radio-group', function (hooks) {
         });
 
         await render(hbs`
-          <RadioGroup @value={{undefined}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{undefined}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -412,7 +416,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
       test('should be possible to tab to the active item', async () => {
         await render(hbs`
-          <RadioGroup @value='home-delivery' @onChange={{console.log}} as |RadioGroup|>
+          <RadioGroup @value='home-delivery' @onChange={{this.noop}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -436,7 +440,7 @@ module('Integration | Component | radio-group', function (hooks) {
         });
 
         await render(hbs`
-            <RadioGroup @value='home-delivery' @onChange={{onChange}} as |RadioGroup|>
+            <RadioGroup @value='home-delivery' @onChange={{this.onChange}} as |RadioGroup|>
               <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
               <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
               <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -461,7 +465,7 @@ module('Integration | Component | radio-group', function (hooks) {
       test('should be possible to tab out of the radio group (no selected value)', async () => {
         await render(hbs`
             <button>Before</button>
-            <RadioGroup @value={{undefined}} @onChange={{console.log}} as |RadioGroup|>
+            <RadioGroup @value={{undefined}} @onChange={{this.noop}} as |RadioGroup|>
               <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
               <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
               <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -482,7 +486,7 @@ module('Integration | Component | radio-group', function (hooks) {
       test('should be possible to tab out of the radio group (selected value)', async () => {
         await render(hbs`
           <button>Before</button>
-          <RadioGroup @value='home-delivery' @onChange={{console.log}} as |RadioGroup|>
+          <RadioGroup @value='home-delivery' @onChange={{this.noop}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -511,7 +515,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
         await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{undefined}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{undefined}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -552,7 +556,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
         await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{undefined}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{undefined}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -593,7 +597,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
         await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{undefined}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{undefined}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -716,7 +720,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
         await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{value}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{this.value}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -753,7 +757,7 @@ module('Integration | Component | radio-group', function (hooks) {
     test('should be possible to change the current radio group value when clicking on a radio option', async () => {
       await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{value}} @onChange={{console.log}} as |RadioGroup|>
+          <RadioGroup @value={{this.value}} @onChange={{this.noop}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
@@ -775,7 +779,7 @@ module('Integration | Component | radio-group', function (hooks) {
 
       await render(hbs`
           <button>Before</button>
-          <RadioGroup @value={{value}} @onChange={{onChange}} as |RadioGroup|>
+          <RadioGroup @value={{this.value}} @onChange={{this.onChange}} as |RadioGroup|>
             <RadioGroup.Label>Pizza Delivery</RadioGroup.Label>
             <RadioGroup.Option @value='pickup'>Pickup</RadioGroup.Option>
             <RadioGroup.Option @value='home-delivery'>Home delivery</RadioGroup.Option>
