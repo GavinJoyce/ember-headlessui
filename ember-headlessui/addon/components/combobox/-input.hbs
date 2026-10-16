@@ -5,6 +5,7 @@
     role={{if @role @role 'combobox'}}
     type={{if @type @type 'input'}}
     id='{{@guid}}-input'
+    aria-controls={{if @isOpen @guid}}
     aria-multiselectable={{if @isMultiselectable 'true'}}
     {{on 'keydown' @handleKeyDown}}
     {{on 'keyup' @handleKeyUp}}
