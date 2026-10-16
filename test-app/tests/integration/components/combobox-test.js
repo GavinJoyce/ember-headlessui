@@ -173,6 +173,33 @@ module('Integration | Component | <Combobox>', function (hooks) {
     });
 
     module('Combobox.Input', () => {
+      test('Combobox.Input has aria-controls pointing at the options only while open', async function (assert) {
+        await render(hbs`
+          <Combobox as |combobox|>
+            <combobox.Input/>
+            <combobox.Button>Trigger</combobox.Button>
+            <combobox.Options as |options|>
+              <options.Option @value="a">Option A</options.Option>
+            </combobox.Options>
+          </Combobox>
+        `);
+
+        assert.dom(getComboboxInput()).doesNotHaveAttribute('aria-controls');
+
+        await click(getComboboxButton());
+
+        assert
+          .dom(getComboboxInput())
+          .hasAttribute(
+            'aria-controls',
+            document.querySelector('[role="listbox"]').getAttribute('id')
+          );
+
+        await click(getComboboxButton());
+
+        assert.dom(getComboboxInput()).doesNotHaveAttribute('aria-controls');
+      });
+
       test('selecting an option puts the value into Combobox.Input when displayValue is not provided', async function (assert) {
         this.set('onChange', (value) => {
           this.set('value', value);
