@@ -13,10 +13,10 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: volta-cli/action@v1
       - name: Cache pnpm modules
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -41,10 +41,10 @@ jobs:
           - ./test-app
           # - ./test-build
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: volta-cli/action@v1
       - name: Cache pnpm modules
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -64,7 +64,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       # Uncomment when addon is converted to v2 format
       # - uses: volta-cli/action@v1
       # - name: Cache pnpm modules
@@ -94,10 +94,10 @@ jobs:
     needs:
       - build_test
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: volta-cli/action@v1
       - name: Cache pnpm modules
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -131,10 +131,10 @@ jobs:
           - ember-canary
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - uses: volta-cli/action@v1
       - name: Cache pnpm modules
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
