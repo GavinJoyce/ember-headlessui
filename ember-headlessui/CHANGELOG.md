@@ -1,26 +1,56 @@
-{
-cwd: '/home/nvp/Development/OpenSource/ember-headlessui/ember-headlessui'
-}
+# Changelog
 
-https://github.com/GavinJoyce/ember-headlessui/pull/204 barryofguilder ## v0.16.0 (2026-02-20)
+## v0.17.3 (2026-11-09)
 
+First npm release since v0.16.2. Versions 0.17.1 and 0.17.2 were tagged on GitHub but never published to npm, so their changes are included here.
+
+#### :bug: Bug Fix
+
+- [#213](https://github.com/GavinJoyce/ember-headlessui/pull/213) Add `aria-controls` to combobox input when open ([@linds-wmce](https://github.com/linds-wmce))
+- [#174](https://github.com/GavinJoyce/ember-headlessui/pull/174) Fix closing animated modal ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+- [#209](https://github.com/GavinJoyce/ember-headlessui/pull/209) Fix `importing-inject-from-ember-service` deprecation ([@tniezurawski](https://github.com/tniezurawski))
+
+#### :house: Internal
+
+- [#214](https://github.com/GavinJoyce/ember-headlessui/pull/214) Update CI actions to current majors (checkout, cache, pnpm, volta) ([@katsugtgz](https://github.com/katsugtgz))
+- [#212](https://github.com/GavinJoyce/ember-headlessui/pull/212) Bump version to 0.17.2 ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+- [#211](https://github.com/GavinJoyce/ember-headlessui/pull/211) Fix radio-group tests failing on Ember 4.4 ([@tniezurawski](https://github.com/tniezurawski))
+
+#### Committers: 5
+
+- David McNamara ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+- Linds ([@linds-wmce](https://github.com/linds-wmce))
+- Muhammad Naufal Mahdi ([@katsugtgz](https://github.com/katsugtgz))
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+- Tomek Nieżurawski ([@tniezurawski](https://github.com/tniezurawski))
 
 ## v0.16.2 (2026-06-06)
 
 #### :bug: Bug Fix
-* [#207](https://github.com/GavinJoyce/ember-headlessui/pull/207) Skip detached listbox options during typeahead ([@GavinJoyce](https://github.com/GavinJoyce))
-* [#206](https://github.com/GavinJoyce/ember-headlessui/pull/206) Guard Listbox scrollIntoView against options removed from the DOM ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
+
+- [#207](https://github.com/GavinJoyce/ember-headlessui/pull/207) Skip detached listbox options during typeahead ([@GavinJoyce](https://github.com/GavinJoyce))
+- [#206](https://github.com/GavinJoyce/ember-headlessui/pull/206) Guard Listbox scrollIntoView against options removed from the DOM ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
 
 #### Committers: 2
+
 - David McNamara ([@dmcnamara-eng](https://github.com/dmcnamara-eng))
 - Gavin Joyce ([@GavinJoyce](https://github.com/GavinJoyce))
-
 
 ## v0.16.1 (2026-02-26)
 
 #### :rocket: Enhancement
 
 - [#205](https://github.com/GavinJoyce/ember-headlessui/pull/205) Add event to the dialog onClose action ([@barryofguilder](https://github.com/barryofguilder))
+
+#### Committers: 1
+
+- Jason Barry ([@barryofguilder](https://github.com/barryofguilder))
+
+## v0.16.0 (2026-02-20)
+
+#### :rocket: Enhancement
+
+- [#204](https://github.com/GavinJoyce/ember-headlessui/pull/204) Support listbox with multiple selection ([@barryofguilder](https://github.com/barryofguilder))
 
 #### Committers: 1
 
