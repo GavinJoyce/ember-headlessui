@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 
-import { restartableTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 export default class Menu extends Component {
   guid = `${guidFor(this)}-tailwindui-menu`;
@@ -83,8 +83,7 @@ export default class Menu extends Component {
     this._setActiveItem(item);
   }
 
-  @restartableTask
-  *searchTask(nextCharacter) {
+  searchTask = task({ restartable: true }, async (nextCharacter) => {
     this.searchTerm += nextCharacter.toLowerCase();
 
     const searchResult = this.items.find((item) => {
@@ -97,10 +96,10 @@ export default class Menu extends Component {
       this._setActiveItem(searchResult);
     }
 
-    yield timeout(350);
+    await timeout(350);
 
     this.searchTerm = '';
-  }
+  });
 
   @action
   async registerItem(item) {

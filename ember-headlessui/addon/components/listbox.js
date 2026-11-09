@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { debounce, scheduleOnce } from '@ember/runloop';
 
-import { TrackedSet } from 'tracked-maps-and-sets';
+import { TrackedSet } from 'tracked-built-ins';
 
 const ACTIVATE_NONE = 0;
 const ACTIVATE_FIRST = 1;
