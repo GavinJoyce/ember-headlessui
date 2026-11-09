@@ -1,6 +1,6 @@
 import Helper from '@ember/component/helper';
 
-import { all, restartableTask, timeout } from 'ember-concurrency';
+import { all, task, timeout } from 'ember-concurrency';
 
 import { waitForTransition } from '../../utils/transition';
 
@@ -70,18 +70,17 @@ export class TransitionVisibilityManager extends Helper {
     return this.value;
   }
 
-  @restartableTask
-  *unmountAfterTransitionTask() {
+  unmountAfterTransitionTask = task({ restartable: true }, async () => {
     // Wait for the next tick, to ensure that the class name string has time to re-build
-    yield timeout(0);
+    await timeout(0);
 
     // Wait for all Transition DOM elements to finish transitioning (parent and children)
-    yield all(
+    await all(
       Array.from(this.domNodes).map((domNode) => waitForTransition(domNode))
     );
 
     this.value = false;
 
     this.recompute();
-  }
+  });
 }

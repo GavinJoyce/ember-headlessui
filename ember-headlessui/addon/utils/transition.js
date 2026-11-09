@@ -1,5 +1,5 @@
 import { timeout } from 'ember-concurrency';
-import { TrackedSet } from 'tracked-maps-and-sets';
+import { TrackedSet } from 'tracked-built-ins';
 
 /**
  * Create a promise that resolves after the transition timeout for a node

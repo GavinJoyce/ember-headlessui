@@ -33,20 +33,22 @@
     "postpack": "ember ts:clean"
   },
   "dependencies": {
-    "ember-auto-import": "^2.2.0",
-    "ember-cli-babel": "^7.26.3",
-    "ember-cli-htmlbars": "^6.0.1",
+    "@babel/core": "^7.29.13",
+    "@embroider/macros": "^1.19.0",
+    "ember-auto-import": "^2.10.0",
+    "ember-cli-babel": "^8.3.2",
+    "ember-cli-htmlbars": "^7.0.1",
     "ember-cli-typescript": "^5.1.0",
-    "ember-concurrency": "^2.1.2",
-    "ember-element-helper": "^0.6.0",
-    "ember-modifier": "^4.0.0-beta.1",
-    "ember-set-helper": "^2.0.1",
-    "ember-truth-helpers": "^3.0.0",
+    "ember-concurrency": "^5.3.0",
+    "ember-element-helper": "^0.8.8",
+    "ember-modifier": "^4.3.0",
+    "ember-set-helper": "^3.1.0",
+    "ember-truth-helpers": "^5.0.0",
     "focus-trap": "^6.7.1",
-    "tracked-maps-and-sets": "^3.0.1"
+    "tracked-built-ins": "^4.1.2"
   },
   "peerDependencies": {
-    "ember-source": ">= 4.4.0"
+    "ember-source": ">= 4.8.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -54,8 +56,6 @@
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/eslint-configs": "^1.5.1",
     "@types/ember": "^4.0.0",
-    "@types/ember-qunit": "^5.0.0",
-    "@types/ember-resolver": "^5.0.11",
     "@types/ember__application": "^4.0.0",
     "@types/ember__array": "^4.0.1",
     "@types/ember__component": "^4.0.8",
@@ -65,6 +65,7 @@
     "@types/ember__engine": "^4.0.0",
     "@types/ember__error": "^4.0.0",
     "@types/ember__object": "^4.0.2",
+    "@types/ember__owner": "^4.0.9",
     "@types/ember__polyfills": "^4.0.0",
     "@types/ember__routing": "^4.0.7",
     "@types/ember__runloop": "^4.0.1",
@@ -73,6 +74,8 @@
     "@types/ember__template": "^4.0.0",
     "@types/ember__test": "^4.0.0",
     "@types/ember__utils": "^4.0.0",
+    "@types/ember-qunit": "^5.0.0",
+    "@types/ember-resolver": "^5.0.11",
     "@types/htmlbars-inline-precompile": "^3.0.0",
     "@types/qunit": "^2.19.0",
     "@types/rsvp": "^4.0.4",
@@ -81,7 +84,7 @@
     "dotenv-cli": "^4.0.0",
     "ember-cli": "~4.4.0",
     "ember-cli-inject-live-reload": "^2.1.0",
-    "ember-source": "~4.4.0",
+    "ember-source": "~4.8.0",
     "ember-template-lint": "^3.5.1",
     "ember-template-lint-plugin-prettier": "^2.0.1",
     "eslint": "^7.32.0",
@@ -97,11 +100,11 @@
     "qunit-dom": "^1.6.0",
     "release-it": "^14.14.3",
     "release-it-lerna-changelog": "^3.1.0",
-    "typescript": "^4.7.3",
+    "typescript": "^5.9.3",
     "webpack": "^5.64.1"
   },
   "engines": {
-    "node": "10.* || >= 12"
+    "node": ">= 20"
   },
   "ember": {
     "edition": "octane"
@@ -114,6 +117,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "volta": {
-    "node": "16.15.0"
+    "node": "22.22.2"
   }
 }
