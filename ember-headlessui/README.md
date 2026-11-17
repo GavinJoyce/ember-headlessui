@@ -16,6 +16,14 @@ A set of completely unstyled, fully accessible UI components for Ember.js, desig
 ember install ember-headlessui
 ```
 
+## Compatibility
+
+| ember-headlessui | Ember (`ember-source`) | Node  |
+| ---------------- | ---------------------- | ----- |
+| 0.18.x           | 4.8 – 7.x              | >= 20 |
+| 0.17.x           | 4.4 – 6.x              | >= 12 |
+| <= 0.16.2        | 3.28 – 6.x             | >= 12 |
+
 ## Usage
 
 See the [component examples](test-app/app/templates) for usage samples.
