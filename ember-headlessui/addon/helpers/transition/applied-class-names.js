@@ -1,6 +1,6 @@
 import Helper from '@ember/component/helper';
 
-import { dropTask, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 import {
   ClassNameSet,
@@ -65,34 +65,35 @@ export class AppliedClassNamesManager extends Helper {
     return splitClassNames(this.transition.args.leaveTo);
   }
 
-  @dropTask
-  *setTransitionClassesTask(base, from, to, entered) {
-    this.appliedClassNames.delete(...entered);
-    this.appliedClassNames.add(...base, ...from);
+  setTransitionClassesTask = task(
+    { drop: true },
+    async (base, from, to, entered) => {
+      this.appliedClassNames.delete(...entered);
+      this.appliedClassNames.add(...base, ...from);
 
-    this.recompute();
+      this.recompute();
 
-    // Wait for the next tick
-    yield timeout(0);
+      // Wait for the next tick
+      await timeout(0);
 
-    this.appliedClassNames.delete(...from);
-    this.appliedClassNames.add(...to);
+      this.appliedClassNames.delete(...from);
+      this.appliedClassNames.add(...to);
 
-    this.recompute();
+      this.recompute();
 
-    yield waitForTransition(this.transition.ownDomNode);
+      await waitForTransition(this.transition.ownDomNode);
 
-    this.appliedClassNames.delete(...to, ...base);
-    this.appliedClassNames.add(...entered);
+      this.appliedClassNames.delete(...to, ...base);
+      this.appliedClassNames.add(...entered);
 
-    this.recompute();
-  }
+      this.recompute();
+    }
+  );
 
-  @dropTask
-  *transitionToShow() {
+  transitionToShow = task({ drop: true }, async () => {
     this.transition.args.beforeEnter?.();
 
-    yield this.setTransitionClassesTask.perform(
+    await this.setTransitionClassesTask.perform(
       this.enterClasses,
       this.enterFromClasses,
       this.enterToClasses,
@@ -100,13 +101,12 @@ export class AppliedClassNamesManager extends Helper {
     );
 
     this.transition.args.afterEnter?.();
-  }
+  });
 
-  @dropTask
-  *transitionToHide() {
+  transitionToHide = task({ drop: true }, async () => {
     this.transition.args.beforeLeave?.();
 
-    yield this.setTransitionClassesTask.perform(
+    await this.setTransitionClassesTask.perform(
       this.leaveClasses,
       this.leaveFromClasses,
       this.leaveToClasses,
@@ -114,7 +114,7 @@ export class AppliedClassNamesManager extends Helper {
     );
 
     this.transition.args.afterLeave?.();
-  }
+  });
 
   shouldTransition() {
     return this.show !== this.previousShowValue;
