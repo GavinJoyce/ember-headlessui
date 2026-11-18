@@ -1,5 +1,15 @@
 # Changelog
 
+
+## v0.18.0 (2026-11-18)
+
+#### :rocket: Enhancement
+* [#217](https://github.com/GavinJoyce/ember-headlessui/pull/217) support Ember 7.4 (upgrade ember-cli-htmlbars & addon deps) ([@tniezurawski](https://github.com/tniezurawski))
+
+#### Committers: 1
+- Tomek Nieżurawski ([@tniezurawski](https://github.com/tniezurawski))
+
+
 ## v0.17.3 (2026-11-09)
 
 First npm release since v0.16.2. Versions 0.17.1 and 0.17.2 were tagged on GitHub but never published to npm, so their changes are included here.
