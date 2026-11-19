@@ -112,6 +112,8 @@ jobs:
       #   with:
       #     name: dist
       #     path: ${{ env.dist }}
+      - name: Build addon
+        run: pnpm --filter ember-headlessui build
       - run: pnpm --filter test-app run test:ember
 
 
@@ -148,6 +150,8 @@ jobs:
       #   with:
       #     name: dist
       #     path: ${{ env.dist }}
+      - name: Build addon
+        run: pnpm --filter ember-headlessui build
       - name: test
         working-directory: test-app
         run: >
