@@ -39,4 +39,8 @@ Router.map(function () {
   this.route('radio-group', function () {
     this.route('radio-group-basic');
   });
+
+  this.route('disclosure', function () {
+    this.route('disclosure-basic');
+  });
 });
