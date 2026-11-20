@@ -76,6 +76,8 @@ export default class ComboboxComponent extends Component {
   set isOpen(isOpen) {
     if (this.isDisabled) return;
 
+    let wasOpen = this._isOpen;
+
     if (!isOpen) {
       this._activeOptionGuid = null;
       this.optionElements = [];
@@ -86,6 +88,13 @@ export default class ComboboxComponent extends Component {
       this._isOpen = true;
     } else {
       this._isOpen = false;
+    }
+
+    // Every way of dismissing the combobox (click outside, Tab, Escape,
+    // selecting an option, the button toggle) goes through this setter, so
+    // this is the one place to tell the consumer it closed.
+    if (wasOpen && !isOpen) {
+      this.args.onClose?.();
     }
   }
 

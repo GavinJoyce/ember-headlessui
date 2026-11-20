@@ -372,6 +372,98 @@ module('Integration | Component | <Combobox>', function (hooks) {
       });
     });
 
+    module('Combobox @onClose', (hooks) => {
+      hooks.beforeEach(async function () {
+        this.closeCount = 0;
+        this.changes = [];
+        this.set('value', 'a');
+        this.set('onClose', () => this.closeCount++);
+        this.set('onChange', (value) => {
+          this.changes.push(value);
+          this.set('value', value);
+        });
+
+        await render(hbs`
+            <Combobox
+              @value={{this.value}}
+              @onChange={{this.onChange}}
+              @onClose={{this.onClose}}
+              as |combobox|
+            >
+              <combobox.Input />
+              <combobox.Button>Trigger</combobox.Button>
+              <combobox.Options as |options|>
+                <options.Option @value="a">Option A</options.Option>
+                <options.Option @value="b">Option B</options.Option>
+                <options.Option @value="c">Option C</options.Option>
+              </combobox.Options>
+            </Combobox>
+          `);
+      });
+
+      test('is not called on render', async function (assert) {
+        assert.strictEqual(this.closeCount, 0);
+      });
+
+      test('is called once when clicking outside after typing, without calling @onChange', async function (assert) {
+        await typeIn(getComboboxInput(), 'typed text');
+        assertComboboxList({ state: ComboboxState.Visible });
+
+        await click(document.body);
+
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+        assert.strictEqual(this.closeCount, 1);
+        assert.deepEqual(
+          this.changes,
+          [],
+          'typed text is never passed to @onChange'
+        );
+      });
+
+      test('is not called when clicking outside while already closed', async function (assert) {
+        await click(document.body);
+
+        assert.strictEqual(this.closeCount, 0);
+      });
+
+      test('is called once when closing with Escape', async function (assert) {
+        await click(getComboboxButton());
+        assertComboboxList({ state: ComboboxState.Visible });
+
+        await triggerKeyEvent(document.activeElement, 'keyup', Keys.Escape);
+
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+        assert.strictEqual(this.closeCount, 1);
+      });
+
+      test('is called once when closing with Tab', async function (assert) {
+        await click(getComboboxButton());
+        assertComboboxList({ state: ComboboxState.Visible });
+
+        await triggerKeyEvent(document.activeElement, 'keydown', Keys.Tab);
+
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+        assert.strictEqual(this.closeCount, 1);
+      });
+
+      test('is called once when closing with the button', async function (assert) {
+        await click(getComboboxButton());
+        await click(getComboboxButton());
+
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+        assert.strictEqual(this.closeCount, 1);
+      });
+
+      test('is called once after selecting an option, alongside @onChange', async function (assert) {
+        await click(getComboboxButton());
+        await click(getComboboxOptions()[1]);
+
+        assertComboboxList({ state: ComboboxState.InvisibleUnmounted });
+        assert.deepEqual(this.changes, ['b']);
+        assert.strictEqual(this.closeCount, 1);
+      });
+    });
+
     module('Combobox.Label', () => {
       test('should be possible to render a Combobox.Label using a yielded prop', async () => {
         await render(hbs`
