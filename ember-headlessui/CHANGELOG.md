@@ -1,6 +1,18 @@
 # Changelog
 
 
+
+## v0.19.0 (2026-11-23)
+
+#### :boom: Breaking Change
+* [#218](https://github.com/GavinJoyce/ember-headlessui/pull/218) feat!: convert ember-headlessui to a v2 addon ([@Tobzzy](https://github.com/Tobzzy))
+
+#### :rocket: Enhancement
+* [#219](https://github.com/GavinJoyce/ember-headlessui/pull/219) feat: publish type declarations and remove v1 leftovers ([@Tobzzy](https://github.com/Tobzzy))
+
+#### Committers: 1
+- Toyib Ahmed ([@Tobzzy](https://github.com/Tobzzy))
+
 ## v0.18.0 (2026-11-18)
 
 #### :rocket: Enhancement
