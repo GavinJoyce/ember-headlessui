@@ -378,7 +378,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           <Combobox 
             as |combobox|
           >
-            <combobox.Label data-test="headlessui-combobox-label-2">{{combobox.isOpen}} {{combobox.isDisabled}}</combobox.Label/>
+            <combobox.Label data-test="headlessui-combobox-label-2">{{combobox.isOpen}} {{combobox.isDisabled}}</combobox.Label>
             <combobox.Input/>
             <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
             <combobox.Options as |options|>
@@ -415,7 +415,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           <Combobox 
             as |combobox|
           >
-            <combobox.Label @as="p" data-test="headlessui-combobox-label-2">{{combobox.isOpen}} {{combobox.isDisabled}}</combobox.Label/>
+            <combobox.Label @as="p" data-test="headlessui-combobox-label-2">{{combobox.isOpen}} {{combobox.isDisabled}}</combobox.Label>
             <combobox.Input/>
             <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
             <combobox.Options as |options|>
@@ -3703,7 +3703,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           @value={{array "bob" "charlie"}}
           as |combobox|
         >
-          <combobox.Label>Label</combobox.Label/>
+          <combobox.Label>Label</combobox.Label>
           <combobox.Input/>
           <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
           <combobox.Options as |options|>
@@ -3737,7 +3737,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           @value={{array "bob" "charlie"}}
           as |combobox|
         >
-          <combobox.Label>Label</combobox.Label/>
+          <combobox.Label>Label</combobox.Label>
           <combobox.Input/>
           <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
           <combobox.Options as |options|>
@@ -3761,7 +3761,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           @value={{array "bob" "charlie"}}
           as |combobox|
         >
-          <combobox.Label>Label</combobox.Label/>
+          <combobox.Label>Label</combobox.Label>
           <combobox.Input/>
           <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
           <combobox.Options as |options|>
@@ -3795,7 +3795,7 @@ module('Integration | Component | <Combobox>', function (hooks) {
           @onChange={{this.onChange}}
           as |combobox|
         >
-          <combobox.Label>Label</combobox.Label/>
+          <combobox.Label>Label</combobox.Label>
           <combobox.Input/>
           <combobox.Button data-test="headlessui-combobox-button-2">Trigger</combobox.Button>
           <combobox.Options as |options|>
