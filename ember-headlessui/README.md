@@ -18,11 +18,14 @@ ember install ember-headlessui
 
 ## Compatibility
 
-| ember-headlessui | Ember (`ember-source`) | Node  |
-| ---------------- | ---------------------- | ----- |
-| 0.18.x           | 4.8 – 7.x              | >= 20 |
-| 0.17.x           | 4.4 – 6.x              | >= 12 |
-| <= 0.16.2        | 3.28 – 6.x             | >= 12 |
+| ember-headlessui | Addon format | Ember (`ember-source`) | Node  |
+| ---------------- | ------------ | ---------------------- | ----- |
+| >= 0.19.0        | v2           | 4.8 – 7.x              | >= 20 |
+| 0.18.x           | v1           | 4.8 – 7.x              | >= 20 |
+| 0.17.x           | v1           | 4.4 – 6.x              | >= 12 |
+| <= 0.16.2        | v1           | 3.28 – 6.x             | >= 12 |
+
+From 0.19.0, ember-headlessui is a [v2 addon](https://rfcs.emberjs.com/id/0507-embroider-v2-package-format/). Classic (non-Embroider) apps keep working through `addonV1Shim`.
 
 ## Usage
 
