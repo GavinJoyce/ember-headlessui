@@ -6,7 +6,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently 'npm:dev:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "dev": "pnpm build && concurrently 'npm:dev:*' --prefix-colors cyan,white,yellow",
     "dev:ember": "pnpm --filter test-app run start",
     "dev:addon": "pnpm --filter ember-headlessui start",
     "dev:docs": "echo 'pnpm run --filter docs docs:watch --preserveWatchOutput'",
