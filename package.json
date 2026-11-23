@@ -10,7 +10,7 @@
     "dev:ember": "pnpm --filter test-app run start",
     "dev:addon": "echo 'pnpm run --filter ember-headlessui start --no-watch.clearScreen'",
     "dev:docs": "echo 'pnpm run --filter docs docs:watch --preserveWatchOutput'",
-    "build:docs": "pnpm --filter test-app run build",
+    "build:docs": "pnpm --filter ember-headlessui build && pnpm --filter test-app run build",
     "release": "pnpm --filter ember-headlessui run release",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",

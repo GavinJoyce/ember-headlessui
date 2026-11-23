@@ -16,7 +16,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build": "rollup --config",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",
@@ -25,36 +25,35 @@
     "lint:js:fix": "eslint . --fix",
     "lint:other": "prettier --check \"**/*.{json,md,yml}\"",
     "lint:other:fix": "prettier --write \"**/*.{json,md,yml}\"",
-    "start": "ember serve",
+    "start": "rollup --config --watch",
     "test": "npm-run-all lint test:*",
-    "test:ember": "ember test",
     "release": "dotenv release-it --",
-    "prepack": "ember ts:precompile",
-    "postpack": "ember ts:clean"
+    "prepack": "rollup --config"
   },
   "dependencies": {
-    "@babel/core": "^7.29.13",
+    "@embroider/addon-shim": "^1.10.0",
     "@embroider/macros": "^1.19.0",
-    "ember-auto-import": "^2.10.0",
-    "ember-cli-babel": "^8.3.2",
-    "ember-cli-htmlbars": "^7.0.1",
-    "ember-cli-typescript": "^5.1.0",
+    "decorator-transforms": "^2.3.0",
     "ember-concurrency": "^5.3.0",
     "ember-element-helper": "^0.8.8",
     "ember-modifier": "^4.3.0",
-    "ember-set-helper": "^3.1.0",
     "ember-truth-helpers": "^5.0.0",
     "focus-trap": "^6.7.1",
     "tracked-built-ins": "^4.1.2"
   },
   "peerDependencies": {
+    "@glimmer/component": ">= 1.0.4",
     "ember-source": ">= 4.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-transform-typescript": "^7.28.0",
     "@ember/optional-features": "^2.0.0",
+    "@embroider/addon-dev": "^8.5.0",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@nullvoxpopuli/eslint-configs": "^1.5.1",
+    "@rollup/plugin-babel": "^6.0.4",
     "@types/ember": "^4.0.0",
     "@types/ember__application": "^4.0.0",
     "@types/ember__array": "^4.0.1",
@@ -80,6 +79,7 @@
     "@types/qunit": "^2.19.0",
     "@types/rsvp": "^4.0.4",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-ember-template-compilation": "^2.4.0",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv-cli": "^4.0.0",
     "ember-cli": "~4.4.0",
@@ -100,6 +100,7 @@
     "qunit-dom": "^1.6.0",
     "release-it": "^14.14.3",
     "release-it-lerna-changelog": "^3.1.0",
+    "rollup": "^4.40.0",
     "typescript": "^5.9.3",
     "webpack": "^5.64.1"
   },
@@ -110,13 +111,57 @@
     "edition": "octane"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/combobox.js": "./dist/_app_/components/combobox.js",
+      "./components/combobox/-button.js": "./dist/_app_/components/combobox/-button.js",
+      "./components/combobox/-input.js": "./dist/_app_/components/combobox/-input.js",
+      "./components/combobox/-label.js": "./dist/_app_/components/combobox/-label.js",
+      "./components/combobox/-option.js": "./dist/_app_/components/combobox/-option.js",
+      "./components/combobox/-options.js": "./dist/_app_/components/combobox/-options.js",
+      "./components/dialog.js": "./dist/_app_/components/dialog.js",
+      "./components/dialog/-description.js": "./dist/_app_/components/dialog/-description.js",
+      "./components/dialog/-overlay.js": "./dist/_app_/components/dialog/-overlay.js",
+      "./components/dialog/-title.js": "./dist/_app_/components/dialog/-title.js",
+      "./components/listbox.js": "./dist/_app_/components/listbox.js",
+      "./components/listbox/-button.js": "./dist/_app_/components/listbox/-button.js",
+      "./components/listbox/-label.js": "./dist/_app_/components/listbox/-label.js",
+      "./components/listbox/-option.js": "./dist/_app_/components/listbox/-option.js",
+      "./components/listbox/-options.js": "./dist/_app_/components/listbox/-options.js",
+      "./components/menu.js": "./dist/_app_/components/menu.js",
+      "./components/menu/button.js": "./dist/_app_/components/menu/button.js",
+      "./components/menu/item-element.js": "./dist/_app_/components/menu/item-element.js",
+      "./components/menu/item.js": "./dist/_app_/components/menu/item.js",
+      "./components/menu/items.js": "./dist/_app_/components/menu/items.js",
+      "./components/radio-group.js": "./dist/_app_/components/radio-group.js",
+      "./components/radio-group/-label.js": "./dist/_app_/components/radio-group/-label.js",
+      "./components/radio-group/-option.js": "./dist/_app_/components/radio-group/-option.js",
+      "./components/switch.js": "./dist/_app_/components/switch.js",
+      "./components/switch/button.js": "./dist/_app_/components/switch/button.js",
+      "./components/switch/label.js": "./dist/_app_/components/switch/label.js",
+      "./components/transition.js": "./dist/_app_/components/transition.js",
+      "./components/transition/child.js": "./dist/_app_/components/transition/child.js",
+      "./helpers/tag-name-is-component.js": "./dist/_app_/helpers/tag-name-is-component.js",
+      "./modifiers/headlessui-focus-trap.js": "./dist/_app_/modifiers/headlessui-focus-trap.js",
+      "./services/dialog-stack-provider.js": "./dist/_app_/services/dialog-stack-provider.js"
+    }
   },
-  "packageManager": "pnpm@7.1.2",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "volta": {
     "node": "22.22.2"
+  },
+  "files": [
+    "addon-main.cjs",
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./*.js": "./dist/*.js",
+    "./*": "./dist/*.js",
+    "./addon-main.js": "./addon-main.cjs"
   }
 }
