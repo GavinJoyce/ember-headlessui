@@ -6,16 +6,17 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently 'npm:dev:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "dev": "pnpm build && concurrently 'npm:dev:*' --prefix-colors cyan,white,yellow",
     "dev:ember": "pnpm --filter test-app run start",
-    "dev:addon": "echo 'pnpm run --filter ember-headlessui start --no-watch.clearScreen'",
+    "dev:addon": "pnpm --filter ember-headlessui start",
     "dev:docs": "echo 'pnpm run --filter docs docs:watch --preserveWatchOutput'",
-    "build:docs": "pnpm --filter ember-headlessui build && pnpm --filter test-app run build",
+    "build": "pnpm --filter ember-headlessui build",
+    "build:docs": "pnpm build && pnpm --filter test-app run build",
     "release": "pnpm --filter ember-headlessui run release",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "lint:js": "pnpm --filter '*' lint:js",
-    "test": "pnpm --filter test-app test:ember"
+    "test": "pnpm build && pnpm --filter test-app test:ember"
   },
   "devDependencies": {
     "concurrently": "^7.2.1"

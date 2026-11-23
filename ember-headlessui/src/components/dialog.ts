@@ -10,7 +10,7 @@ import { modifier } from 'ember-modifier';
 
 import { Keys } from '../utils/keyboard.ts';
 
-import type DialogStackProvider from '../services/dialog-stack-provider.ts';
+import type DialogStackProvider from '../services/dialog-stack-provider.js';
 
 interface Args {
   isOpen: boolean;

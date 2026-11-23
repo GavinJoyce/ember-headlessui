@@ -30,16 +30,24 @@ See the [component examples](test-app/app/templates) for usage samples.
 
 ## Local Development
 
-This is a pnpm monorepo. To run locally:
+This is a pnpm monorepo:
+
+- `ember-headlessui/` is the addon, published to npm as a [v2 addon](https://rfcs.emberjs.com/id/0507-embroider-v2-package-format/). Its source lives in `src/`; rollup builds it into `dist/` and `tsc` emits type declarations into `declarations/`.
+- `test-app/` is the Ember app that hosts the test suite and the component examples.
+
+The test-app uses the built addon, so build it before running the test-app on its own.
 
 ```bash
 # Install dependencies
 pnpm install
 
-# Run the development server (http://localhost:4200)
+# Build the addon (dist/ and declarations/)
+pnpm build
+
+# Rebuild the addon on change and run the test-app (http://localhost:4200)
 pnpm dev
 
-# Run tests
+# Build the addon, then run the tests
 pnpm test
 
 # Linting
