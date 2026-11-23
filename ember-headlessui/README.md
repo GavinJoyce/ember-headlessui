@@ -16,6 +16,9 @@ A set of completely unstyled, fully accessible UI components for Ember.js, desig
 ember install ember-headlessui
 ```
 
+- **v2 addon (>= 0.19.0):** your app needs [ember-auto-import](https://github.com/embroider-build/ember-auto-import) v2 or later, or [Embroider](https://github.com/embroider-build/embroider). Classic apps keep working through `@embroider/addon-shim`.
+- **v1 addon (<= 0.18.x):** if your app can't use ember-auto-import v2 yet, stay on the last v1 release: `ember install ember-headlessui@0.18`.
+
 ## Compatibility
 
 | ember-headlessui | Addon format | Ember (`ember-source`) | Node  |
@@ -30,6 +33,44 @@ From 0.19.0, ember-headlessui is a [v2 addon](https://rfcs.emberjs.com/id/0507-e
 ## Usage
 
 See the [component examples](test-app/app/templates) for usage samples.
+
+### Classic `.hbs` templates (v1 and v2)
+
+The components, services and modifiers are added to your app, so components resolve by name in loose-mode templates: `<Menu>`, `<Listbox>`, `<Combobox>`, `<Dialog>`, `<RadioGroup>`, `<Switch>` and `<Transition>`. This works the same for the v1 and v2 addon formats.
+
+```hbs
+<Menu as |menu|>
+  <menu.Button>Options</menu.Button>
+  <menu.Items as |items|>
+    <items.Item as |item|>
+      <item.Element class={{if item.isActive "bg-indigo-500 text-white"}}>
+        Account settings
+      </item.Element>
+    </items.Item>
+  </menu.Items>
+</Menu>
+```
+
+### Template tag `.gjs` / `.gts` (v2 only)
+
+From 0.19.0 you can import components directly, which is required in strict-mode (template tag) components:
+
+```gjs
+import Menu from 'ember-headlessui/components/menu';
+
+<template>
+  <Menu as |menu|>
+    <menu.Button>Options</menu.Button>
+    <menu.Items as |items|>
+      <items.Item as |item|>
+        <item.Element>Account settings</item.Element>
+      </items.Item>
+    </menu.Items>
+  </Menu>
+</template>
+```
+
+Import paths mirror the addon's `src/` folder, e.g. `ember-headlessui/components/dialog` or `ember-headlessui/components/listbox`. Type declarations are published in `declarations/` for the modules written in TypeScript.
 
 ## Local Development
 
