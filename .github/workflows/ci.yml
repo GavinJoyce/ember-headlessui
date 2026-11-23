@@ -118,9 +118,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: ["eslint", "tests"]
     timeout-minutes: 10
-    # Ember 7 scenarios fail on the test-app's tooling (ember-cli 4.4,
-    # ember-qunit 5, @ember/test-helpers 2), not on the addon. They stay
-    # visible but don't block until the test-app is upgraded.
+    # Canary is a nightly build of Ember, so a failure there is visible but
+    # doesn't block the PR.
     continue-on-error: ${{ matrix.allow-failure }}
     strategy:
       fail-fast: false
@@ -129,12 +128,10 @@ jobs:
           - ember-lts-4.8
           - ember-lts-5.12
           - ember-lts-6.12
+          - ember-release
+          - ember-beta
         allow-failure: [false]
         include:
-          - ember-try-scenario: ember-release
-            allow-failure: true
-          - ember-try-scenario: ember-beta
-            allow-failure: true
           - ember-try-scenario: ember-canary
             allow-failure: true
 
