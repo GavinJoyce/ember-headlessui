@@ -7,7 +7,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/GavinJoyce/ember-headlessui.git"
+    "url": "git+https://github.com/GavinJoyce/ember-headlessui.git"
   },
   "license": "MIT",
   "author": "",
