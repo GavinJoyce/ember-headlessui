@@ -1,0 +1,9 @@
+{{#if @isOpen}}
+  <div
+    id={{this.panelGuid}}
+    data-test-headlessui-disclosure-panel='disclosure-panel-{{@index}}'
+    ...attributes
+  >
+    {{yield}}
+  </div>
+{{/if}}

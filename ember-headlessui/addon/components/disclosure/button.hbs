@@ -1,0 +1,12 @@
+<button
+  type='button'
+  aria-haspopup={{true}}
+  aria-controls={{if @isOpen this.itemsGuid}}
+  aria-expanded={{@isOpen}}
+  data-test-headlessui-disclosure-button='test-disclosure-btn-{{@index}}'
+  id={{this.buttonGuid}}
+  {{on 'click' @toggleState}}
+  ...attributes
+>
+  {{yield}}
+</button>
